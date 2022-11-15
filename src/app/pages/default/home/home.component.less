@@ -1,0 +1,129 @@
+.home {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  padding: 0 10vw;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('./../../../../assets/png/main-image.png');
+    background-size: 55%;
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    z-index: 0;
+  }
+
+  & &__content {
+    position: relative;
+    // display: flex;
+    // flex-direction: column;
+    // height: 100vh;
+    // justify-content: center;
+
+    // max-width: 1400px;
+    // margin: 0 auto;
+
+    &-tag {
+      font-size: 1rem;
+      // color: var(--tui-support-02);
+      color: #5051ac;
+      margin: 0 0 10px 0;
+      font-weight: 600;
+    }
+
+    &-title {
+      color: #1e1e2a;
+      font: var(--tui-font-heading-1);
+      margin: 0 0 2rem 0;
+    }
+
+    &-desc {
+      margin: 0;
+      font: var(--tui-font-text-xl);
+      color: #5f606b;
+      max-width: 600px;
+    }
+  }
+}
+
+.invoice-notification {
+  position: relative;
+  padding: 1rem;
+  display: inline-flex;
+  flex-direction: column;
+
+  border: 2px solid #ffffff1a;
+  border-radius: 0.75rem;
+  background-color: #f8f7fc33;
+
+  & &__item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background: #fff;
+    border: 3px solid #fff;
+    margin-bottom: 0.75rem;
+    max-width: 300px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    &._active {
+      transform: translateX(-50px);
+      border: 3px solid #fabd3f;
+    }
+
+    &:not(._active) {
+      > * {
+        opacity: 0.6;
+      }
+    }
+
+    &:hover {
+      transform: translateX(-50px);
+      border: 3px solid #fabd3f;
+
+      > * {
+        opacity: 1;
+      }
+    }
+
+    &-img {
+      display: inline-flex;
+      width: 50px;
+      height: 50px;
+      border-radius: 100px;
+      align-items: center;
+      margin-right: 10px;
+      background: #eee;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+
+    &-title {
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    &-text {
+      font: var(--tui-font-text-s);
+      font-weight: 400;
+      color: #333;
+      margin: 0;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}

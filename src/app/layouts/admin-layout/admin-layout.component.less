@@ -1,0 +1,16 @@
+.root {
+  display: grid;
+  grid-template-columns: 80px calc(100% - 80px);
+  grid-template-rows: 100%;
+
+  & &__menu {
+    display: flex;
+    height: 100vh;
+    background: #fff;
+    // border-right: 1px solid #e7e9f1;
+  }
+
+  & &__main {
+    height: 100vh;
+  }
+}

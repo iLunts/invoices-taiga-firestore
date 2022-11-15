@@ -1,0 +1,50 @@
+<div class="home">
+  <div class="tui-container tui-container_adaptive">
+    <div class="tui-row tui-row_adaptive">
+      <div class="tui-col_xs-12 tui-col_md-6 tui-col_lg-6">
+        <div class="home__content">
+          <p class="home__content-tag">Meet new invoices</p>
+          <h1 class="home__content-title">Quick invoice generator</h1>
+          <h2 class="home__content-desc">
+            Send tax-deductible invoices to clients located anywhere and collect
+            payments. Administer without delay and red tape.
+          </h2>
+        </div>
+      </div>
+      <div class="tui-col_xs-12 tui-col_md-6 tui-col_lg-6">
+        <div class="invoice-notification">
+          <div
+            class="invoice-notification__item"
+            [class._active]="item.isActive"
+            *ngFor="let item of invoiceNotification"
+          >
+            <img
+              [src]="item.avatar"
+              alt=""
+              class="invoice-notification__item-img"
+            />
+            <div class="invoice-notification__item-content">
+              <p class="invoice-notification__item-title">{{ item.title }}</p>
+              <p class="invoice-notification__item-text">
+                {{ item.text }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="home__content">
+    <p class="home__content-tag">Meet invoices</p>
+    <h1 class="home__content-title">
+      Simplify invoice payments.
+      <br />
+      Amplify cash flow.
+    </h1>
+    <h2 class="home__content-desc">
+      Send tax-deductible invoices to clients located anywhere and collect
+      payments. Administer without delay and red tape.
+    </h2>
+  </div> -->
+</div>
