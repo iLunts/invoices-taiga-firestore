@@ -1,0 +1,50 @@
+.tui-table {
+  & &__th {
+    vertical-align: middle;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    // border-bottom-color: var(--tui-base-03);
+    border-bottom-color: transparent;
+    padding: 0.5rem;
+    // color: var(--tui-text-03);
+
+    background: #f7f7f7;
+    color: #7d8994;
+
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      padding-left: 1rem;
+    }
+
+    &:last-child {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    &.tui-table__th--center {
+      text-align: center;
+    }
+  }
+
+  & &__td {
+    vertical-align: middle;
+    border-left: none;
+    border-right: none;
+    padding: 0.5rem;
+    border-bottom-color: var(--tui-base-03);
+
+    &.tui-table__td--right {
+      text-align: right;
+    }
+
+    &.tui-table__td--center {
+      text-align: center;
+    }
+
+    &.tui-table__td--action {
+      white-space: nowrap;
+    }
+  }
+}

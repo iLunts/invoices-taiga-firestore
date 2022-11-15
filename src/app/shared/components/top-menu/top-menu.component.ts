@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-// import { User } from 'src/app/models/user.model';
-// import { AuthService } from 'src/app/services/auth.service';
+
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-top-menu',
@@ -8,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./top-menu.component.less']
 })
 export class TopMenuComponent implements OnInit {
-  // isLoggedIn: boolean;
-  // user: User;
-  // isOpenSidebar = false;
+  isLoggedIn!: boolean;
+  user!: User;
+  isOpenSidebar = false;
 
   constructor(
     // private authService: AuthService
@@ -21,7 +21,7 @@ export class TopMenuComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // toggle(state: boolean) {
-  //   this.isOpenSidebar = state;
-  // }
+  toggle(state: boolean) {
+    this.isOpenSidebar = state;
+  }
 }

@@ -22,7 +22,7 @@
     <div *tuiSidebar="isOpenSidebar">Content</div>
   </button> -->
 
-  <!-- <div class="top-menu__auth" *ngIf="!isLoggedIn">
+  <div class="top-menu__auth" *ngIf="!isLoggedIn">
     <a class="top-menu__auth-btn" tuiLink routerLink="/auth/login"> Login </a>
     <button
       tuiButton
@@ -33,9 +33,9 @@
     >
       Sign-in
     </button>
-  </div> -->
+  </div>
 
-  <!-- <div class="top-menu__auth" *ngIf="isLoggedIn">
+  <div class="top-menu__auth" *ngIf="isLoggedIn">
     <a
       class="top-menu__auth-btn tui-space_right-5"
       tuiLink
@@ -45,8 +45,8 @@
     </a>
     <a class="top-menu__auth-user user" tuiLink routerLink="/admin">
       <tui-avatar
-        [text]="user.displayName || user.email"
-        [avatarUrl]="user.photoURL"
+        [text]="user.displayName! || user.email!"
+        [avatarUrl]="user.photoURL!"
         size="s"
         class="user__avatar"
         [rounded]="true"
@@ -56,5 +56,5 @@
         <div class="user__email">{{ user.email }}</div>
       </div>
     </a>
-  </div> -->
+  </div>
 </nav>

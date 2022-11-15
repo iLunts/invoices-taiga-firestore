@@ -1,0 +1,34 @@
+.form-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 1.25rem 0;
+  margin: 0 4rem;
+
+  & + & {
+    border-top: 1px solid var(--tui-base-03);
+  }
+
+  & &__item {
+    &.form-group__item-info {
+      max-width: 400px;
+    }
+
+    &-title {
+      display: flex;
+      align-items: center;
+      font-size: 1.45rem;
+      line-height: 1.7rem;
+    }
+
+    &-desc {
+      font-size: 0.9rem;
+      line-height: 1.5rem;
+      color: var(--tui-base-06);
+    }
+
+    &-status {
+      margin-left: 10px;
+    }
+  }
+}
