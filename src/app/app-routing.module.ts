@@ -8,11 +8,11 @@ const routes: Routes = [
   //     import('./pages/admin/admin.module').then((m) => m.AdminModule),
   //   canActivate: [AuthGuard]
   // },
-  // {
-  //   path: 'auth',
-  //   loadChildren: () =>
-  //     import('./pages/auth/auth.module').then((m) => m.AuthModule)
-  // },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./pages/auth/auth.module').then((m) => m.AuthModule)
+  },
   {
     path: '',
     loadChildren: () =>
@@ -21,7 +21,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

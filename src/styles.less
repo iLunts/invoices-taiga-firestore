@@ -18,6 +18,15 @@ body {
     text-rendering: optimizeLegibility;
 }
 
+body {
+    min-height: 100%;
+    font: var(--tui-font-text-s);
+    color: var(--tui-text-01);
+    min-height: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
 a,
 p {
     font-size: 15px;
@@ -46,4 +55,8 @@ table {
         max-width: 100%;
         padding: 0 1.5rem;
     }
+}
+
+* {
+    box-sizing: border-box;
 }

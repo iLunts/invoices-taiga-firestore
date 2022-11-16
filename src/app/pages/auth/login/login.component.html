@@ -1,0 +1,50 @@
+<div class="login-content">
+  <h1 class="login-content__title">Login</h1>
+  <p class="login-content__text">Hi, Welcome back 👋</p>
+
+  <button
+    tuiButton
+    type="button"
+    class="tui-space_bottom-3"
+    appearance="outline"
+    size="m"
+    (click)="loginWithGoogle()"
+    [disabled]="true"
+  >
+    <!-- TODO: Need change PNG to SVG -->
+    <img class="btn__icon" src="./assets/svg/g-logo.svg" alt="" />
+    Login with Google
+  </button>
+
+  <div class="login-content__split">
+    <span class="login-content__split-text">or Login with Email</span>
+  </div>
+
+  <form [formGroup]="form" (keyup.enter)="send()">
+    <tui-input formControlName="email"> Email </tui-input>
+    <tui-input-password class="tui-space_top-6" formControlName="password">
+      Password
+    </tui-input-password>
+    <button
+      tuiButton
+      type="button"
+      class="tui-space_top-6 tui-space_bottom-3"
+      [disabled]="form.invalid"
+      (click)="send()"
+    >
+      Login
+    </button>
+
+    <p class="login-content__registration">
+      Not registered yet?
+      <a
+        class="tui-space_left-3"
+        tuiLink
+        routerLink="/auth/registration"
+        icon="tuiIconArrowUpRight"
+      >
+        Create an account
+      </a>
+    </p>
+  </form>
+</div>

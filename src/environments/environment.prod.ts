@@ -1,4 +1,15 @@
 export const environment = {
+  firebase: {
+    projectId: 'invoices-244bd',
+    appId: '1:281478247600:web:4bce50f58c2357d55ab775',
+    databaseURL: 'https://invoices-244bd.firebaseio.com',
+    storageBucket: 'invoices-244bd.appspot.com',
+    locationId: 'europe-west',
+    apiKey: 'AIzaSyAt0A-pNJNvSe9pUWrby_2-SFQCXI7WMsE',
+    authDomain: 'invoices-244bd.firebaseapp.com',
+    messagingSenderId: '281478247600',
+    measurementId: 'G-YDRP5ST41Z',
+  },
   production: true,
   startPageAfterLogin: 'home',
   firebaseConfig: {

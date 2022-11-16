@@ -1,0 +1,75 @@
+.login-content {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 5rem;
+
+  & &__title {
+    font: var(--tui-font-heading-2);
+    margin: 0 0 1rem 0;
+  }
+
+  & &__text {
+    font: var(--tui-font-text-m);
+    color: var(--tui-base-07);
+    margin: 0 0 1.5rem 0;
+
+    &-icon {
+      width: 20px;
+      margin-left: 5px;
+    }
+  }
+
+  & &__split {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    margin: 1.5rem 0;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: calc(50% + 1px);
+      width: 100%;
+      height: 1px;
+      background-color: var(--tui-base-03);
+    }
+
+    &-text {
+      position: relative;
+      padding: 0.5rem;
+      background: #fff;
+      color: var(--tui-base-07);
+      font: var(--tui-font-text-s);
+    }
+  }
+
+  & &__registration {
+    text-align: right;
+    color: var(--tui-base-06);
+    margin-top: 1.5rem;
+    font: var(--tui-font-text-m);
+
+    a {
+      font: var(--tui-font-text-m);
+    }
+  }
+}
+
+:host ::ng-deep button {
+  display: flex;
+  width: 100%;
+
+  // TODO: (Taiga UI migration): use mixins to customize tuiWrapper. See https://taiga-ui.dev/wrapper
+[tuiWrapper][data-appearance='outline'] {
+    font-size: 0.8rem;
+  }
+
+  .btn__icon {
+    display: inline-flex;
+    width: 15px;
+    margin-right: 10px;
+  }
+}
