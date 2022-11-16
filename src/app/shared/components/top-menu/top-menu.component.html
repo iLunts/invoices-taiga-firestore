@@ -1,4 +1,4 @@
-<nav class="top-menu">
+<nav class="top-menu" *tuiLet="isMobileRes$ | async as isMobileRes">
   <a class="top-menu__logo" href="">
     <img class="top-menu__logo-img" src="./assets/svg/logo.svg" alt="" />
   </a>
@@ -12,49 +12,53 @@
     </li>
   </ul> -->
 
-  <!-- <button
-    tuiButton
+  <button
+    tuiIconButton
     type="button"
+    appearance="icon"
+    icon="tuiIconMenuLarge"
     (click)="toggle(true)"
     (tuiActiveZoneChange)="toggle($event)"
+    *ngIf="isMobileRes"
   >
-    Show sidebar
-    <div *tuiSidebar="isOpenSidebar">Content</div>
-  </button> -->
+    <div *tuiSidebar="isOpenSidebar; direction: 'right'">Content</div>
+  </button>
 
-  <div class="top-menu__auth" *ngIf="!isLoggedIn">
-    <a class="top-menu__auth-btn" tuiLink routerLink="/auth/login"> Login </a>
-    <button
-      tuiButton
-      shape="rounded"
-      appearance="outline"
-      size="m"
-      routerLink="/auth/registration"
-    >
-      Sign-in
-    </button>
-  </div>
+  <ng-container *ngIf="!isMobileRes">
+    <div class="top-menu__auth" *ngIf="!isLoggedIn">
+      <a class="top-menu__auth-btn" tuiLink routerLink="/auth/login"> Login </a>
+      <button
+        tuiButton
+        shape="rounded"
+        appearance="outline"
+        size="m"
+        routerLink="/auth/registration"
+      >
+        Sign-in
+      </button>
+    </div>
 
-  <div class="top-menu__auth" *ngIf="isLoggedIn">
-    <a
-      class="top-menu__auth-btn tui-space_right-5"
-      tuiLink
-      routerLink="/auth/login"
-    >
-      Открыть кабинет
-    </a>
-    <a class="top-menu__auth-user user" tuiLink routerLink="/admin">
-      <tui-avatar
-        [text]="user.displayName! || user.email!"
-        [avatarUrl]="user.photoURL!"
-        size="s"
-        class="user__avatar"
-        [rounded]="true"
-      ></tui-avatar>
-      <div class="user__content">
-        <div class="user__name">{{ user.displayName }}</div>
-        <div class="user__email">{{ user.email }}</div>
-      </div>
-    </a>
-  </div>
+    <div class="top-menu__auth" *ngIf="isLoggedIn">
+      <a
+        class="top-menu__auth-btn tui-space_right-5"
+        tuiLink
+        [routerLink]="[routing.admin.dashboard]"
+      >
+        Открыть кабинет
+      </a>
+      <a class="top-menu__auth-user user" tuiLink routerLink="/admin">
+        <tui-avatar
+          [text]="getUserName"
+          [avatarUrl]="user.photoURL"
+          size="s"
+          class="user__avatar"
+          [rounded]="true"
+        ></tui-avatar>
+        <div class="user__content">
+          <div class="user__name">{{ user.displayName }}</div>
+          <div class="user__email">{{ user.email }}</div>
+        </div>
+      </a>
+    </div>
+  </ng-container>
 </nav>

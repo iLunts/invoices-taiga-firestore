@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.less']
+  styleUrls: ['./login.component.less'],
 })
 export class LoginComponent implements OnInit {
   routing = environment.routing;
@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
-      Validators.minLength(6)
-    ])
+      Validators.minLength(6),
+    ]),
   });
 
   constructor(
@@ -33,12 +33,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn) {
+      // debugger;
       this.router.navigate([this.routing.admin.dashboard]);
-    } else {
-      this.authService.signOut();
-      // this.returnUrl =
-      //   this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
     }
+    // else {
+    //   // debugger;
+    //   // this.authService.signOut();
+    //   // this.returnUrl =
+    //   // this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+    // }
   }
 
   async send(): Promise<any> {
@@ -59,6 +62,6 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithGoogle(): void {
-    // this.authService.loginWithGooglePopup(this.returnUrl);
+    this.authService.loginWithGooglePopup(this.returnUrl);
   }
 }

@@ -7,11 +7,18 @@ import { Router } from '@angular/router';
 // Firebase
 import { Auth } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  getAdditionalUserInfo,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth';
 // import firebase from 'firebase/app';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   routing = environment.routing;
@@ -125,7 +132,7 @@ export class AuthService {
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
       token: user.idToken,
-      refreshToken: user.refreshToken
+      refreshToken: user.refreshToken,
     };
 
     this.userSubject.next(userData);
@@ -207,4 +214,33 @@ export class AuthService {
   //       }
   //     });
   // }
+
+  loginWithGooglePopup(returnUrl = '/'): Promise<any> {
+    const provider = new GoogleAuthProvider();
+
+    return signInWithPopup(this.auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential?.accessToken;
+        const user = result.user as User;
+        user.token = credential?.accessToken;
+        this.setUserData(result.user);
+
+        returnUrl == '/'
+          ? this.router.navigate([this.routing.admin.dashboard])
+          : this.router.navigateByUrl(returnUrl);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+
+        // TODO: Need to add notification service
+      });
+  }
 }
