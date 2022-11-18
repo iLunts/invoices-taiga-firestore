@@ -46,10 +46,11 @@
       >
         Открыть кабинет
       </a>
+
       <a class="top-menu__auth-user user" tuiLink routerLink="/admin">
         <tui-avatar
           [text]="getUserName"
-          [avatarUrl]="user.photoURL"
+          [avatarUrl]="getUserPhoto"
           size="s"
           class="user__avatar"
           [rounded]="true"

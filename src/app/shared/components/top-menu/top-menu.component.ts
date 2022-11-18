@@ -34,4 +34,8 @@ export class TopMenuComponent implements OnInit {
   get getUserName(): string {
     return this.user.displayName || this.user.email || '';
   }
+
+  get getUserPhoto(): string {
+    return this.user.photoURL || '';
+  }
 }

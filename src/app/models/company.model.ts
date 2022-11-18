@@ -1,16 +1,19 @@
+import { BankAccount } from './bank.model';
+import * as moment from 'moment';
+
 export class Company {
-  _id: string;
+  _id: string | null;
   _createdDate: string;
-  _userId: string;
+  _userId: string | null;
   _type: number;
 
   info: CompanyInfo;
   mailingAddress: CompanyAddress;
   juridicalAddress: CompanyAddress;
   bankAccount: BankAccount;
-  responsiblePerson: ResponsiblePerson;
+  responsiblePerson: ResponsiblePerson | null;
   contacts: Contact[];
-  ved: CompanyVEDInfo[];
+  ved: CompanyVEDInfo[] = [];
 
   constructor(
     _id?: string,
@@ -24,10 +27,10 @@ export class Company {
     responsiblePerson?: ResponsiblePerson,
     contacts?: Contact[]
   ) {
-    this._id = this._id || null;
-    this._userId = this._userId || null;
-    this._createdDate = this._createdDate || moment().toString() || null;
-    this._type = this._type || 1;
+    this._id = _id || null;
+    this._userId = _userId || null;
+    this._createdDate = _createdDate || moment().toString() || null!;
+    this._type = _type || 1;
     this.info = info || new CompanyInfo();
     this.mailingAddress = mailingAddress || new CompanyAddress();
     this.juridicalAddress = juridicalAddress || new CompanyAddress();
@@ -38,20 +41,20 @@ export class Company {
 }
 
 export class CompanyAddress {
-  zipCode: string;
-  country: string;
-  countryType: string;
-  city: string;
-  cityType: string;
-  street: string;
-  streetType: string;
-  houseNumber: string;
-  office: string;
-  officeType: string;
-  email: string;
-  phone: string;
-  fax: string;
-  vnsfull: string;
+  zipCode: string | null;
+  country: string | null;
+  countryType: string | null;
+  city: string | null;
+  cityType: string | null;
+  street: string | null;
+  streetType: string | null;
+  houseNumber: string | null;
+  office: string | null;
+  officeType: string | null;
+  email: string | null;
+  phone: string | null;
+  fax: string | null;
+  vnsfull: string | null;
 
   constructor(
     zipCode?: string,
@@ -87,14 +90,14 @@ export class CompanyAddress {
 }
 
 export class CompanyInfo {
-  fullName?: string;
-  fullNameBel?: string;
-  shortName?: string;
-  shortNameBel?: string;
-  name?: string;
-  nameBel?: string;
-  registrationDate?: string;
-  unp?: string;
+  fullName?: string | null;
+  fullNameBel?: string | null;
+  shortName?: string | null;
+  shortNameBel?: string | null;
+  name?: string | null;
+  nameBel?: string | null;
+  registrationDate?: string | null;
+  unp?: string | null;
 
   constructor(
     fullName?: string,
@@ -126,8 +129,8 @@ export class Contact {
   telegram?: string;
 
   constructor(fullName?: string, basis?: string) {
-    this.fullName = fullName || null;
-    this.basis = basis || null;
+    this.fullName = fullName || null!;
+    this.basis = basis || null!;
   }
 }
 
@@ -137,9 +140,9 @@ export class ResponsiblePerson {
   type?: string;
 
   constructor(fullName?: string, basis?: string, type?: string) {
-    this.fullName = fullName || null;
-    this.basis = basis || null;
-    this.type = type || null;
+    this.fullName = fullName || null!;
+    this.basis = basis || null!;
+    this.type = type || null!;
   }
 }
 
@@ -159,15 +162,12 @@ export class CompanyVEDInfo {
     cact?: string,
     nsi00114?: { vkvdn: string; vnvdnp: string; nsi00114: string }
   ) {
-    this.ngrn = ngrn || null;
-    this.dfrom = dfrom || null;
-    this.cact = cact || null;
+    this.ngrn = ngrn || null!;
+    this.dfrom = dfrom || null!;
+    this.cact = cact || null!;
     this.nsi00114 = nsi00114;
   }
 }
-
-import { BankAccount } from './bank.model';
-import * as moment from 'moment';
 
 export class Contractor {
   _id: string;
@@ -180,8 +180,8 @@ export class Contractor {
   juridicalAddress: ContractorAddress;
   bankAccount: BankAccount;
   responsiblePerson: ResponsiblePerson;
-  contacts: Contact[];
-  ved: VEDInfo[];
+  contacts: Contact[] = [];
+  ved: VEDInfo[] = [];
 
   constructor(
     _id?: string,
@@ -195,34 +195,34 @@ export class Contractor {
     responsiblePerson?: ResponsiblePerson,
     contacts?: Contact[]
   ) {
-    this._id = this._id || null;
-    this._userId = this._userId || null;
-    this._createdDate = this._createdDate || moment().toString() || null;
-    this._type = this._type || 1;
+    this._id = _id || null!;
+    this._userId = _userId || null!;
+    this._createdDate = _createdDate || moment().toString() || null!;
+    this._type = _type || 1;
     this.info = info || new ContractorInfo();
     this.mailingAddress = mailingAddress || new ContractorAddress();
     this.juridicalAddress = juridicalAddress || new ContractorAddress();
     this.bankAccount = bankAccount || new BankAccount();
-    this.responsiblePerson = responsiblePerson || null;
+    this.responsiblePerson = responsiblePerson || null!;
     this.contacts = contacts || [];
   }
 }
 
 export class ContractorAddress {
-  zipCode: string;
-  country: string;
-  countryType: string;
-  city: string;
-  cityType: string;
-  street: string;
-  streetType: string;
-  houseNumber: string;
-  office: string;
-  officeType: string;
-  email: string;
-  phone: string;
-  fax: string;
-  vnsfull: string;
+  zipCode: string | null;
+  country: string | null;
+  countryType: string | null;
+  city: string | null;
+  cityType: string | null;
+  street: string | null;
+  streetType: string | null;
+  houseNumber: string | null;
+  office: string | null;
+  officeType: string | null;
+  email: string | null;
+  phone: string | null;
+  fax: string | null;
+  vnsfull: string | null;
 
   constructor(
     zipCode?: string,
@@ -255,22 +255,17 @@ export class ContractorAddress {
     this.fax = fax || null;
     this.vnsfull = vnsfull || null;
   }
-
-  // getAddressFromEGR(data: any) {
-  //   let obj = new ContractorAddress();
-  //   return obj;
-  // }
 }
 
 export class ContractorInfo {
-  fullName?: string;
-  fullNameBel?: string;
-  shortName?: string;
-  shortNameBel?: string;
-  name?: string;
-  nameBel?: string;
-  registrationDate?: string;
-  unp?: string;
+  fullName?: string | null;
+  fullNameBel?: string | null;
+  shortName?: string | null;
+  shortNameBel?: string | null;
+  name?: string | null;
+  nameBel?: string | null;
+  registrationDate?: string | null;
+  unp?: string | null;
 
   constructor(
     fullName?: string,
@@ -298,15 +293,15 @@ export class CompanyPerson {
   basis?: string;
 
   constructor(responsiblePerson?: string, basis?: string) {
-    this.responsiblePerson = responsiblePerson || null;
-    this.basis = basis || null;
+    this.responsiblePerson = responsiblePerson || null!;
+    this.basis = basis || null!;
   }
 }
 
 export class VEDInfo {
-  ngrn?: string;
-  dfrom?: string;
-  cact?: string;
+  ngrn?: string | null;
+  dfrom?: string | null;
+  cact?: string | null;
   nsi00114?: {
     vkvdn: string;
     vnvdnp: string;

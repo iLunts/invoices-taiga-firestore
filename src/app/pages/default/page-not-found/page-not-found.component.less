@@ -27,12 +27,17 @@
   }
 }
 
+:host {
+  display: block;
+  height: 100vh;
+}
+
 body {
   background-color: #f7f7f7;
 }
 
 .container {
-  font-family: 'Varela Round', sans-serif;
+  font-family: "Varela Round", sans-serif;
   color: #9b9b9b;
   position: relative;
   height: 100%;
@@ -70,7 +75,7 @@ body {
   animation: floating 3s ease-in-out infinite;
 }
 .boo::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   left: -18.8235294118px;
@@ -97,7 +102,7 @@ body {
 }
 .boo .face::before,
 .boo .face::after {
-  content: '';
+  content: "";
   display: block;
   width: 6px;
   height: 6px;
