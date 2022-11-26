@@ -2,16 +2,16 @@ import { BankAccount } from './bank.model';
 import * as moment from 'moment';
 
 export class Profile {
-  _id: string;
-  _createdDate: string;
-  _userId: string;
+  _id: string | null;
+  _createdDate: string | null;
+  _userId: string | null;
   _type: number; // 1 - фирма, 2 - ИП
 
   info: ProfileInfo;
   mailingAddress: ProfileAddress;
   juridicalAddress: ProfileAddress;
   bankAccount: BankAccount;
-  responsiblePerson: ResponsiblePerson;
+  responsiblePerson: ResponsiblePerson | null;
   contacts: Contact[];
 
   constructor(
@@ -26,10 +26,10 @@ export class Profile {
     responsiblePerson?: ResponsiblePerson,
     contacts?: Contact[]
   ) {
-    this._id = this._id || null;
-    this._userId = this._userId || null;
-    this._createdDate = this._createdDate || moment().toString() || null;
-    this._type = this._type || 1;
+    this._id = _id || null;
+    this._userId = _userId || null;
+    this._createdDate = _createdDate || moment().toString() || null;
+    this._type = _type || 1;
     this.info = info || new ProfileInfo();
     this.mailingAddress = mailingAddress || new ProfileAddress();
     this.juridicalAddress = juridicalAddress || new ProfileAddress();
@@ -40,16 +40,16 @@ export class Profile {
 }
 
 export class ProfileAddress {
-  zipCode: string;
-  country: string;
-  countryType: string;
-  city: string;
-  street: string;
-  houseNumber: string;
-  office: string;
-  email: string;
-  phone: string;
-  fax: string;
+  zipCode: string | null;
+  country: string | null;
+  countryType: string | null;
+  city: string | null;
+  street: string | null;
+  houseNumber: string | null;
+  office: string | null;
+  email: string | null;
+  phone: string | null;
+  fax: string | null;
 
   constructor(
     zipCode?: string,
@@ -82,16 +82,16 @@ export class ProfileAddress {
 }
 
 export class ProfileInfo {
-  fullName?: string;
-  fullNameBel?: string;
-  shortName?: string;
-  shortNameBel?: string;
-  name?: string;
-  nameBel?: string;
-  registrationDate?: string;
-  unp?: string;
-  isBlocked?: boolean;
-  isActive?: boolean;
+  fullName?: string | null;
+  fullNameBel?: string | null;
+  shortName?: string | null;
+  shortNameBel?: string | null;
+  name?: string | null;
+  nameBel?: string | null;
+  registrationDate?: string | null;
+  unp?: string | null;
+  isBlocked?: boolean | null;
+  isActive?: boolean | null;
 
   constructor(
     fullName?: string,
@@ -127,8 +127,8 @@ export class Contact {
   telegram?: string;
 
   constructor(fullName?: string, basis?: string) {
-    this.fullName = fullName || null;
-    this.basis = basis || null;
+    this.fullName = fullName || null!;
+    this.basis = basis || null!;
   }
 }
 
@@ -137,7 +137,7 @@ export class ResponsiblePerson {
   basis?: string;
 
   constructor(fullName?: string, basis?: string) {
-    this.fullName = fullName || null;
-    this.basis = basis || null;
+    this.fullName = fullName || null!;
+    this.basis = basis || null!;
   }
 }

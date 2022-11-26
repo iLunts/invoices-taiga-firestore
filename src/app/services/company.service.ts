@@ -1,15 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import {
-  addDoc,
-  collection,
-  collectionChanges,
-  collectionData,
-  CollectionReference,
-  doc,
-  DocumentData,
-  Firestore,
-  updateDoc,
-} from '@angular/fire/firestore';
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
 import { BehaviorSubject, from, Observable, of, Subject } from 'rxjs';
 import * as _ from 'lodash';
 
@@ -20,6 +13,7 @@ import {
   CompanyInfo,
   ResponsiblePerson,
 } from '../models/company.model';
+import { NotificationService } from './notification.service';
 import { Bank, BankAccount } from '../models/bank.model';
 import {
   distinctUntilChanged,
@@ -31,14 +25,13 @@ import {
   tap,
 } from 'rxjs/operators';
 import { merge } from 'lodash';
-import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CompanyService implements OnDestroy {
   private dbPath = '/companies';
-  // private companyRef: AngularFirestoreCollection<Company> = null;
+  private companyRef: AngularFirestoreCollection<Company> = null!;
   private regexSWIFT = /^[A-Z]{2}[0-9]{2}[A-Z]{4}[0-9]{20}$/;
   private companySubject = new BehaviorSubject<Company>(new Company());
   private readonly destroySubject = new Subject();
@@ -46,28 +39,26 @@ export class CompanyService implements OnDestroy {
   company$!: Observable<Company>;
   companies$!: Observable<any[]>;
   company!: Company;
-  companyCollection: CollectionReference<DocumentData>;
 
   constructor(
-    private readonly firestore: Firestore,
     private authService: AuthService,
-    // private afs: AngularFirestore,
+    private afs: AngularFirestore,
     private notificationService: NotificationService
   ) {
-    this.companyCollection = collection(this.firestore, this.dbPath);
-
     if (this.authService.isLoggedIn) {
-      //   this.companies$ = this.afs
-      //     .collection(this.dbPath, (q) =>
-      //       q.where('_userId', '==', this.authService.getUserId())
-      //     )
-      //     .valueChanges();
+      this.companies$ = this.afs
+        .collection(this.dbPath, (q) =>
+          q.where('_userId', '==', this.authService.getUserId())
+        )
+        .valueChanges();
       // .pipe(
       //   first(),
       //   map((company: Company[]) => company[0])
       // ) as Observable<Company>;
+
       // TODO: Нужно проверить будут ли меняться данные, при повторном вызове сервиса в конструкторе другого компонента
       // const company$ = this.getProfileCompany$();
+
       // company$
       //   .pipe(
       //     filter((company: Company) => !!company),
@@ -96,7 +87,6 @@ export class CompanyService implements OnDestroy {
       //   this.checkCompanyBankValid(company) &&
       //   this.checkCompanySwiftValid(company.bankAccount.SWIFT)
       // );
-      //   TODO: Need check INFO + Bank + SWIFT
       return true;
     } else {
       return false;
@@ -171,35 +161,16 @@ export class CompanyService implements OnDestroy {
     return this.companySubject.getValue();
   }
 
-  // getCompanyData$(): Observable<Company> {
-  getCompanyData$(): any {
-    const collectionRef = collection(this.firestore, this.dbPath);
+  getCompanyData$(): Observable<Company> {
+    const companyRef: AngularFirestoreCollection<Company> = this.afs.collection(
+      this.dbPath,
+      (q) => q.where('_userId', '==', this.authService.getUserId())
+    );
 
-    return collectionChanges(collectionRef).pipe(
-      first()
-      // map((company: Company[]) => company[0])
+    return companyRef.valueChanges().pipe(
+      first(),
+      map((company: Company[]) => company[0])
     ) as Observable<Company>;
-
-    // return collectionChanges(collection(this.firestore, this.dbPath)).pipe(
-    //   first()
-    //   // map((items) =>
-    //   //   items.map((item) => {
-    //   //     const data = item.doc.data();
-    //   //     const id = `idprefix-${item.doc.id}`;
-    //   //     return { id, ...data };
-    //   //   })
-    //   // )
-    // );
-
-    // const companyRef: AngularFirestoreCollection<Company> = this.afs.collection(
-    //   this.dbPath,
-    //   (q) => q.where('_userId', '==', this.authService.getUserId())
-    // );
-
-    // return companyRef.valueChanges().pipe(
-    //   first(),
-    //   map((company: Company[]) => company[0])
-    // ) as Observable<Company>;
 
     // const company$ = companyRef.valueChanges().pipe(
     //   first(),
@@ -224,38 +195,27 @@ export class CompanyService implements OnDestroy {
     return this.companySubject.getValue();
   }
 
-  // getProfileCompany$(): Observable<Company> {
-  //   return collectionChanges(collection(this.firestore, this.dbPath)).pipe(
-  //     first(),
-  //     // map(([company]) => company),
-  //     // distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
-  //     // tap((company: Company) => {
-  //     //   this.companySubject.next(company);
-  //     //   this.setCompanyToLocalStorage(company);
-  //     // }),
-  //     // shareReplay()
-  //   );
+  getProfileCompany$(): Observable<Company> {
+    const companyRef: AngularFirestoreCollection<Company> = this.afs.collection(
+      this.dbPath,
+      (q) => q.where('_userId', '==', this.authService.getUserId())
+    );
 
-  //   // const companyRef: AngularFirestoreCollection<Company> = this.afs.collection(
-  //   //   this.dbPath,
-  //   //   (q) => q.where('_userId', '==', this.authService.getUserId())
-  //   // );
+    // const company$ = companyRef.valueChanges().pipe(
+    return companyRef.valueChanges().pipe(
+      first(),
+      map(([company]) => company),
+      distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+      tap((company: Company) => {
+        this.companySubject.next(company);
+        this.setCompanyToLocalStorage(company);
+      }),
+      shareReplay()
+      // takeUntil(this.destroySubject)
+    );
 
-  //   // const company$ = companyRef.valueChanges().pipe(
-  //   // return companyRef.valueChanges().pipe(
-  //   //   first(),
-  //   //   map(([company]) => company),
-  //   //   distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
-  //   //   tap((company: Company) => {
-  //   //     this.companySubject.next(company);
-  //   //     this.setCompanyToLocalStorage(company);
-  //   //   }),
-  //   //   shareReplay()
-  //   //   // takeUntil(this.destroySubject)
-  //   // );
-
-  //   // return company$;
-  // }
+    // return company$;
+  }
 
   clearCompanyInfo(): void {
     let company = this.getCompany();
@@ -316,59 +276,47 @@ export class CompanyService implements OnDestroy {
     this.setCompany(new Company());
   }
 
-  // add$(company: Company): Observable<any> {
-  //   const collectionRef = collection(this.firestore, this.dbPath);
+  add$(company: Company): Observable<any> {
+    if (!company._id) {
+      company._id = this.afs.createId();
+    }
+    company._userId = this.authService.getUserId();
+    company._createdDate = new Date().toString();
 
-  //   if (!company._id) {
-  //     // company._id = this.afs.createId();
-  //     // const { id } = doc(collectionRef);
-  //     company._id = doc(collectionRef).id;
-  //   }
-  //   company._userId = this.authService.getUserId();
-  //   company._createdDate = new Date().toString();
-
-  //   addDoc(this.pokemonCollection, pokemon);
-
-  //   return from(
-  //     this.afs
-  //       .collection(this.dbPath)
-  //       .doc(company._id)
-  //       .set(JSON.parse(JSON.stringify(company)))
-  //       .then(() => {
-  //         this.notificationService.success('Компания успешно добавлена');
-  //       })
-  //   );
-  // }
-
-  update$(_id: string, company: Company): Observable<void> {
-    const pokemonDocumentReference = doc(
-      this.firestore,
-      `${this.dbPath}/${_id}`
+    return from(
+      this.afs
+        .collection(this.dbPath)
+        .doc(company._id)
+        .set(JSON.parse(JSON.stringify(company)))
+        .then(() => {
+          this.notificationService.success('Компания успешно добавлена');
+        })
     );
-    return from(updateDoc(pokemonDocumentReference, { ...company }));
-
-    // return from(
-    //   this.afs
-    //     .collection(this.dbPath)
-    //     .doc(_id)
-    //     .update(company)
-    //     .then(() => {
-    //       this.notificationService.success('Компания успешно обнавлена');
-    //     })
-    // );
   }
 
-  //   update(): Observable<any> {
-  //     return from(
-  //       this.afs
-  //         .collection(this.dbPath)
-  //         .doc(this.company._id)
-  //         .update(this.company)
-  //         .then(() => {
-  //           this.notificationService.success('Компания успешно обнавлена');
-  //         })
-  //     );
-  //   }
+  update$(_id: string, company: any): Observable<void> {
+    return from(
+      this.afs
+        .collection(this.dbPath)
+        .doc(_id)
+        .update(company)
+        .then(() => {
+          this.notificationService.success('Компания успешно обнавлена');
+        })
+    );
+  }
+
+  update(): Observable<any> {
+    return from(
+      this.afs
+        .collection(this.dbPath)
+        .doc(this.company._id!)
+        .update(this.company)
+        .then(() => {
+          this.notificationService.success('Компания успешно обнавлена');
+        })
+    );
+  }
 
   updateResponsiblePerson(responsiblePerson: ResponsiblePerson): void {
     // const company$ = this.company$.pipe(

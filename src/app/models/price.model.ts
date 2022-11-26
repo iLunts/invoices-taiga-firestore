@@ -1,9 +1,9 @@
-export class Price {
+export interface Price {
   amount: number;
   currency: Currency;
 }
 
-export class Currency {
+export interface Currency {
   _id: string;
   code: string;
   num: number;

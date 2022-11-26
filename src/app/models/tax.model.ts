@@ -1,9 +1,9 @@
 export class Tax {
-  _id: string;
-  amount: number;
-  isCalculate: boolean;
-  label: string;
-  desc: string;
+  _id: string | null;
+  amount: number | null;
+  isCalculate: boolean | null;
+  label: string | null;
+  desc: string | null;
 
   constructor(
     _id?: string,

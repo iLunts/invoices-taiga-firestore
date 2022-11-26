@@ -3,22 +3,22 @@ import { Tax } from './tax.model';
 import { Unit } from './unit.model';
 
 export class Service {
-  _id: string;
-  _userId: string;
-  date: Date | any;
-  desc: string;
-  count: Count;
-  group: ServiceGroup;
-  name: ServiceItem;
-  price: Price;
-  tax: Tax;
-  unit: Unit;
-  isFreePrice: boolean;
-  totalSum: Price;
-  totalTax: Price;
-  taxSum: Price;
+  _id!: string;
+  _userId!: string;
+  date!: Date | any;
+  desc!: string;
+  count!: Count;
+  group!: ServiceGroup;
+  name!: ServiceItem;
+  price!: Price;
+  tax!: Tax;
+  unit!: Unit;
+  isFreePrice!: boolean;
+  totalSum!: Price;
+  totalTax!: Price;
+  taxSum!: Price;
 }
-export class ServiceItem {
+export interface ServiceItem {
   _id: string;
   _userId: string;
   date: Date | any;
@@ -35,14 +35,14 @@ export class ServiceItem {
   taxSum: Price;
 }
 
-export class ServiceGroup {
+export interface ServiceGroup {
   _id: string;
   _userId: string;
   name: string;
   desc: string;
 }
 
-export class Count {
+export interface Count {
   amount: number;
   isEditable: boolean;
 }

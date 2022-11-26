@@ -5,17 +5,18 @@ import { Router } from '@angular/router';
 
 //
 // Firebase
-import { Auth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { environment } from 'src/environments/environment';
-import {
-  createUserWithEmailAndPassword,
-  getAdditionalUserInfo,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-} from 'firebase/auth';
-// import firebase from 'firebase/app';
-import { GoogleAuthProvider } from 'firebase/auth';
+
+// import  auth  from 'firebase/app';
+import firebase from 'firebase/compat/app';
+
+// import { auth } from 'firebase/app';
+// import { AngularFirestore } from '@angular/fire/firestore';
+// import { AngularFireAuth } from 'angularfire2/auth';
+// import { AngularFirestoreDocument } from 'angularfire2/firestore';
+// import { auth } from 'firebase/app';
+// import { ProfileService } from './profile.service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,27 +27,29 @@ export class AuthService {
   userSubject = new Subject<User>();
 
   constructor(
-    private auth: Auth,
+    private afAuth: AngularFireAuth,
+    // private _fs: AngularFirestore,
     private router: Router,
     public _ngZone: NgZone
   ) {
-    // this.afAuth.authState.subscribe((user) => {
-    //   if (user) {
-    //     this.setUserData(user);
-    //     this.authStateChanged();
-    //   } else {
-    //     localStorage.removeItem('user');
-    //   }
-    // });
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.setUserData(user);
+        this.authStateChanged();
+      } else {
+        localStorage.removeItem('user');
+      }
+    });
   }
 
   signIn(email: string, password: string): Promise<any> {
-    return signInWithEmailAndPassword(this.auth, email, password);
+    return this.afAuth.signInWithEmailAndPassword(email, password);
+    // return this._fa.auth.signInWithEmailAndPassword(email, password);
   }
 
   // Register user with email/password
   registerUser(email: string, password: string): any {
-    return createUserWithEmailAndPassword(this.auth, email, password);
+    return this.afAuth.createUserWithEmailAndPassword(email, password);
   }
 
   // Email verification when new user register
@@ -57,30 +60,28 @@ export class AuthService {
   // }
 
   // Recover password
-  // passwordRecover(passwordResetEmail: string): any {
-  //   sendPasswordResetEmail(this.auth,)
+  passwordRecover(passwordResetEmail: string): any {
+    return this.afAuth
+      .sendPasswordResetEmail(passwordResetEmail)
+      .then(() => {
+        window.alert(
+          'Password reset email has been sent, please check your inbox.'
+        );
+      })
+      .catch((error) => {
+        window.alert(error);
+      });
+  }
 
-  //   return this.afAuth
-  //     .sendPasswordResetEmail(passwordResetEmail)
-  //     .then(() => {
-  //       window.alert(
-  //         'Password reset email has been sent, please check your inbox.'
-  //       );
-  //     })
-  //     .catch((error) => {
-  //       window.alert(error);
-  //     });
-  // }
-
-  // authStateChanged(): void {
-  //   this.afAuth.onAuthStateChanged((user: User) => {
-  //     if (user) {
-  //       this.setUserData(user);
-  //     } else {
-  //       this.afAuth.signOut();
-  //     }
-  //   });
-  // }
+  authStateChanged(): void {
+    this.afAuth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setUserData(user);
+      } else {
+        this.afAuth.signOut();
+      }
+    });
+  }
 
   // Returns true when user is looged in
   get isLoggedIn(): boolean {
@@ -88,6 +89,7 @@ export class AuthService {
     if (user) {
       this.setUserData(user);
     }
+    // return user !== null && user.emailVerified !== false ? true : false;
     return user !== null ? true : false;
   }
 
@@ -142,7 +144,7 @@ export class AuthService {
 
   signOut(): any {
     // TODO: Need to check why this function called every time when user not Auth
-    signOut(this.auth).then(() => {
+    return this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');
       this.router.navigate([environment.routing.default.home]);
     });
@@ -164,26 +166,28 @@ export class AuthService {
     //   }
     // }
 
-    return this.userData.uid;
+    return this.userData?.uid || null!;
   }
 
-  getUser(): User | null {
-    if (this.userData) {
-      return this.userData;
-    } else {
-      this.checkUser();
-      if (this.userData) {
-        return this.userData;
-      } else {
-        return null;
-      }
-    }
+  getUser(): User {
+    // if (this.userData) {
+    //   return this.userData;
+    // } else {
+    //   this.checkUser();
+    //   if (this.userData) {
+    //     return this.userData;
+    //   } else {
+    //     return null;
+    //   }
+    // }
+
+    return this.userData || null;
   }
 
-  getUserDisplayName(): string | null {
-    if (!this.userData) {
-      return null;
-    }
+  getUserDisplayName(): string {
+    // if (!this.userData) {
+    //   return null;
+    // }
     return this.userData.displayName! || this.userData.email!;
   }
 
@@ -192,55 +196,22 @@ export class AuthService {
   //   this.router.navigate([environment.routing.home]);
   // }
 
-  // async logout() {
-  //   signOut(this.auth);
-
-  //   // await this.afAuth.signOut();
-  //   localStorage.removeItem('user');
-  //   this.router.navigate([environment.routing.auth.login]);
-  // }
-
-  // loginWithGooglePopup(returnUrl = '/'): Promise<any> {
-  //   signInWithPopup(this.auth, new firebase.auth.GoogleAuthProvider())
-
-  //   return this.afAuth
-  //     .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-  //     .then((response) => {
-  //       if (response.user) {
-  //         this.setUserData(response.user);
-  //         returnUrl == '/'
-  //           ? this.router.navigate([this.routing.admin.dashboard])
-  //           : this.router.navigateByUrl(returnUrl);
-  //       }
-  //     });
-  // }
+  async logout() {
+    await this.afAuth.signOut();
+    localStorage.removeItem('user');
+    this.router.navigate([environment.routing.auth.login]);
+  }
 
   loginWithGooglePopup(returnUrl = '/'): Promise<any> {
-    const provider = new GoogleAuthProvider();
-
-    return signInWithPopup(this.auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential?.accessToken;
-        const user = result.user as User;
-        user.token = credential?.accessToken;
-        this.setUserData(result.user);
-
-        returnUrl == '/'
-          ? this.router.navigate([this.routing.admin.dashboard])
-          : this.router.navigateByUrl(returnUrl);
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-
-        // TODO: Need to add notification service
+    return this.afAuth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then((response) => {
+        if (response.user) {
+          this.setUserData(response.user);
+          returnUrl == '/'
+            ? this.router.navigate([this.routing.admin.dashboard])
+            : this.router.navigateByUrl(returnUrl);
+        }
       });
   }
 }

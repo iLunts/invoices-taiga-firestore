@@ -1,8 +1,8 @@
 import { TuiDay } from '@taiga-ui/cdk';
 
 export class DateRange {
-  from: Date | TuiDay;
-  to: Date | TuiDay;
+  from: Date | TuiDay | null;
+  to: Date | TuiDay | null;
 
   constructor(from?: Date | TuiDay, to?: Date | TuiDay) {
     this.from = from || null;

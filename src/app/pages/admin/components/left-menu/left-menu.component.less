@@ -1,0 +1,113 @@
+.left-menu {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
+  border-right: 1px solid var(--color-graphite);
+  overflow: hidden;
+
+  & &__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--page-header-height);
+    border-bottom: 1px solid var(--color-graphite);
+    // background: #f4f7ff;
+    padding: 15px;
+    padding-bottom: 15px;
+    font-weight: 600;
+  }
+
+  & &__menu {
+    height: calc(100vh - var(--page-header-height));
+    padding-top: 1rem;
+    // background: #f4f7ff;
+
+    &-item {
+      margin: 0 11px;
+
+      &._active {
+        button {
+          background: var(--color-graphite);
+          color: var(--color-menu-icon);
+        }
+      }
+
+      button {
+        display: flex;
+        width: 100%;
+
+        & // TODO: (Taiga UI migration): use mixins to customize tuiWrapper. See https://taiga-ui.dev/wrapper
+[tuiWrapper][data-appearance='icon'] {
+          color: var(--color-menu-icon);
+        }
+        // & tui-wrapper[data-appearance='icon'][data-state='pressed']
+      }
+    }
+
+    &-divider {
+      display: block;
+      width: 70%;
+      margin: 15px auto;
+    }
+  }
+
+  & &__account {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 10px;
+    border-top: 1px solid var(--color-graphite);
+    font-weight: 600;
+  }
+}
+
+::ng-deep tui-wrapper[data-appearance='menuButton'] {
+  width: 100%;
+  color: #2b3f57;
+  padding: 0 15px !important;
+
+  .content {
+    text-align: left;
+    justify-content: flex-start;
+  }
+
+  .icon {
+    color: #bfc6cd;
+  }
+
+  &[data-state='hover'] {
+    background: #f1f3f9;
+    color: #3558c7;
+
+    .icon {
+      color: #3558c7;
+    }
+  }
+
+  &[data-state='active'] {
+    background: #3558c7;
+    color: #fff;
+
+    .icon {
+      color: #fff;
+    }
+  }
+
+  &[data-state='disabled'] {
+    background: #bec8d6;
+  }
+}
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+:host ::ng-deep {
+  tui-wrapper[data-appearance='icon'] {
+    color: var(--color-menu-icon);
+  }
+}

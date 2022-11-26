@@ -1,9 +1,9 @@
 export class Status {
-  _id: string;
-  color: string;
-  name: string;
-  order: string;
-  type: string;
+  _id: string | null;
+  color: string | null;
+  name: string | null;
+  order: string | null;
+  type: string | null;
 
   constructor(
     _id?: string,

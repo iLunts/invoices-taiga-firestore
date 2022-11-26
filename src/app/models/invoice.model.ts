@@ -9,26 +9,25 @@ import { ModelHelper } from '../utils/model.helper';
 import { DateRange } from './date-range.model';
 
 export class Invoice {
-  _id: string;
-  _actId: string;
-  _contractId: string;
-  _rentalCertificateId: string;
+  _id: string | null;
+  _actId: string | null;
+  _contractId: string | null;
+  _rentalCertificateId: string | null;
   _createdDate: Date;
-  _userId: string;
-  headerImage: HeaderImage;
+  _userId: string | null;
+  headerImage: HeaderImage | null;
   contractor: Contractor;
-  // dateRange: TuiDay;
-  dateRange: DateRange;
-  description: string;
-  number: string;
+  dateRange: DateRange | null;
+  description: string | null;
+  number: string | null;
   profileCompany: Profile;
-  qrCode: string;
+  qrCode: string | null;
   services: Service[];
   signature: Signature;
-  status: InvoiceStatus;
+  status: InvoiceStatus | null;
   total: TotalSum;
-  type: string;
-  template: string;
+  type: string | null;
+  template: string | null;
 
   constructor(
     _id?: string,
@@ -39,7 +38,6 @@ export class Invoice {
     _userId?: string,
     headerImage?: HeaderImage,
     contractor?: Contractor,
-    // dateRange?: TuiDay,
     dateRange?: DateRange,
     description?: string,
     number?: string,
@@ -64,9 +62,6 @@ export class Invoice {
     this.profileCompany = profileCompany || new Profile();
     this.services = services || [];
     this.dateRange = dateRange || null;
-    // this.dateRange =
-    //   dateRange ||
-    //   TuiDay.normalizeParse(moment().add(7, 'day').format('DD.MM.YYYY'));
     this.status = status || null;
     this.description = description || null;
     this.type = type || null;
@@ -79,7 +74,7 @@ export class Invoice {
   isValid(invoice: Invoice): boolean {
     let valid =
       invoice?.services?.length > 0 &&
-      ModelHelper.isValidObject(invoice?.status) &&
+      ModelHelper.isValidObject(invoice?.status!) &&
       ModelHelper.isValidObject(invoice?.contractor.info)
         ? true
         : false;
@@ -133,8 +128,8 @@ export class TotalSum {
 }
 
 export class InvoiceListItem {
-  service: Service;
-  quantity: number;
+  service: Service | null;
+  quantity: number | null;
 
   constructor(service?: Service, quantity?: number) {
     this.service = service || null;
@@ -143,10 +138,10 @@ export class InvoiceListItem {
 }
 
 export class Signature {
-  sign: string;
-  firstName: string;
-  lastName: string;
-  initials: string;
+  sign: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  initials: string | null;
 
   constructor(
     sign?: string,
@@ -162,8 +157,8 @@ export class Signature {
 }
 
 export class HeaderImage {
-  url: string;
-  name: string;
+  url: string | null;
+  name: string | null;
 
   constructor(url?: string, name?: string) {
     this.url = url || null;
