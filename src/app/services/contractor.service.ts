@@ -17,13 +17,14 @@ import { filter, switchMap } from 'rxjs/operators';
 export class ContractorService {
   private dbPath = '/contractors';
   private regexSWIFT = /^[A-Z]{2}[0-9]{2}[A-Z]{4}[0-9]{20}$/;
-  customersRef: AngularFirestoreCollection<Contractor> = null!;
+  contractorRef: AngularFirestoreCollection<Contractor> = null!;
   customersExistRef: AngularFirestoreCollection<Contractor> = null!;
   dbRef: AngularFirestoreCollection<Contractor> = null!;
 
   selectedContractor!: Contractor;
   private contractorSubject = new BehaviorSubject<Contractor>(new Contractor());
   contractor$: Observable<Contractor> = this.contractorSubject.asObservable();
+  contractors$: Observable<Contractor[]>;
 
   constructor(
     private _fs: AngularFirestore,
@@ -31,15 +32,16 @@ export class ContractorService {
     private notificationService: NotificationService
   ) {
     if (this.authService.isLoggedIn) {
-      this.customersRef = this._fs.collection(this.dbPath, (q) =>
+      this.contractorRef = this._fs.collection(this.dbPath, (q) =>
         q.where('_userId', '==', this.authService.getUserId())
       );
     }
+
+    this.contractors$ = this.contractorRef.valueChanges();
   }
 
-  // getAll$(): AngularFirestoreCollection<Contractor> {
   getAll$(): Observable<Contractor[]> {
-    return this.customersRef.valueChanges();
+    return this.contractorRef.valueChanges();
   }
 
   // getById(id: string): AngularFirestoreCollection<any> {
@@ -79,7 +81,7 @@ export class ContractorService {
 
   delete$(_id: string): Observable<void> {
     return from(
-      this.customersRef
+      this.contractorRef
         .doc(_id)
         .delete()
         .then(() => {
@@ -89,7 +91,7 @@ export class ContractorService {
   }
 
   update$(_id: string, value: any): Observable<any> {
-    return of(this.customersRef.doc(_id).update(value));
+    return of(this.contractorRef.doc(_id).update(value));
   }
 
   getContractorState$(): Observable<Contractor> {

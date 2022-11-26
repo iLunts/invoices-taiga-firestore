@@ -1,0 +1,100 @@
+<tui-loader
+  [showLoader]="!(contractors$ | async)"
+  [overlay]="true"
+  [inheritColor]="true"
+  textContent="Загружается..."
+  size="l"
+>
+  <aside class="contractor-aside">
+    <tui-input
+      class="contractor-aside__search"
+      [formControl]="filterControl"
+      tuiTextfieldIconLeft="tuiIconSearch"
+      tuiTextfieldSize="m"
+      appearance="aside-search"
+    >
+      Поиск
+    </tui-input>
+
+    <tui-scrollbar class="contractor-aside__scroller">
+      <div
+        class="contractor-card contractor-card--new"
+        (click)="goToCreatePage()"
+      >
+        <div class="contractor-card__top">
+          <tui-avatar
+            class="contractor-card__avatar tui-space_right-2"
+            text="+"
+            [autoColor]="false"
+            [rounded]="true"
+            size="s"
+          ></tui-avatar>
+          <p class="contractor-card__info">
+            <span class="contractor-card__info-name">Создать нового</span>
+            <small class="contractor-card__info-unp">контрагента</small>
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="contractor-card"
+        [class._active]="isSelectedContractor(item)"
+        (click)="selectContractor(item)"
+        *ngFor="let item of filteredContractors$ | async"
+      >
+        <div class="contractor-card__top">
+          <tui-badged-content
+            colorBottom="var(--tui-success-fill)"
+            size="m"
+            class="tui-space_right-2"
+            [rounded]="true"
+          >
+            <tui-avatar
+              [text]="item.info.name!"
+              size="m"
+              [rounded]="true"
+              [autoColor]="true"
+            ></tui-avatar>
+          </tui-badged-content>
+
+          <p class="contractor-card__info">
+            <span class="contractor-card__info-name">{{ item.info.name }}</span>
+            <small class="contractor-card__info-unp"
+              >УНП: {{ item.info.unp }}</small
+            >
+          </p>
+        </div>
+        <!-- <div class="contractor-card__bottom">
+          <tui-badge
+            class="tui-space_right-2"
+            status="success"
+            value="Активный"
+            size="s"
+          ></tui-badge>
+          <div class="contractor-card__actions">
+            <button
+              tuiIconButton
+              appearance="flat"
+              size="xs"
+              icon="tuiIconEyeOpen"
+              title="Просмотреть"
+              shape="rounded"
+              [disabled]="true"
+              (click)="toggleAsideContractorView(item)"
+            ></button>
+            <button
+              tuiIconButton
+              appearance="flat"
+              size="xs"
+              icon="tuiIconTrash"
+              title="Удалить"
+              shape="rounded"
+              [disabled]="true"
+              (click)="delete(item)"
+            ></button>
+          </div>
+        </div> -->
+      </div>
+    </tui-scrollbar>
+  </aside>
+</tui-loader>

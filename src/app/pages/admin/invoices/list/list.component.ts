@@ -6,7 +6,16 @@ import {
   OnInit,
 } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Observable, of, Subject } from 'rxjs';
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  Observable,
+  of,
+  shareReplay,
+  Subject,
+  switchMap,
+} from 'rxjs';
 import { Router } from '@angular/router';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import * as _ from 'lodash';
@@ -28,7 +37,7 @@ import { TabItem } from 'src/app/models/tabs.model';
 import { Status } from 'src/app/models/status.model';
 import { Contractor } from 'src/app/models/company.model';
 import { InvoiceService } from 'src/app/services/invoice.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-invoices-list',
@@ -69,26 +78,25 @@ export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     private readonly invoiceService: InvoiceService,
-    // private firestore: AngularFirestore,
+    private readonly storeService: StoreService,
     private router: Router
   ) {
-    // this.invoices$ = this.invoiceService.invoices$;
+    this.invoices$ = this.storeService.getContractor$().pipe(
+      filter((contractor) => !!contractor),
+      distinctUntilChanged(),
+      switchMap((contractor) =>
+        this.invoiceService.getAllByContractorId$(contractor._id)
+      ),
+      shareReplay()
+    );
 
-    this.invoices$ = this.invoiceService.getAll$();
-
-    // this.invoices$ = this.storeService.getContractor$().pipe(
-    //   filter((contractor) => !!contractor),
-    //   distinctUntilChanged(),
-    //   switchMap((contractor) =>
-    //     this.invoiceService.getAllByContractorId$(contractor._id)
-    //   ),
-    //   shareReplay()
-    // );
     // this.contractor$ = this.storeService.getContractor$();
+
     // this.lastIndex$ = this.invoices$.pipe(
     //   filter((contracts) => !!contracts),
     //   map((contracts) => _.maxBy(contracts, (c) => c.number))
     // );
+
     // this.invoices$ = this.invoiceService.invoices$;
     // this.invoices$ = this.invoiceService.getAll$();
     // this.invoices$ = this.invoiceService.invoices$;

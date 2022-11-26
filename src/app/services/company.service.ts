@@ -46,15 +46,18 @@ export class CompanyService implements OnDestroy {
     private notificationService: NotificationService
   ) {
     if (this.authService.isLoggedIn) {
-      this.companies$ = this.afs
+      console.log('Call constructor CompanyService');
+
+      this.company$ = this.afs
         .collection(this.dbPath, (q) =>
           q.where('_userId', '==', this.authService.getUserId())
         )
-        .valueChanges();
-      // .pipe(
-      //   first(),
-      //   map((company: Company[]) => company[0])
-      // ) as Observable<Company>;
+        .valueChanges()
+        .pipe(
+          first(),
+          map((company: any[]) => company[0] || null),
+          shareReplay()
+        );
 
       // TODO: Нужно проверить будут ли меняться данные, при повторном вызове сервиса в конструкторе другого компонента
       // const company$ = this.getProfileCompany$();

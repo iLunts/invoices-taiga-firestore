@@ -12,10 +12,10 @@ import { CompanyService } from 'src/app/services/company.service';
   providers: [AuthService, CompanyService],
 })
 export class DashboardComponent implements OnInit {
-  profileCompany$: Observable<Company>;
+  company$!: Observable<Company>;
 
   constructor(private readonly companyService: CompanyService) {
-    this.profileCompany$ = this.companyService.profileCompany$;
+    this.company$ = this.companyService.company$;
   }
 
   ngOnInit(): void {}

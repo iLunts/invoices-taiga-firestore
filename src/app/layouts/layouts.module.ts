@@ -9,6 +9,7 @@ import { DefaultLayoutComponent } from './default-layout/default-layout.componen
 import { TopMenuModule } from '../shared/components/top-menu/top-menu.module';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { LeftMenuModule } from '../pages/admin/components/left-menu/left-menu.module';
+import { ContractorModule } from '../shared/components/contractor/contractor.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { LeftMenuModule } from '../pages/admin/components/left-menu/left-menu.mo
     TopMenuModule,
     TuiScrollbarModule,
     LeftMenuModule,
+    ContractorModule,
   ],
   exports: [
     AdminLayoutComponent,

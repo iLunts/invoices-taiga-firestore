@@ -25,30 +25,32 @@ export class InvoiceService {
   invoicesRef: AngularFirestoreCollection<Invoice> = null!;
   invoicesForContractorsRef: AngularFirestoreCollection<Invoice> = null!;
 
+  invoices$!: Observable<Invoice[]>;
+
   constructor(
-    private _fs: AngularFirestore,
+    private afs: AngularFirestore,
     private authService: AuthService,
     private contractorService: ContractorService,
     private notificationService: NotificationService,
     private _route: Router
   ) {
     if (this.authService.isLoggedIn) {
-      this.invoicesRef = _fs.collection(this.dbPath, (q) =>
+      this.invoicesRef = afs.collection(this.dbPath, (q) =>
         q
           .where('_userId', '==', this.authService.getUserId())
           .orderBy('_createdDate', 'desc')
       );
+
+      this.invoices$ = this.invoicesRef.valueChanges() as Observable<Invoice[]>;
     }
   }
 
   getAll$(): Observable<Invoice[]> {
-    return this.invoicesRef
-      .valueChanges()
-      .pipe(tap((data) => console.log(data)));
+    return this.invoicesRef.valueChanges();
   }
 
   getAllByContractorId$(contractorId: string): Observable<any[]> {
-    const invoicesRef = this._fs.collection(this.dbPath, (q) =>
+    const invoicesRef = this.afs.collection(this.dbPath, (q) =>
       q
         .where('_userId', '==', this.authService.getUserId())
         .where('contractor._id', '==', contractorId)
@@ -58,7 +60,7 @@ export class InvoiceService {
   }
 
   getById$(id: string): Observable<Invoice> {
-    const collection = this._fs.collection(this.dbPath, (q) =>
+    const collection = this.afs.collection(this.dbPath, (q) =>
       q
         .where('_userId', '==', this.authService.getUserId())
         .where('_id', '==', id)
@@ -70,19 +72,19 @@ export class InvoiceService {
   }
 
   get$(id: string): Observable<any> {
-    return this._fs
+    return this.afs
       .collection(this.dbPath, (q) => q.where('_id', '==', id))
       .valueChanges();
   }
 
   getAllStatus$(): Observable<any> {
-    return this._fs
+    return this.afs
       .collection(this.dbPathStatuses, (q) => q.orderBy('order'))
       .valueChanges();
   }
 
   getAllByStatus$(statusId: string): Observable<any> {
-    return this._fs
+    return this.afs
       .collection(this.dbPathStatuses, (q) =>
         q
           .where('_userId', '==', this.authService.getUserId())
@@ -92,7 +94,7 @@ export class InvoiceService {
   }
 
   getAllByContractor$(): Observable<any[]> {
-    this.invoicesForContractorsRef = this._fs.collection(this.dbPath, (q) =>
+    this.invoicesForContractorsRef = this.afs.collection(this.dbPath, (q) =>
       q
         .where('_userId', '==', this.authService.getUserId())
         .where(
@@ -116,7 +118,7 @@ export class InvoiceService {
     );
 
     return from(
-      this._fs
+      this.afs
         .collection(this.dbPath)
         .doc(invoice._id!)
         .set(JSON.parse(JSON.stringify(invoice)))
