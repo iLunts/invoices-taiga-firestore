@@ -23,14 +23,14 @@ const routes: Routes = [
               ),
             canActivate: [AuthGuard, CompanyGuard],
           },
-          // {
-          //   path: 'contract',
-          //   loadChildren: () =>
-          //     import('./contract/contract.module').then(
-          //       (m) => m.ContractModule
-          //     ),
-          //   canActivate: [AuthGuard, CompanyGuard],
-          // },
+          {
+            path: 'contract',
+            loadChildren: () =>
+              import('./contract/contract.module').then(
+                (m) => m.ContractModule
+              ),
+            canActivate: [AuthGuard, CompanyGuard],
+          },
           // {
           //   path: 'contractor',
           //   loadChildren: () =>

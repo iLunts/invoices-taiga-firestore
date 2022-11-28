@@ -40,6 +40,7 @@ import { TuiCurrencyPipeModule } from '@taiga-ui/addon-commerce';
     TuiBadgeModule,
     TuiButtonModule,
     TuiCurrencyPipeModule,
+    TuiDataListModule,
     TuiDialogModule,
     TuiFormatNumberPipeModule,
     TuiHintModule,
@@ -59,7 +60,6 @@ import { TuiCurrencyPipeModule } from '@taiga-ui/addon-commerce';
     TuiTableModule,
     TuiTabsModule,
     TuiTextAreaModule,
-    TuiDataListModule,
   ],
   exports: [
     TuiActiveZoneModule,
@@ -68,6 +68,7 @@ import { TuiCurrencyPipeModule } from '@taiga-ui/addon-commerce';
     TuiBadgeModule,
     TuiButtonModule,
     TuiCurrencyPipeModule,
+    TuiDataListModule,
     TuiDialogModule,
     TuiFormatNumberPipeModule,
     TuiHintModule,
@@ -87,7 +88,6 @@ import { TuiCurrencyPipeModule } from '@taiga-ui/addon-commerce';
     TuiTableModule,
     TuiTabsModule,
     TuiTextAreaModule,
-    TuiDataListModule,
   ],
 })
 export class TaigaSharedModule {}

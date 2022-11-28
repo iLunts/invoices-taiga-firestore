@@ -1,0 +1,252 @@
+<app-header-list
+  title="Договора"
+  description="Создавайте договора с различными шаблонами для разных контрагентов"
+>
+  <div action>
+    <button
+      class="tui-space_left-5"
+      tuiButton
+      size="m"
+      icon="tuiIconPlus"
+      title="Создать новый"
+      [routerLink]="[routing.admin.contract.create]"
+      [queryParams]="{ lastIndex: (lastIndex$ | async)?.number }"
+      [disabled]="(indicator$ | async)?.loading || !(contractor$ | async)"
+    >
+      Создать новый
+    </button>
+    <button
+      class="tui-space_left-5"
+      tuiIconButton
+      size="m"
+      icon="tuiIconAttention"
+      [disabled]="true"
+    ></button>
+  </div>
+</app-header-list>
+
+<ng-container *ngIf="isViewInit">
+  <section
+    class="page-body"
+    fluidHeight
+    *tuiLet="contracts$ | async as contracts"
+  >
+    <app-empty-panel
+      [link]="(contractor$ | async) ? routing.admin.contract.create : ''"
+      *ngIf="!contracts?.length"
+    ></app-empty-panel>
+
+    <tui-scrollbar *ngIf="contracts?.length">
+      <section class="tui-container tui-container_full">
+        <div class="tui-row tui-row_adaptive">
+          <div class="tui-col_xs-12 tui-col_s-12 tui-col_sm-12 tui-col_md-12">
+            <!-- Tabs -->
+            <tui-tabs-with-more
+              class="page-tabs tui-space_bottom-5"
+              [activeItemIndex]="getTabActiveIndex"
+              [moreContent]="more"
+            >
+              <ng-container *ngFor="let tab of tabs">
+                <button
+                  *tuiItem
+                  tuiTab
+                  (click)="selectTab(tab)"
+                  [disabled]="tab.disabled"
+                >
+                  {{ tab.name }}
+                </button>
+              </ng-container>
+            </tui-tabs-with-more>
+
+            <!-- Table -->
+            <table
+              tuiTable
+              [columns]="columns"
+              class="tui-table tui-space_bottom-5"
+            >
+              <thead>
+                <tr class="tui-table__tr" tuiThGroup>
+                  <th
+                    class="tui-table__th"
+                    *tuiHead="'number'"
+                    tuiTh
+                    [resizable]="true"
+                  >
+                    Номер
+                  </th>
+                  <th
+                    class="tui-table__th"
+                    *tuiHead="'date'"
+                    tuiTh
+                    [resizable]="true"
+                  >
+                    Дата начала
+                  </th>
+                  <th
+                    class="tui-table__th"
+                    *tuiHead="'status'"
+                    tuiTh
+                    [resizable]="true"
+                  >
+                    Статус
+                  </th>
+                  <th
+                    class="tui-table__th"
+                    *tuiHead="'dateCreation'"
+                    tuiTh
+                    [resizable]="true"
+                  >
+                    Дата создания
+                  </th>
+                  <th
+                    class="tui-table__th"
+                    *tuiHead="'action'"
+                    tuiTh
+                    [resizable]="false"
+                  ></th>
+                </tr>
+              </thead>
+              <tbody tuiTbody [data]="contracts">
+                <tr
+                  class="tui-table__tr"
+                  tuiTr
+                  *tuiRow="let item of contracts; let index = index"
+                >
+                  <td class="tui-table__td" *tuiCell="'number'" tuiTd>
+                    <b *ngIf="!!item?.number">№ {{ item?.number }}</b>
+                    <small *ngIf="item?.number == null">Без номера</small>
+                  </td>
+                  <td class="tui-table__td" *tuiCell="'date'" tuiTd>
+                    <b>{{ item?.date | date: "dd MMM yyyy" }}</b>
+                  </td>
+                  <td class="tui-table__td" *tuiCell="'status'" tuiTd>
+                    <tui-badge
+                      [class]="getStatusClass(item.status)"
+                      status="custom"
+                      [value]="item?.status?.name"
+                      *ngIf="item?.status"
+                    ></tui-badge>
+                    <span *ngIf="!item?.status">не указан</span>
+                  </td>
+                  <td class="tui-table__td" *tuiCell="'dateCreation'" tuiTd>
+                    <span>
+                      {{ item?._createdDate | date: "dd MMM yyyy" }}
+                    </span>
+                    <br />
+                    <small>
+                      {{ item?._createdDate | date: "HH:mm" }}
+                    </small>
+                  </td>
+                  <td
+                    class="tui-table__td tui-table__td--right"
+                    *tuiCell="'action'"
+                    tuiTd
+                  >
+                    <button
+                      tuiIconButton
+                      appearance="flat"
+                      size="s"
+                      icon="tuiIconDownload"
+                      title="Скачать PDF"
+                      shape="rounded"
+                      (click)="downloadPdf(item)"
+                      [disabled]="(indicator | async)?.loading"
+                    ></button>
+                    <tui-hosted-dropdown #dropdown [content]="content">
+                      <button
+                        tuiIconButton
+                        appearance="flat"
+                        size="s"
+                        icon="tuiIconMoreVer"
+                        type="button"
+                        shape="rounded"
+                        [pseudoHover]="dropdown.open || null"
+                        [disabled]="(indicator | async)?.loading"
+                      ></button>
+                    </tui-hosted-dropdown>
+                    <ng-template #content let-activeZone>
+                      <tui-data-list
+                        tuiDataListDropdownManager
+                        [tuiActiveZoneParent]="activeZone"
+                      >
+                        <tui-opt-group>
+                          <button
+                            tuiOption
+                            (click)="createBaseOnInvoice(item)"
+                            [disabled]="false"
+                          >
+                            Счёт
+                          </button>
+                          <button
+                            tuiOption
+                            (click)="createBaseOnAct(item)"
+                            [disabled]="false"
+                          >
+                            Акт
+                          </button>
+                          <button
+                            tuiOption
+                            (click)="createBaseOnRentalReference(item)"
+                            [disabled]="false"
+                          >
+                            Справка
+                          </button>
+                        </tui-opt-group>
+                        <tui-opt-group>
+                          <button
+                            class="btn-delete"
+                            tuiOption
+                            [disabled]="(indicator | async)?.loading"
+                            (click)="openDeleteModal(item, dialogDelete)"
+                          >
+                            Удалить
+                          </button>
+                        </tui-opt-group>
+                      </tui-data-list>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </tui-scrollbar>
+    <!-- </tui-loader> -->
+  </section>
+</ng-container>
+
+<ng-template #more>
+  <tui-svg src="tuiIconMoreHorLarge"></tui-svg>
+</ng-template>
+
+<ng-template #dialogDelete let-observer>
+  <section class="modal-dialog">
+    <p>
+      Вы действительно хотите удалить договор: №
+      <b>{{ selectedContract?.number }}</b>
+      от <b>{{ selectedContract?.date | date: "dd MMM yyyy" }}</b> ?
+    </p>
+    <div class="modal-dialog__actions">
+      <button
+        tuiButton
+        type="button"
+        size="m"
+        appearance="outline"
+        (click)="observer.complete()"
+      >
+        Отменить
+      </button>
+      <button
+        tuiButton
+        type="button"
+        appearance="accent"
+        size="m"
+        class="tui-space_left-3"
+        (click)="delete(selectedContract); observer.complete()"
+      >
+        Удалить
+      </button>
+    </div>
+  </section>
+</ng-template>
