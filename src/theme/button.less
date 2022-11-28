@@ -1,6 +1,6 @@
 button {
-  &[data-tui-host-size='m'],
-  &[data-tui-host-size='s'] {
+  &[data-tui-host-size="m"],
+  &[data-tui-host-size="s"] {
     border-radius: 5px;
   }
 
@@ -9,7 +9,7 @@ button {
     opacity: var(--tui-disabled-opacity);
 
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       top: 50%;
       left: 50%;
@@ -30,12 +30,12 @@ button {
     }
 
     // TODO: (Taiga UI migration): use mixins to customize tuiWrapper. See https://taiga-ui.dev/wrapper
-[tuiWrapper][data-appearance='primary'] {
+    [tuiWrapper][data-appearance="primary"] {
       background: #eee;
       color: #eee;
     }
 
-    tui-wrapper[data-appearance='outline'] {
+    tui-wrapper[data-appearance="outline"] {
       background: #eee;
       color: #eee;
 
@@ -46,25 +46,25 @@ button {
   }
 }
 
-tui-wrapper[data-appearance='accent'] {
+tui-wrapper[data-appearance="accent"] {
   background: var(--tui-accent);
   color: var(--tui-accent-text);
 
-  &[data-state='hover'] {
+  &[data-state="hover"] {
     background: var(--tui-accent-hover);
   }
 
-  &[data-state='active'] {
+  &[data-state="active"] {
     background: var(--tui-accent-active);
   }
 
-  &[data-state='disabled'] {
+  &[data-state="disabled"] {
     background: #eaecee;
   }
 }
 
-tui-wrapper[data-appearance='primary'] {
-  &[data-state='disabled'] {
+tui-wrapper[data-appearance="primary"] {
+  &[data-state="disabled"] {
     background: #eaecee;
     color: #888;
   }

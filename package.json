@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
     "@taiga-ui/addon-commerce": "^3.9.0",
+    "@taiga-ui/addon-editor": "^3.11.0",
     "@taiga-ui/addon-mobile": "^3.9.0",
     "@taiga-ui/addon-table": "^3.9.0",
     "@taiga-ui/cdk": "^3.9.0",

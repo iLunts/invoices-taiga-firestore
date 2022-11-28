@@ -29,6 +29,7 @@ import {
 } from '@taiga-ui/kit';
 import { TuiTableModule } from '@taiga-ui/addon-table';
 import { TuiCurrencyPipeModule } from '@taiga-ui/addon-commerce';
+import { TuiEditorModule } from '@taiga-ui/addon-editor';
 
 @NgModule({
   declarations: [],
@@ -42,6 +43,7 @@ import { TuiCurrencyPipeModule } from '@taiga-ui/addon-commerce';
     TuiCurrencyPipeModule,
     TuiDataListModule,
     TuiDialogModule,
+    TuiEditorModule,
     TuiFormatNumberPipeModule,
     TuiHintModule,
     TuiHostedDropdownModule,
@@ -70,6 +72,7 @@ import { TuiCurrencyPipeModule } from '@taiga-ui/addon-commerce';
     TuiCurrencyPipeModule,
     TuiDataListModule,
     TuiDialogModule,
+    TuiEditorModule,
     TuiFormatNumberPipeModule,
     TuiHintModule,
     TuiHostedDropdownModule,

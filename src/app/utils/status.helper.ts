@@ -1,3 +1,4 @@
+import { ContractStatus } from '../models/contract.model';
 import { Status } from '../models/status.model';
 
 export class StatusHelper {

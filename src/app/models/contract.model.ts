@@ -1,6 +1,7 @@
 import { Profile } from './profile.model';
 import { Contractor } from './contractor.model';
 import * as moment from 'moment';
+import { Status } from './status.model';
 
 export class Contract {
   _id: string;
@@ -12,7 +13,8 @@ export class Contract {
   date: string;
   number: number;
   profile: Profile;
-  status: ContractStatus;
+  // status: ContractStatus;
+  status: Status;
   template: string;
 
   constructor(
@@ -23,7 +25,8 @@ export class Contract {
     template?: string,
     contractor?: Contractor,
     profile?: Profile,
-    status?: ContractStatus,
+    // status?: ContractStatus,
+    status?: Status,
     date?: string,
     number?: number
   ) {

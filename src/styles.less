@@ -1,62 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@taiga-ui/core/styles/taiga-ui-local';
-@import './theme/color.less';
-@import './theme/variables.less';
+@import "~@taiga-ui/core/styles/taiga-ui-local";
+@import "./theme/color.less";
+@import "./theme/variables.less";
 // @import './theme/accent.less';
-@import './theme/button.less';
+@import "./theme/button.less";
 
 html,
 body {
-    background-color: #f9f9fb;
-    font-family: 'Manrope', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #6d6f72;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-}
-
-body {
-    min-height: 100%;
-    font: var(--tui-font-text-s);
-    color: var(--tui-text-01);
-    min-height: 100%;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
+  background-color: #f9f9fb;
+  font-family: "Manrope", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #6d6f72;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 a,
 p {
-    font-size: 15px;
-    font-weight: 400;
+  font-size: 15px;
+  font-weight: 400;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 img {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 table {
-    width: 100%;
+  width: 100%;
 }
 
 .tui-container {
-    &.tui-container_adaptive {
-        max-width: calc(100% - 30px);
-    }
+  &.tui-container_adaptive {
+    max-width: calc(100% - 30px);
+  }
 
-    &.tui-container_full {
-        width: 100%;
-        max-width: 100%;
-        padding: 0 1.5rem;
-    }
-}
-
-* {
-    box-sizing: border-box;
+  &.tui-container_full {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 1.5rem;
+  }
 }

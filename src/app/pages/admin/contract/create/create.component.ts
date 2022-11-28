@@ -39,6 +39,10 @@ import { DateHelper } from 'src/app/utils/date.helper';
 import { environment } from 'src/environments/environment';
 import { StoreService } from 'src/app/services/store.service';
 import { CONTRACT_TEMPLATE_ALL } from 'src/app/templates/contracts/contract.template';
+import {
+  defaultEditorExtensions,
+  TUI_EDITOR_EXTENSIONS,
+} from '@taiga-ui/addon-editor';
 
 @Component({
   selector: 'app-contract-create',
@@ -48,10 +52,6 @@ import { CONTRACT_TEMPLATE_ALL } from 'src/app/templates/contracts/contract.temp
     {
       provide: TUI_EDITOR_EXTENSIONS,
       useValue: defaultEditorExtensions,
-    },
-    {
-      provide: TUI_EDITOR_STYLES,
-      useValue: tiptapEditorStyles,
     },
   ],
 })

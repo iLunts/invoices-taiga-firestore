@@ -117,7 +117,7 @@
                   class="tui-table__tr"
                 >
                   <td class="tui-table__td" *tuiCell="'number'" tuiTd>
-                    № <b>{{ item?.number || "Б.н." }}</b>
+                    № <b>{{ item?.number! || "Б.н." }}</b>
                   </td>
                   <td class="tui-table__td" *tuiCell="'date'" tuiTd>
                     <b>{{ item?.date | date: "dd MMM yyyy" }}</b>
@@ -202,7 +202,7 @@
   <section class="modal-dialog">
     <p>
       Вы действительно хотите удалить акт: №
-      <b>{{ selectedAct?.number }}</b>
+      <b>{{ selectedAct.number }}</b>
       <!-- от <b>{{ selectedAct?.date | date: "dd MMM yyyy" }}</b> ? -->
       от <b>TEST</b> ?
     </p>

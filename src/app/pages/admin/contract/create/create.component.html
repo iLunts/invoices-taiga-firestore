@@ -22,58 +22,54 @@
       >
         Дата
       </tui-input-date>
-      <app-status-panel
+      <!-- <app-status-panel
         class="tui-col_xs-12 tui-col_s-1 tui-col_sm-4 tui-col_md-4"
         type="contract"
         (changed)="setStatus($event)"
-      ></app-status-panel>
+      ></app-status-panel> -->
     </div>
 
     <div class="tui-form__row tui-form__row_multi-fields">
       <div class="tui-form__multi-field">
         <h3 class="tui-form__header">Арендодатель</h3>
-        <app-company-panel
+        <!-- <app-company-panel
           [company]="f.profileCompany.value"
           [isLoaded]="true"
-        ></app-company-panel>
+        ></app-company-panel> -->
       </div>
 
       <div class="tui-form__multi-field">
         <h3 class="tui-form__header">Арендодатель</h3>
-        <app-company-panel
+        <!-- <app-company-panel
           [company]="f.contractor.value"
           [isLoaded]="true"
-        ></app-company-panel>
+        ></app-company-panel> -->
       </div>
     </div>
 
     <div class="tui-row tui-row_adaptive tui-space_top-5">
       <div
-        class="
-          tui-col_xs-12 tui-col_s-12 tui-col_sm-12 tui-col_md-12 tui-col_lg-12
-        "
+        class="tui-col_xs-12 tui-col_s-12 tui-col_sm-12 tui-col_md-12 tui-col_lg-12"
       >
-        <tui-editor  formControlName="template">
-          Шаблон договора
-        </tui-editor>
+        <tui-editor formControlName="template"> Шаблон договора </tui-editor>
       </div>
     </div>
 
     <!-- QR Code -->
-    <qrcode
+    <!-- <qrcode
       class="qr-code"
       #qrBlock
       [qrdata]="form.controls._id.value"
       [width]="125"
       [errorCorrectionLevel]="'H'"
       [elementType]="'img'"
-    ></qrcode>
+    ></qrcode> -->
     <!-- end QR Code -->
   </form>
 </tui-scrollbar>
 <!-- </section> -->
 
-<footer class="page-footer">
+<!-- <footer class="page-footer">
   <button
     tuiButton
     type="button"
@@ -91,6 +87,21 @@
     [(stateInProgress)]="stateInProgress"
     (click)="save()"
   >
+    Создать
+  </button>
+</footer> -->
+
+<footer class="page-footer">
+  <button
+    tuiButton
+    type="button"
+    class="tui-space_right-3"
+    appearance="outline"
+    (click)="cancel()"
+  >
+    Отменить
+  </button>
+  <button tuiButton type="button" class="tui-space_right-3" (click)="save()">
     Создать
   </button>
 </footer>

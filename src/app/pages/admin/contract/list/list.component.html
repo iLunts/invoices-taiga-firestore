@@ -3,7 +3,7 @@
   description="Создавайте договора с различными шаблонами для разных контрагентов"
 >
   <div action>
-    <button
+    <!-- <button
       class="tui-space_left-5"
       tuiButton
       size="m"
@@ -12,6 +12,17 @@
       [routerLink]="[routing.admin.contract.create]"
       [queryParams]="{ lastIndex: (lastIndex$ | async)?.number }"
       [disabled]="(indicator$ | async)?.loading || !(contractor$ | async)"
+    >
+      Создать новый
+    </button> -->
+    <button
+      class="tui-space_left-5"
+      tuiButton
+      size="m"
+      icon="tuiIconPlus"
+      title="Создать новый"
+      [routerLink]="[routing.admin.contract.create]"
+      [queryParams]="{ lastIndex: (lastIndex$ | async)?.number }"
     >
       Создать новый
     </button>
@@ -106,11 +117,11 @@
                   ></th>
                 </tr>
               </thead>
-              <tbody tuiTbody [data]="contracts">
+              <tbody tuiTbody [data]="contracts!">
                 <tr
                   class="tui-table__tr"
                   tuiTr
-                  *tuiRow="let item of contracts; let index = index"
+                  *tuiRow="let item of contracts!; let index = index"
                 >
                   <td class="tui-table__td" *tuiCell="'number'" tuiTd>
                     <b *ngIf="!!item?.number">№ {{ item?.number }}</b>
@@ -142,7 +153,7 @@
                     *tuiCell="'action'"
                     tuiTd
                   >
-                    <button
+                    <!-- <button
                       tuiIconButton
                       appearance="flat"
                       size="s"
@@ -151,9 +162,18 @@
                       shape="rounded"
                       (click)="downloadPdf(item)"
                       [disabled]="(indicator | async)?.loading"
+                    ></button> -->
+                    <button
+                      tuiIconButton
+                      appearance="flat"
+                      size="s"
+                      icon="tuiIconDownload"
+                      title="Скачать PDF"
+                      shape="rounded"
+                      (click)="downloadPdf(item)"
                     ></button>
                     <tui-hosted-dropdown #dropdown [content]="content">
-                      <button
+                      <!-- <button
                         tuiIconButton
                         appearance="flat"
                         size="s"
@@ -162,6 +182,15 @@
                         shape="rounded"
                         [pseudoHover]="dropdown.open || null"
                         [disabled]="(indicator | async)?.loading"
+                      ></button> -->
+                      <button
+                        tuiIconButton
+                        appearance="flat"
+                        size="s"
+                        icon="tuiIconMoreVer"
+                        type="button"
+                        shape="rounded"
+                        [pseudoHover]="dropdown.open || null"
                       ></button>
                     </tui-hosted-dropdown>
                     <ng-template #content let-activeZone>
@@ -193,10 +222,17 @@
                           </button>
                         </tui-opt-group>
                         <tui-opt-group>
-                          <button
+                          <!-- <button
                             class="btn-delete"
                             tuiOption
                             [disabled]="(indicator | async)?.loading"
+                            (click)="openDeleteModal(item, dialogDelete)"
+                          >
+                            Удалить
+                          </button> -->
+                          <button
+                            class="btn-delete"
+                            tuiOption
                             (click)="openDeleteModal(item, dialogDelete)"
                           >
                             Удалить
@@ -224,8 +260,8 @@
   <section class="modal-dialog">
     <p>
       Вы действительно хотите удалить договор: №
-      <b>{{ selectedContract?.number }}</b>
-      от <b>{{ selectedContract?.date | date: "dd MMM yyyy" }}</b> ?
+      <b>{{ selectedContract.number }}</b>
+      от <b>{{ selectedContract.date | date: "dd MMM yyyy" }}</b> ?
     </p>
     <div class="modal-dialog__actions">
       <button
