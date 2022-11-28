@@ -1,10 +1,10 @@
 <!-- TODO: (Taiga UI migration) tuiFormatNumber pipe has new API. See https://taiga-ui.dev/pipes/format-number -->
-<!-- <app-page-header
+<app-header-list
   title="Акты"
   description="Создавайте акты с различными товарами или услугами для разнличных контрагентов"
 >
   <div action>
-    <button
+    <!-- <button
       class="tui-space_left-5"
       tuiButton
       size="m"
@@ -13,6 +13,17 @@
       [routerLink]="[routing.admin.act.create]"
       [queryParams]="{ lastIndex: (lastIndex$ | async)?.number }"
       [disabled]="(indicator$ | async)?.loading || !(contractor$ | async)"
+    >
+      Создать новый
+    </button> -->
+    <button
+      class="tui-space_left-5"
+      tuiButton
+      size="m"
+      icon="tuiIconPlus"
+      title="Создать новый"
+      [routerLink]="[routing.admin.act.create]"
+      [queryParams]="{ lastIndex: (lastIndex$ | async)?.number }"
     >
       Создать новый
     </button>
@@ -24,7 +35,7 @@
       [disabled]="true"
     ></button>
   </div>
-</app-page-header> -->
+</app-header-list>
 
 <ng-container *ngIf="isViewInit">
   <section class="page-body" fluidHeight *tuiLet="acts$ | async as acts">
