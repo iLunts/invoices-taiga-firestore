@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/app/guards/auth.guard';
+import { CompanyGuard } from 'src/app/guards/company.guard';
 
 import { AdminLayoutComponent } from 'src/app/layouts/admin-layout/admin-layout.component';
 import { ContractorAsideLayoutComponent } from 'src/app/layouts/contractor-aside-layout/contractor-aside-layout.component';
@@ -19,7 +21,7 @@ const routes: Routes = [
               import('./invoices/invoices.module').then(
                 (m) => m.InvoicesModule
               ),
-            // canActivate: [AuthGuard, CompanyGuard],
+            canActivate: [AuthGuard, CompanyGuard],
           },
           // {
           //   path: 'contract',
@@ -37,12 +39,12 @@ const routes: Routes = [
           //     ),
           //   canActivate: [AuthGuard, CompanyGuard],
           // },
-          // {
-          //   path: 'act',
-          //   loadChildren: () =>
-          //     import('./act/act.module').then((m) => m.ActModule),
-          //   canActivate: [AuthGuard, CompanyGuard],
-          // },
+          {
+            path: 'act',
+            loadChildren: () =>
+              import('./act/act.module').then((m) => m.ActModule),
+            canActivate: [AuthGuard, CompanyGuard],
+          },
           // {
           //   path: 'rental-certificate',
           //   loadChildren: () =>

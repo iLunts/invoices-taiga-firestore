@@ -95,4 +95,8 @@ export class LeftMenuComponent implements OnInit {
   get getUserDisplayName(): string {
     return this.authService.getUserDisplayName()!;
   }
+
+  logout() {
+    this.authService.logout();
+  }
 }

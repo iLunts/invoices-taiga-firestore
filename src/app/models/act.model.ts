@@ -48,24 +48,24 @@ export class Act {
     total?: TotalSum,
     profileCompany?: Profile
   ) {
-    this._id = _id || null;
-    this._userId = _userId || null;
-    this._contractId = _contractId || null;
-    this._invoiceId = _invoiceId || null;
-    this._rentalCertificateId = _rentalCertificateId || null;
+    this._id = _id || null!;
+    this._userId = _userId || null!;
+    this._contractId = _contractId || null!;
+    this._invoiceId = _invoiceId || null!;
+    this._rentalCertificateId = _rentalCertificateId || null!;
     this._createdDate = _createdDate || new Date();
-    this.number = number || null;
-    this.date = date || null;
-    this.contractor = contractor || null;
-    this.contract = contract || null;
+    this.number = number || null!;
+    this.date = date || null!;
+    this.contractor = contractor || null!;
+    this.contract = contract || null!;
     this.services = services || [];
     this.createDate = createDate || moment().toString();
     this.expiredDate = expiredDate || moment().add(7, 'days').toString();
-    this.status = status || null;
-    this.contractId = contractId || null;
+    this.status = status || null!;
+    this.contractId = contractId || null!;
     this.signature = signature || new Signature();
     this.total = total || new TotalSum();
-    this.profileCompany = profileCompany || null;
+    this.profileCompany = profileCompany || null!;
   }
 
   isValid(act: Act): boolean {
@@ -87,12 +87,12 @@ export class Act {
 
 //   constructor(date?: Date, service?: Service, order?: number) {
 //     this.date = date || new Date();
-//     this.service = service || null;
-//     this.order = order || null;
+//     this.service = service || null!;
+//     this.order = order || null!;
 //   }
 // }
 
-export class ActStatus {
+export interface ActStatus {
   _id: string;
   name: string;
   color: string;
@@ -116,7 +116,7 @@ export class Price {
 //   quantity: number;
 
 //   constructor(service?: Service, quantity?: number) {
-//     this.service = service || null;
+//     this.service = service || null!;
 //     this.quantity = quantity || 1;
 //   }
 // }
@@ -143,9 +143,9 @@ export class Signature {
     lastName?: string,
     initials?: string
   ) {
-    this.sign = sign || null;
-    this.firstName = firstName || null;
-    this.lastName = lastName || null;
-    this.initials = initials || null;
+    this.sign = sign || null!;
+    this.firstName = firstName || null!;
+    this.lastName = lastName || null!;
+    this.initials = initials || null!;
   }
 }

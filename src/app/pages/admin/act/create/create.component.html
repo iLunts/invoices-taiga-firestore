@@ -1,0 +1,126 @@
+<!-- <app-header-create title="Создание акта"></app-header-create> -->
+
+<tui-scrollbar class="page-body page-body--header-footer">
+  <form class="tui-container tui-container_full" [formGroup]="form">
+    <div class="tui-row tui-row_sme">
+      <div
+        class="tui-col_sm-12 tui-col_md-12 tui-col_lg-12 tui-space_bottom-5"
+        *ngIf="invoice$ | async as invoice"
+      >
+        <tui-notification>
+          Акт создается на основании счета #{{ invoice.number }} от
+          {{ invoice._createdDate | date: "dd.MM.yyyy" }}
+        </tui-notification>
+      </div>
+      <div
+        class="tui-col_sm-12 tui-col_md-12 tui-col_lg-12 tui-space_bottom-5"
+        *ngIf="rentalCertificate$ | async as rentalCertificate"
+      >
+        <tui-notification>
+          Акт создается на основании справки аренды #{{
+            rentalCertificate.number
+          }}
+          от
+          {{ rentalCertificate._createdDate | date: "dd.MM.yyyy" }}
+        </tui-notification>
+      </div>
+
+      <div class="tui-col_12">
+        <div class="tui-form__row tui-form__row_multi-fields">
+          <tui-input-number
+            class="tui-form__multi-field"
+            formControlName="number"
+          >
+            Номер акта
+          </tui-input-number>
+
+          <!-- <app-status-panel
+            class="tui-form__multi-field"
+            type="act"
+            [status]="f.status.value"
+            (changed)="setStatus($event)"
+          ></app-status-panel> -->
+
+          <tui-input-date
+            class="tui-form__multi-field"
+            tuiUnfinishedValidator="Finish filling the field"
+            formControlName="date"
+            tuiHintContent="Дата автоматически заполняется из списка услуг"
+          >
+            Дата акта
+          </tui-input-date>
+        </div>
+
+        <div class="tui-form__row tui-form__row_multi-fields">
+          <div class="tui-form__multi-field">
+            <h3 class="tui-form__header">Арендодатель</h3>
+            <!-- <app-company-panel
+              [company]="f.profileCompany.value"
+              [isLoaded]="true"
+            ></app-company-panel> -->
+          </div>
+
+          <div class="tui-form__multi-field">
+            <h3 class="tui-form__header">Арендодатель</h3>
+            <!-- <app-company-panel
+              [company]="f.contractor.value"
+              [isLoaded]="true"
+            ></app-company-panel> -->
+
+            <!-- <app-contract-panel
+              class="tui-space_top-4"
+              [contractor]="f.contractor.value"
+              (selected)="setContract($event)"
+            ></app-contract-panel> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tui-row tui-row_adaptive tui-space_top-8">
+      <div
+        class="tui-col_xs-12 tui-col_s-12 tui-col_sm-12 tui-col_md-12 tui-col_lg-12"
+      >
+        <div class="tui-form__row">
+          <div class="tui-form__field">
+            <!-- <app-service-table
+              [services]="f.services.value"
+              [hideDateColumn]="true"
+              (selected)="setService($event)"
+            ></app-service-table> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <qrcode
+      class="qr-code"
+      #qrBlock
+      [qrdata]="f._id.value"
+      [width]="150"
+      [errorCorrectionLevel]="'H'"
+      [elementType]="'img'"
+    ></qrcode> -->
+  </form>
+</tui-scrollbar>
+
+<div class="page-footer">
+  <button
+    tuiButton
+    type="button"
+    class="tui-space_right-3"
+    appearance="outline"
+    (click)="cancel()"
+  >
+    Отменить
+  </button>
+  <button
+    tuiButton
+    type="button"
+    class="tui-space_right-3"
+    (click)="save()"
+    [disabled]="form.invalid"
+  >
+    Создать
+  </button>
+</div>

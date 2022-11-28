@@ -21,29 +21,19 @@ import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import * as _ from 'lodash';
 
 import { Invoice, InvoiceStatus } from 'src/app/models/invoice.model';
-// import { InvoiceService } from 'src/app/services/invoice.service';
-// import { TemplatePdfService } from 'src/app/services/template-pdf.service';
-// import {
-//   distinctUntilChanged,
-//   filter,
-//   map,
-//   shareReplay,
-//   switchMap,
-// } from 'rxjs/operators';
-// import { StoreService } from 'src/app/services/store.service';
-// import { indicate, IndicatorBehaviorSubject } from 'ngx-ready-set-go';
 import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { TabItem } from 'src/app/models/tabs.model';
 import { Status } from 'src/app/models/status.model';
 import { Contractor } from 'src/app/models/company.model';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { StoreService } from 'src/app/services/store.service';
+import { StatusHelper } from 'src/app/utils/status.helper';
+import { StatusService } from 'src/app/services/status.service';
 
 @Component({
   selector: 'app-invoices-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.less'],
-  // providers: [InvoiceService],
 })
 export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly routing = environment.routing;
@@ -70,7 +60,7 @@ export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private readonly destroySubject = new Subject();
   invoices$!: Observable<any>;
-  // invoiceStatuses$: Observable<any>;
+  invoiceStatuses$: Observable<any>;
   lastIndex$!: Observable<Invoice>;
   // indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
   contractor$!: Observable<Contractor>;
@@ -78,6 +68,7 @@ export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     private readonly invoiceService: InvoiceService,
+    private readonly statusService: StatusService,
     private readonly storeService: StoreService,
     private router: Router
   ) {
@@ -90,16 +81,13 @@ export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
       shareReplay()
     );
 
-    // this.contractor$ = this.storeService.getContractor$();
+    this.contractor$ = this.storeService.getContractor$();
+    this.invoiceStatuses$ = this.statusService.getAll$('invoice');
 
     // this.lastIndex$ = this.invoices$.pipe(
     //   filter((contracts) => !!contracts),
     //   map((contracts) => _.maxBy(contracts, (c) => c.number))
     // );
-
-    // this.invoices$ = this.invoiceService.invoices$;
-    // this.invoices$ = this.invoiceService.getAll$();
-    // this.invoices$ = this.invoiceService.invoices$;
   }
 
   ngOnInit(): void {}
@@ -150,7 +138,7 @@ export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   delete(item: Invoice): void {
     if (item) {
-      // this.invoiceService.delete$(item._id);
+      this.invoiceService.delete$(item._id!);
     }
   }
 
@@ -162,7 +150,7 @@ export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate([this.routing.admin.contract.create], {
       queryParams: {
         contractorId: invoice.contractor._id,
-        // contractId: invoice._id,
+        contractId: invoice._id,
       },
     });
   }
@@ -188,7 +176,6 @@ export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getStatusClass(status: Status): string {
-    // return StatusHelper.getStatusClassName(status);
-    return null!;
+    return StatusHelper.getStatusClassName(status);
   }
 }

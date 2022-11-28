@@ -7,16 +7,7 @@ import { Router } from '@angular/router';
 // Firebase
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { environment } from 'src/environments/environment';
-
-// import  auth  from 'firebase/app';
 import firebase from 'firebase/compat/app';
-
-// import { auth } from 'firebase/app';
-// import { AngularFirestore } from '@angular/fire/firestore';
-// import { AngularFireAuth } from 'angularfire2/auth';
-// import { AngularFirestoreDocument } from 'angularfire2/firestore';
-// import { auth } from 'firebase/app';
-// import { ProfileService } from './profile.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +19,6 @@ export class AuthService {
 
   constructor(
     private afAuth: AngularFireAuth,
-    // private _fs: AngularFirestore,
     private router: Router,
     public _ngZone: NgZone
   ) {

@@ -214,10 +214,7 @@ export class CompanyService implements OnDestroy {
         this.setCompanyToLocalStorage(company);
       }),
       shareReplay()
-      // takeUntil(this.destroySubject)
     );
-
-    // return company$;
   }
 
   clearCompanyInfo(): void {

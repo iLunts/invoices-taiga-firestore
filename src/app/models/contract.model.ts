@@ -27,20 +27,20 @@ export class Contract {
     date?: string,
     number?: number
   ) {
-    this._id = this._id || null;
-    this._userId = this._userId || null;
-    this._invoiceId = this._invoiceId || null;
-    this._createdDate = this._createdDate || moment().toString() || null;
-    this.template = template || null;
-    this.contractor = contractor || null;
-    this.profile = profile || null;
-    this.status = status || null;
-    this.date = date || null;
-    this.number = number || null;
+    this._id = _id || null!;
+    this._userId = _userId || null!;
+    this._invoiceId = _invoiceId || null!;
+    this._createdDate = _createdDate || moment().toString() || null!;
+    this.template = template || null!;
+    this.contractor = contractor || null!;
+    this.profile = profile || null!;
+    this.status = status || null!;
+    this.date = date || null!;
+    this.number = number || null!;
   }
 }
 
-export class ContractStatus {
+export interface ContractStatus {
   _id: string;
   name: string;
   color: string;

@@ -47,24 +47,24 @@ export class RentalCertificate {
     type?: string,
     template?: string
   ) {
-    this._id = _id || null;
-    this._userId = _userId || null;
-    this._contractId = _contractId || null;
-    this._invoiceId = _invoiceId || null;
-    this._actId = _actId || null;
+    this._id = _id || null!;
+    this._userId = _userId || null!;
+    this._contractId = _contractId || null!;
+    this._invoiceId = _invoiceId || null!;
+    this._actId = _actId || null!;
     this._createdDate = _createdDate || new Date();
-    this.number = number || null;
+    this.number = number || null!;
     this.contractor = contractor || new Contractor();
     this.profileCompany = profileCompany || new Profile();
     this.services = services || [];
-    this.dateRange = dateRange || null;
-    this.status = status || null;
-    this.description = description || null;
-    this.type = type || null;
+    this.dateRange = dateRange || null!;
+    this.status = status || null!;
+    this.description = description || null!;
+    this.type = type || null!;
     this.signature = signature || new Signature();
     this.total = total || new TotalSum();
-    this.qrCode = qrCode || null;
-    this.template = template || null;
+    this.qrCode = qrCode || null!;
+    this.template = template || null!;
   }
 
   isValid(rentalCertificate: RentalCertificate): boolean {
@@ -130,7 +130,7 @@ export class RentalCertificateListItem {
   quantity: number;
 
   constructor(service?: Service, quantity?: number) {
-    this.service = service || null;
+    this.service = service || null!;
     this.quantity = quantity || 1;
   }
 }
@@ -147,9 +147,9 @@ export class Signature {
     lastName?: string,
     initials?: string
   ) {
-    this.sign = sign || null;
-    this.firstName = firstName || null;
-    this.lastName = lastName || null;
-    this.initials = initials || null;
+    this.sign = sign || null!;
+    this.firstName = firstName || null!;
+    this.lastName = lastName || null!;
+    this.initials = initials || null!;
   }
 }

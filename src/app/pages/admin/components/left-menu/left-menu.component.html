@@ -1,11 +1,10 @@
-<section class="left-menu">
-  <div class="left-menu__logo">Logo</div>
-  <tui-scrollbar class="left-menu__menu">
-    <!-- <nav class="left-menu__menu"> -->
+<section class="menu">
+  <div class="menu__logo">Logo</div>
+  <tui-scrollbar class="menu__list">
     <ng-container *ngFor="let item of menu">
-      <div class="left-menu__menu-item" routerLinkActive="_active">
+      <div class="menu__list-item" routerLinkActive="_active">
         <button
-          class="left-menu__menu-item"
+          class="menu__list-item-btn"
           tuiIconButton
           type="button"
           appearance="icon"
@@ -18,50 +17,22 @@
           [tuiHint]="item.name"
           tuiHintDirection="right"
         ></button>
-
-        <!-- <button
-          class="left-menu__menu-item"
-          tuiButton
-          appearance="menuButton"
-          type="button"
-          class="tui-space_bottom-2"
-          [icon]="item.icon"
-          [routerLink]="[item.url]"
-          routerLinkActive="active"
-          *ngIf="item.type === 'menu'"
-          [disabled]="item.disabled"
-          [tuiHint]="item.name"
-          tuiHintDirection="right"
-        >
-          <span class="left-menu__menu-item-text">
-            {{ item.name }}
-          </span>
-        </button> -->
-
-        <hr class="left-menu__menu-divider" *ngIf="item.type === 'divider'" />
+        <hr class="menu__list-divider" *ngIf="item.type === 'divider'" />
       </div>
     </ng-container>
-    <!-- </nav> -->
-  </tui-scrollbar>
-  <!-- <div class="left-menu__account">
-    <tui-badged-content
-      *ngIf="getUserDisplayName"
-      class="tui-space_right-2"
-      contentTop=""
-      colorTop="red"
-      size="s"
-      [rounded]="true"
-    >
-      <tui-avatar
-        class="tui-space_right-2"
-        [text]="getUserDisplayName"
-        size="s"
-        [autoColor]="true"
-        [rounded]="true"
-        [tuiHint]="getUserDisplayName"
+
+    <div class="menu__list-item">
+      <button
+        class="menu__list-item-btn"
+        tuiIconButton
+        type="button"
+        appearance="icon"
+        class="tui-space_bottom-2"
+        icon="tuiIconLogoutLarge"
+        tuiHint="Выйти"
         tuiHintDirection="right"
-      >
-      </tui-avatar>
-    </tui-badged-content>
-  </div> -->
+        (click)="logout()"
+      ></button>
+    </div>
+  </tui-scrollbar>
 </section>
