@@ -1,6 +1,8 @@
+@import "~@taiga-ui/core/styles/taiga-ui-local";
+
 button {
-  &[data-tui-host-size="m"],
-  &[data-tui-host-size="s"] {
+  &[data-size="m"],
+  &[data-size="s"] {
     border-radius: 5px;
   }
 
@@ -29,13 +31,12 @@ button {
       animation: loading-bar-spinner 700ms linear infinite;
     }
 
-    // TODO: (Taiga UI migration): use mixins to customize tuiWrapper. See https://taiga-ui.dev/wrapper
     [tuiWrapper][data-appearance="primary"] {
       background: #eee;
       color: #eee;
     }
 
-    tui-wrapper[data-appearance="outline"] {
+    [tuiWrapper][data-appearance="outline"] {
       background: #eee;
       color: #eee;
 
@@ -46,28 +47,28 @@ button {
   }
 }
 
-tui-wrapper[data-appearance="accent"] {
+[tuiWrapper][data-appearance="accent"] {
   background: var(--tui-accent);
   color: var(--tui-accent-text);
 
-  &[data-state="hover"] {
+  .wrapper-hover({
     background: var(--tui-accent-hover);
-  }
+  });
 
-  &[data-state="active"] {
+  .wrapper-active({
     background: var(--tui-accent-active);
-  }
+  });
 
-  &[data-state="disabled"] {
+  .wrapper-disabled({
     background: #eaecee;
-  }
+  });
 }
 
-tui-wrapper[data-appearance="primary"] {
-  &[data-state="disabled"] {
-    background: #eaecee;
-    color: #888;
-  }
+[tuiWrapper][data-appearance="primary"] {
+  .wrapper-disabled({
+      background: #eaecee;
+      color: #888;
+  });
 }
 
 @keyframes loading-bar-spinner {

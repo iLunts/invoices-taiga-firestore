@@ -19,6 +19,8 @@ import { TuiActiveZoneModule, TuiLetModule } from '@taiga-ui/cdk';
 import {
   TuiAvatarModule,
   TuiBadgeModule,
+  TuiCheckboxLabeledModule,
+  TuiCheckboxModule,
   TuiInputDateModule,
   TuiInputDateRangeModule,
   TuiInputFilesModule,
@@ -62,6 +64,8 @@ import { TuiEditorModule } from '@taiga-ui/addon-editor';
     TuiTableModule,
     TuiTabsModule,
     TuiTextAreaModule,
+    TuiCheckboxModule,
+    TuiCheckboxLabeledModule,
   ],
   exports: [
     TuiActiveZoneModule,
@@ -91,6 +95,8 @@ import { TuiEditorModule } from '@taiga-ui/addon-editor';
     TuiTableModule,
     TuiTabsModule,
     TuiTextAreaModule,
+    TuiCheckboxModule,
+    TuiCheckboxLabeledModule,
   ],
 })
 export class TaigaSharedModule {}

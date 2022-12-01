@@ -13,36 +13,27 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-// import {
-//   defaultEditorExtensions,
-//   tiptapEditorStyles,
-//   TUI_EDITOR_EXTENSIONS,
-//   // TODO: (Taiga UI migration) TUI_EDITOR_STYLES token has been deleted in 3.0, please use global styles to override default editor styles
-//   TUI_EDITOR_STYLES,
-// } from '@taiga-ui/addon-editor';
 import {
   distinctUntilChanged,
   filter,
   shareReplay,
   takeUntil,
   tap,
-  withLatestFrom,
 } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-
-import { Company, Contractor } from 'src/app/models/company.model';
-import { CompanyService } from 'src/app/services/company.service';
-// import { CONTRACT_TEMPLATE_ALL } from 'src/app/templates/contracts/contract.template';
-import { ContractorService } from 'src/app/services/contractor.service';
-import { ContractService } from 'src/app/services/contract.service';
-import { DateHelper } from 'src/app/utils/date.helper';
 import { environment } from 'src/environments/environment';
-import { StoreService } from 'src/app/services/store.service';
-import { CONTRACT_TEMPLATE_ALL } from 'src/app/templates/contracts/contract.template';
 import {
   defaultEditorExtensions,
   TUI_EDITOR_EXTENSIONS,
 } from '@taiga-ui/addon-editor';
+
+import { Company, Contractor } from 'src/app/models/company.model';
+import { CompanyService } from 'src/app/services/company.service';
+import { ContractorService } from 'src/app/services/contractor.service';
+import { ContractService } from 'src/app/services/contract.service';
+import { DateHelper } from 'src/app/utils/date.helper';
+import { StoreService } from 'src/app/services/store.service';
+import { CONTRACT_TEMPLATE_ALL } from 'src/app/templates/contracts/contract.template';
 
 @Component({
   selector: 'app-contract-create',
@@ -59,7 +50,9 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
   @ViewChild('qrBlock') qrBlock: any;
 
   private readonly destroySubject = new Subject();
-  queryParams: Params = null!;
+  queryParams: Params = {
+    lastIndex: 0,
+  };
   stateInProgress = false;
   templateContent = CONTRACT_TEMPLATE_ALL;
 
@@ -183,7 +176,6 @@ export class ContractCreateComponent implements OnInit, OnDestroy {
   setContractor(contractor: Contractor | Company): void {
     if (this.form) {
       this.form.get('contractor')?.setValue(contractor);
-      // this.form.controls.contractor.patchValue(contractor);
     }
   }
 

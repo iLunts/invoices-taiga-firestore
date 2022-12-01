@@ -4,7 +4,7 @@ import { interval, Subscription } from 'rxjs';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.less']
+  styleUrls: ['./home.component.less'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
   timerSubscription: Subscription;
@@ -14,26 +14,26 @@ export class HomeComponent implements OnInit, OnDestroy {
       avatar: './../../../../assets/png/faces/1.png',
       title: 'Invoice created & sent',
       text: 'Monday at 9:15am',
-      isActive: true
+      isActive: true,
     },
     {
       avatar: './../../../../assets/png/faces/2.png',
       title: 'Invoice accepted',
       text: 'Monday at 4:55pm',
-      isActive: false
+      isActive: false,
     },
     {
       avatar: './../../../../assets/png/faces/3.png',
       title: 'Converted to act',
       text: 'Yesterday at 10:20pm',
-      isActive: false
+      isActive: false,
     },
     {
       avatar: './../../../../assets/png/faces/4.png',
       title: 'Invoice sent & delivered',
       text: 'Yesterday at 10:22pm',
-      isActive: false
-    }
+      isActive: false,
+    },
   ];
 
   constructor() {
