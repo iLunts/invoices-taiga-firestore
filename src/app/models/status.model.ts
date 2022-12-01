@@ -1,9 +1,9 @@
 export class Status {
-  _id: string | null;
-  color: string | null;
-  name: string | null;
-  order: string | null;
-  type: string | null;
+  _id: string;
+  color: string;
+  name: string;
+  order: string;
+  type: string;
 
   constructor(
     _id?: string,
@@ -12,10 +12,14 @@ export class Status {
     order?: string,
     type?: string
   ) {
-    this._id = _id || null;
-    this.color = color || null;
-    this.name = name || null;
-    this.order = order || null;
-    this.type = type || null;
+    this._id = _id!;
+    this.color = color!;
+    this.name = name!;
+    this.order = order!;
+    this.type = type!;
   }
+
+  // init() {
+  //   return new Status(null!, '#ff9800', 'Черновик', null!, null!);
+  // }
 }

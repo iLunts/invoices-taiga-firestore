@@ -1,7 +1,7 @@
-import { Profile } from './profile.model';
 import { Contractor } from './contractor.model';
-import * as moment from 'moment';
+import { Profile } from './profile.model';
 import { Status } from './status.model';
+import * as moment from 'moment';
 
 export class Contract {
   _id: string;
@@ -13,7 +13,6 @@ export class Contract {
   date: string;
   number: number;
   profile: Profile;
-  // status: ContractStatus;
   status: Status;
   template: string;
 
@@ -25,21 +24,20 @@ export class Contract {
     template?: string,
     contractor?: Contractor,
     profile?: Profile,
-    // status?: ContractStatus,
     status?: Status,
     date?: string,
     number?: number
   ) {
-    this._id = _id || null!;
-    this._userId = _userId || null!;
-    this._invoiceId = _invoiceId || null!;
-    this._createdDate = _createdDate || moment().toString() || null!;
-    this.template = template || null!;
-    this.contractor = contractor || null!;
-    this.profile = profile || null!;
-    this.status = status || null!;
-    this.date = date || null!;
-    this.number = number || null!;
+    this._id = _id!;
+    this._userId = _userId!;
+    this._invoiceId = _invoiceId!;
+    this._createdDate = _createdDate || moment().toString();
+    this.template = template!;
+    this.contractor = contractor!;
+    this.profile = profile!;
+    this.status = status!;
+    this.date = date!;
+    this.number = number!;
   }
 }
 

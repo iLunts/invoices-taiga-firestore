@@ -1,4 +1,4 @@
-<!-- <app-header-create title="Создание акта"></app-header-create> -->
+<app-header-create title="Создание акта"></app-header-create>
 
 <tui-scrollbar class="page-body page-body--header-footer">
   <form class="tui-container tui-container_full" [formGroup]="form">
@@ -34,12 +34,12 @@
             Номер акта
           </tui-input-number>
 
-          <!-- <app-status-panel
+          <app-status-panel
             class="tui-form__multi-field"
             type="act"
             [status]="f.status.value"
             (changed)="setStatus($event)"
-          ></app-status-panel> -->
+          ></app-status-panel>
 
           <tui-input-date
             class="tui-form__multi-field"
@@ -54,24 +54,24 @@
         <div class="tui-form__row tui-form__row_multi-fields">
           <div class="tui-form__multi-field">
             <h3 class="tui-form__header">Арендодатель</h3>
-            <!-- <app-company-panel
+            <app-company-panel
               [company]="f.profileCompany.value"
               [isLoaded]="true"
-            ></app-company-panel> -->
+            ></app-company-panel>
           </div>
 
           <div class="tui-form__multi-field">
             <h3 class="tui-form__header">Арендодатель</h3>
-            <!-- <app-company-panel
+            <app-company-panel
               [company]="f.contractor.value"
               [isLoaded]="true"
-            ></app-company-panel> -->
+            ></app-company-panel>
 
-            <!-- <app-contract-panel
+            <app-contract-panel
               class="tui-space_top-4"
               [contractor]="f.contractor.value"
               (selected)="setContract($event)"
-            ></app-contract-panel> -->
+            ></app-contract-panel>
           </div>
         </div>
       </div>
@@ -93,14 +93,14 @@
       </div>
     </div>
 
-    <!-- <qrcode
+    <qrcode
       class="qr-code"
       #qrBlock
-      [qrdata]="f._id.value"
+      [qrdata]="form.get('_id')?.value"
       [width]="150"
       [errorCorrectionLevel]="'H'"
       [elementType]="'img'"
-    ></qrcode> -->
+    ></qrcode>
   </form>
 </tui-scrollbar>
 

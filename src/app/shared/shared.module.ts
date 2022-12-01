@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { QRCodeModule } from 'angularx-qrcode';
 
 import { EmptyModule } from './components/empty/empty.module';
 import { FluidHeightDirective } from './directives/fluid-height.directive';
@@ -9,28 +10,28 @@ import { StateInProgressDirective } from './directives/state-in-progress.directi
 @NgModule({
   declarations: [StateInProgressDirective, FluidHeightDirective],
   imports: [
-    CommonModule,
     // ComponentsModule,
-    EmptyModule,
-    FormsModule,
-    // QRCodeModule,
-    ReactiveFormsModule,
     // TaigaModule,
     // TextMaskModule,
     // TopMenuModule,
+    CommonModule,
+    EmptyModule,
+    FormsModule,
+    QRCodeModule,
+    ReactiveFormsModule,
   ],
   exports: [
-    CommonModule,
     // ComponentsModule,
-    EmptyModule,
-    FormsModule,
-    // QRCodeModule,
-    ReactiveFormsModule,
-    // StateInProgressDirective,
     // FluidHeightDirective,
+    // StateInProgressDirective,
     // TaigaModule,
     // TextMaskModule,
     // TopMenuModule,
+    CommonModule,
+    EmptyModule,
+    FormsModule,
+    QRCodeModule,
+    ReactiveFormsModule,
   ],
 })
 export class SharedModule {}

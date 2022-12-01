@@ -1,0 +1,20 @@
+<!-- <section>
+  <div *ngIf="!(company$ | async)?.info?.unp">
+    <tui-input ngDefaultControl [formControl]="unpControl"> УНП </tui-input>
+    <tui-error [error]="[] | tuiFieldError | async" [formControl]="unpControl"></tui-error>
+  </div>
+
+  <app-company-panel
+    *ngIf="company$ | async; let company"
+    [company]="company"
+    [isLoaded]="company"
+    [canChange]="canChange"
+    (onChange)="setCompany($event)"
+  ></app-company-panel>
+
+  <p *ngIf="(company$ | async)?._type === 2">
+    <tui-notification>
+      Для Индивидуального предпринимателя необходимо указать адрес.
+    </tui-notification>
+  </p>
+</section> -->

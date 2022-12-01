@@ -1,0 +1,59 @@
+<tui-loader
+  [showLoader]="!(contracts$ | async) && !(contracts$ | async) !== null"
+  [overlay]="true"
+  [inheritColor]="true"
+>
+  <form
+    *tuiLet="contracts$ | async as contracts"
+    class="b-form"
+    [formGroup]="form"
+  >
+    <tui-expand [expanded]="contracts?.length != undefined">
+      <tui-select
+        formControlName="contract"
+        [valueContent]="itemContent"
+        (ngModelChange)="selected.emit($event)"
+      >
+        Договор
+        <!-- <tui-data-list-wrapper
+          *tuiDataList
+          size="l"
+          [items]="contracts"
+          [itemContent]="itemContent"
+          [disabledItemHandler]="disabledItemHandler"
+        ></tui-data-list-wrapper> -->
+        <tui-data-list-wrapper
+          *tuiDataList
+          size="l"
+          [items]="contracts"
+          [itemContent]="itemContent"
+        ></tui-data-list-wrapper>
+      </tui-select>
+    </tui-expand>
+
+    <tui-expand
+      [expanded]="
+        !contracts?.length &&
+        (contracts$ | async) &&
+        (contracts$ | async) !== null
+      "
+    >
+      <ng-template tuiExpandContent>
+        <tui-notification class="tui-space_top-4" status="warning">
+          Вам нужно
+          <button tuiLink [pseudo]="true" (click)="openContractCreatePage()">
+            создать
+          </button>
+          хотя бы один договор для контрагента.
+        </tui-notification>
+      </ng-template>
+    </tui-expand>
+    <!-- <tui-field-error formControlName="contract"></tui-field-error> -->
+  </form>
+</tui-loader>
+
+<ng-template #itemContent let-data>
+  <div class="itemContent">
+    <div class="itemContent__name">Договор №{{ data?.number || "б.н." }}</div>
+  </div>
+</ng-template>

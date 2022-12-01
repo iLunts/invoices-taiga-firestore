@@ -1,0 +1,36 @@
+<ng-container *tuiLet="company$ | async as company">
+  <div class="company" *ngIf="company?.info?.unp">
+    <tui-avatar
+      class="company__avatar"
+      class="tui-space_right-3"
+      [text]="company?.info?.name!"
+      [autoColor]="true"
+      [rounded]="true"
+    >
+    </tui-avatar>
+
+    <div class="company__content">
+      <p class="company__subtitle tui-text_body-s">
+        УНП: {{ company?.info?.unp || "не установлено" }}
+      </p>
+      <h4
+        class="company__title tui-text_body-m tui-space_top-0 tui-space_bottom-0"
+      >
+        {{ company?.info?.shortName }}
+      </h4>
+    </div>
+
+    <button
+      *ngIf="canChange"
+      class="company__btn company__btn--change"
+      tuiButton
+      type="button"
+      class="tui-space_left-3"
+      appearance="outline"
+      size="m"
+      (click)="clearCompanyUnp()"
+    >
+      Изменить
+    </button>
+  </div>
+</ng-container>

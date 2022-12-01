@@ -30,6 +30,7 @@
     "@taiga-ui/kit": "^3.9.0",
     "@taiga-ui/styles": "^3.9.0",
     "@tinkoff/ng-dompurify": "3.0.0",
+    "angularx-qrcode": "^14.0.0",
     "dompurify": "2.2.9",
     "firebase": "^9.0.0",
     "lodash": "^4.17.21",

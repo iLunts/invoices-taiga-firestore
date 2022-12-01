@@ -69,14 +69,14 @@
       </div>
     </div>
 
-    <!-- <qrcode
+    <qrcode
       class="qr-code"
       #qrBlock
-      [qrdata]="f._id.value"
+      [qrdata]="form.get('_id')?.value"
       [width]="125"
       [errorCorrectionLevel]="'H'"
       [elementType]="'img'"
-    ></qrcode> -->
+    ></qrcode>
   </form>
 </tui-scrollbar>
 
