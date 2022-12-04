@@ -10,4 +10,4 @@ import { TuiButtonModule } from '@taiga-ui/core';
   imports: [CommonModule, TuiButtonModule],
   exports: [HeaderCreateComponent, HeaderListComponent],
 })
-export class HeaderModule {}
+export class HeaderComponentsModule {}

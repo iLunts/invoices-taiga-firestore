@@ -135,7 +135,7 @@ export class InvoicesCreateComponent implements OnInit, OnDestroy {
     return this.form.controls;
   }
 
-  setStatus(data: InvoiceStatus): void {
+  setStatus(data: InvoiceStatus | any): void {
     this.form.get('status')?.setValue(data);
   }
 

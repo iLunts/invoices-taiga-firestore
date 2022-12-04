@@ -45,14 +45,14 @@ const routes: Routes = [
               import('./act/act.module').then((m) => m.ActModule),
             canActivate: [AuthGuard, CompanyGuard],
           },
-          // {
-          //   path: 'rental-certificate',
-          //   loadChildren: () =>
-          //     import('./rental-certificate/rental-certificate.module').then(
-          //       (m) => m.RentalCertificateModule
-          //     ),
-          //   canActivate: [AuthGuard, CompanyGuard],
-          // },
+          {
+            path: 'rental-certificate',
+            loadChildren: () =>
+              import('./rental-certificate/rental-certificate.module').then(
+                (m) => m.RentalCertificateModule
+              ),
+            canActivate: [AuthGuard, CompanyGuard],
+          },
         ],
       },
       {

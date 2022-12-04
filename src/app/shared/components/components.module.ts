@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 // import { CompanyModule } from './company/company.module';
 import { ContractorModule } from './contractor/contractor.module';
 import { EmptyModule } from './empty/empty.module';
-import { HeaderModule } from './header/header.module';
+import { HeaderComponentsModule } from './header/header.module';
 // import { InvoiceModule } from './invoice/invoice.module';
 // import { LeftMenuModule } from './left-menu/left-menu.module';
 // import { PagesModule } from '../pages/pages.module';
@@ -26,7 +26,7 @@ import { HeaderModule } from './header/header.module';
     // LeftMenuModule,
     // PagesModule,
     RouterModule,
-    HeaderModule,
+    HeaderComponentsModule,
     // ServiceModule,
     // StatusModule,
     // UploadImageModule
@@ -39,7 +39,7 @@ import { HeaderModule } from './header/header.module';
     // InvoiceModule,
     // LeftMenuModule,
     // PagesModule,
-    HeaderModule,
+    HeaderComponentsModule,
     RouterModule,
     // ServiceModule,
     // StatusModule,
