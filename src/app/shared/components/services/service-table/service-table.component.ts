@@ -10,13 +10,14 @@ import {
   ControlValueAccessor,
   FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   NgControl,
   Validators,
 } from '@angular/forms';
 import { TuiDay, TuiDestroyService } from '@taiga-ui/cdk';
 import { TUI_ARROW } from '@taiga-ui/kit';
-import { filter, map, Observable } from 'rxjs';
+import { filter, map, Observable, tap } from 'rxjs';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 
@@ -201,17 +202,12 @@ export class ServiceTableComponent implements OnInit, ControlValueAccessor {
   initDate(): any {
     let format = 'DD.MM.YYYY';
     if (this.form) {
-      // let lastIndex = this.getFormArray.length - 1;
-      let lastIndex = this.tableRowArray.length;
-      debugger;
-      //   let date =
-      //     this.form.get('tableRowArray')['controls'][lastIndex].controls.date
-      //       .value;
-      //   return TuiDay.normalizeParse(moment(date).add(1, 'day').format(format));
+      let lastIndex = this.tableRowArray.length - 1;
+      const date = this.tableRowArray.at(lastIndex).value.date;
+      return TuiDay.normalizeParse(moment(date).add(1, 'day').format(format));
     } else {
       return TuiDay.normalizeParse(moment().format(format));
     }
-    return null;
   }
 
   convertDate(date: any): TuiDay {
@@ -280,6 +276,10 @@ export class ServiceTableComponent implements OnInit, ControlValueAccessor {
     return this.form.get('tableRowArray') as FormArray;
   }
 
+  getFormArray(index: number): any {
+    return this.tableRowArray.at(index).value;
+  }
+
   groupService(services: Service[]): any[] {
     var result = _.chain(services)
       .groupBy('groupName')
@@ -294,7 +294,9 @@ export class ServiceTableComponent implements OnInit, ControlValueAccessor {
 
   onEnabled(state: any): void {}
 
-  deleteRow(index: number): void {}
+  deleteRow(index: number): void {
+    this.tableRowArray.removeAt(index);
+  }
 
   addNewRow(serviceItem?: Service): void {
     this.tableRowArray.push(this.createTableRow(serviceItem));

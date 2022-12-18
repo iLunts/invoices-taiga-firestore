@@ -8,3 +8,47 @@
   justify-content: flex-end;
   margin-bottom: 0.5rem;
 }
+
+.cell {
+  &&--date {
+    width: 145px;
+    flex: 0 0 145px;
+  }
+
+  &&--count {
+    width: 90px;
+    flex: 0 0 90px;
+    text-align: right;
+  }
+
+  &&--count,
+  &&--unit {
+    width: 100px;
+    flex: 0 0 150px;
+    // text-align: right;
+  }
+
+  &&--price,
+  &&--sum {
+    width: 150px;
+    flex: 0 0 150px;
+  }
+
+  &&--price {
+    text-align: right;
+  }
+
+  &&--delete {
+    padding: 0;
+    max-width: 56px;
+    color: var(--tui-base-05);
+    text-align: center;
+
+    &._hovered {
+      color: var(--tui-base-03);
+    }
+    &._pressed {
+      color: var(--tui-accent-active);
+    }
+  }
+}

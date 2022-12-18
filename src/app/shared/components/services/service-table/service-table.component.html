@@ -29,6 +29,7 @@
         <th tuiTh>Кол-во</th>
         <th tuiTh>Цена</th>
         <th tuiTh>Сумма</th>
+        <th tuiTh></th>
       </tr>
     </thead>
     <tbody>
@@ -40,9 +41,9 @@
         "
         [formGroupName]="i"
       >
-        <td tuiTd>
+        <td tuiTd class="cell cell--date">
           <tui-input-date
-            class="cell cell_date _isEditable"
+            class="_isEditable"
             tuiTextfieldSize="m"
             formControlName="date"
             *ngIf="!hideDateColumn"
@@ -75,136 +76,55 @@
             </tui-data-list>
           </tui-select>
         </td>
-        <td tuiTd formGroupName="unit">
-          <tui-input [readOnly]="true" formControlName="shortName"></tui-input>
+        <td tuiTd formGroupName="unit" class="cell cell--unit">
+          <tui-input
+            [readOnly]="true"
+            tuiTextfieldSize="m"
+            formControlName="shortName"
+          ></tui-input>
         </td>
-        <td tuiTd formGroupName="count">
+        <td tuiTd formGroupName="count" class="cell cell--count">
           <tui-input-count
             formControlName="amount"
             [readOnly]="true"
+            [class._isEditable]="getFormArray(i)?.count?.isEditable"
+            [readOnly]="!getFormArray(i)?.count?.isEditable"
+            (ngModelChange)="calculateSum(itemRow, i)"
           ></tui-input-count>
         </td>
-        <td tuiTd formGroupName="price">
-          <tui-input-number [readOnly]="true" formControlName="amount">
+        <td tuiTd formGroupName="price" class="cell cell--price">
+          <tui-input-number
+            formControlName="amount"
+            [class._isEditable]="getFormArray(i)?.isFreePrice"
+            [readOnly]="getFormArray(i)?.isFreePrice != true"
+            (ngModelChange)="calculateSum(itemRow, i)"
+          >
           </tui-input-number>
         </td>
-        <td tuiTd formGroupName="totalSum">
-          <tui-input-number [readOnly]="true" formControlName="amount">
+        <td tuiTd formGroupName="totalSum" class="cell cell--sum">
+          <tui-input-number
+            formControlName="amount"
+            tuiTextfieldSize="m"
+            [readOnly]="true"
+          >
           </tui-input-number>
+        </td>
+        <td tuiTd class="cell cell--delete">
+          <button
+            appearance="icon"
+            tuiIconButton
+            [icon]="
+              tableRowArray.length === 1 ? 'tuiIconMinus' : 'tuiIconTrash'
+            "
+            type="button"
+            size="s"
+            (click)="deleteRow(i)"
+            [disabled]="tableRowArray.length === 1"
+          ></button>
         </td>
       </tr>
     </tbody>
   </table>
-
-  <!-- <div class="table" formArrayName="tableRowArray">
-    <div
-      tuiGroup
-      class="row"
-      [collapsed]="true"
-      *ngFor="
-        let itemRow of form.get('tableRowArray')['controls'];
-        let i = index;
-        let l = last
-      "
-      [formGroupName]="i"
-    >
-      <tui-input-date
-        class="cell cell_date _isEditable"
-        tuiTextfieldSize="m"
-        formControlName="date"
-        *ngIf="!hideDateColumn"
-      >
-        Дата
-      </tui-input-date>
-
-      <tui-select
-        #select
-        formControlName="name"
-        [valueContent]="valueContent"
-        (ngModelChange)="selectedService($event, i)"
-      >
-        Название
-        <tui-data-list *tuiDataList>
-          <tui-opt-group
-            [label]="serviceGroups[0]"
-            *ngFor="let serviceGroups of services"
-          >
-            <button
-              *ngFor="let service of serviceGroups[1]"
-              tuiOption
-              [value]="service"
-              class="btn-menu-item"
-            >
-              {{ service.name }}
-            </button>
-          </tui-opt-group>
-        </tui-data-list>
-      </tui-select>
-
-      <ng-container formGroupName="unit">
-        <tui-input
-          class="cell cell_count"
-          tuiTextfieldSize="m"
-          formControlName="shortName"
-          [readOnly]="true"
-        >
-          Ед. изм.
-        </tui-input>
-      </ng-container>
-
-      <ng-container formGroupName="count">
-        <tui-input-count
-          class="cell cell_count"
-          [class._isEditable]="
-            getFormArray(i)?.count?.controls?.isEditable.value
-          "
-          tuiTextfieldSize="m"
-          formControlName="amount"
-          [readOnly]="!getFormArray(i)?.count?.controls?.isEditable.value"
-          (ngModelChange)="calculateSum(itemRow, i)"
-        >
-          Кол-во
-        </tui-input-count>
-      </ng-container>
-
-      <ng-container formGroupName="price">
-        <tui-input-count
-          class="cell cell_price"
-          [class._isEditable]="getFormArray(i)?.isFreePrice?.value"
-          tuiTextfieldSize="m"
-          formControlName="amount"
-          [readOnly]="getFormArray(i)?.isFreePrice?.value != true"
-          (ngModelChange)="calculateSum(itemRow, i)"
-        >
-          Цена
-        </tui-input-count>
-      </ng-container>
-
-      <ng-container formGroupName="totalSum">
-        <tui-input-number
-          class="cell cell_price"
-          tuiTextfieldSize="m"
-          formControlName="amount"
-          [readOnly]="true"
-        >
-          Сумма
-        </tui-input-number>
-      </ng-container>
-      <button
-        class="cell cell_delete"
-        appearance="buttonDeleteRow"
-        tuiIconButton
-        [icon]="
-          form.get('tableRowArray').length === 1
-            ? 'tuiIconHrLarge'
-            : 'tuiIconTrashLarge'
-        "
-        type="button"
-        (click)="deleteRow(i)"
-        [disabled]="form.get('tableRowArray').length === 1"
-      ></button>
-    </div>
-  </div> -->
 </form>
 
 <button
