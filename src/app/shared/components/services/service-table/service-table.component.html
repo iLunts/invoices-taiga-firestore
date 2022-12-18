@@ -1,0 +1,239 @@
+<form
+  tuiTableMode
+  tuiTextfieldSize="m"
+  [formGroup]="form"
+  *tuiLet="serviceListData$ | async as services"
+>
+  <div class="table-filters">
+    <tui-hosted-dropdown [content]="dropdown" [canOpen]="false">
+      <button tuiButton size="s" [iconRight]="arrow" [disabled]="true">
+        Колонки
+      </button>
+      <ng-template #dropdown>
+        <tui-reorder
+          class="columns"
+          [enabled]="enabled"
+          [(items)]="columns"
+          (enabledChange)="onEnabled($event)"
+        ></tui-reorder>
+      </ng-template>
+    </tui-hosted-dropdown>
+  </div>
+
+  <table tuiTable class="table" formArrayName="tableRowArray">
+    <thead>
+      <tr>
+        <th tuiTh>Дата</th>
+        <th tuiTh>Название</th>
+        <th tuiTh>Ед. из.</th>
+        <th tuiTh>Кол-во</th>
+        <th tuiTh>Цена</th>
+        <th tuiTh>Сумма</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let itemRow of tableRowArray.controls;
+          let i = index;
+          let l = last
+        "
+        [formGroupName]="i"
+      >
+        <td tuiTd>
+          <tui-input-date
+            class="cell cell_date _isEditable"
+            tuiTextfieldSize="m"
+            formControlName="date"
+            *ngIf="!hideDateColumn"
+          >
+            Дата
+          </tui-input-date>
+        </td>
+        <td tuiTd>
+          <tui-select
+            #select
+            formControlName="name"
+            [valueContent]="valueContent"
+            (ngModelChange)="selectedService($event, i)"
+          >
+            Название
+            <tui-data-list *tuiDataList>
+              <tui-opt-group
+                [label]="serviceGroups.groupName"
+                *ngFor="let serviceGroups of services"
+              >
+                <button
+                  *ngFor="let service of serviceGroups.items"
+                  tuiOption
+                  [value]="service"
+                  class="btn-menu-item"
+                >
+                  {{ service.name }}
+                </button>
+              </tui-opt-group>
+            </tui-data-list>
+          </tui-select>
+        </td>
+        <td tuiTd formGroupName="unit">
+          <tui-input [readOnly]="true" formControlName="shortName"></tui-input>
+        </td>
+        <td tuiTd formGroupName="count">
+          <tui-input-count
+            formControlName="amount"
+            [readOnly]="true"
+          ></tui-input-count>
+        </td>
+        <td tuiTd formGroupName="price">
+          <tui-input-number [readOnly]="true" formControlName="amount">
+          </tui-input-number>
+        </td>
+        <td tuiTd formGroupName="totalSum">
+          <tui-input-number [readOnly]="true" formControlName="amount">
+          </tui-input-number>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- <div class="table" formArrayName="tableRowArray">
+    <div
+      tuiGroup
+      class="row"
+      [collapsed]="true"
+      *ngFor="
+        let itemRow of form.get('tableRowArray')['controls'];
+        let i = index;
+        let l = last
+      "
+      [formGroupName]="i"
+    >
+      <tui-input-date
+        class="cell cell_date _isEditable"
+        tuiTextfieldSize="m"
+        formControlName="date"
+        *ngIf="!hideDateColumn"
+      >
+        Дата
+      </tui-input-date>
+
+      <tui-select
+        #select
+        formControlName="name"
+        [valueContent]="valueContent"
+        (ngModelChange)="selectedService($event, i)"
+      >
+        Название
+        <tui-data-list *tuiDataList>
+          <tui-opt-group
+            [label]="serviceGroups[0]"
+            *ngFor="let serviceGroups of services"
+          >
+            <button
+              *ngFor="let service of serviceGroups[1]"
+              tuiOption
+              [value]="service"
+              class="btn-menu-item"
+            >
+              {{ service.name }}
+            </button>
+          </tui-opt-group>
+        </tui-data-list>
+      </tui-select>
+
+      <ng-container formGroupName="unit">
+        <tui-input
+          class="cell cell_count"
+          tuiTextfieldSize="m"
+          formControlName="shortName"
+          [readOnly]="true"
+        >
+          Ед. изм.
+        </tui-input>
+      </ng-container>
+
+      <ng-container formGroupName="count">
+        <tui-input-count
+          class="cell cell_count"
+          [class._isEditable]="
+            getFormArray(i)?.count?.controls?.isEditable.value
+          "
+          tuiTextfieldSize="m"
+          formControlName="amount"
+          [readOnly]="!getFormArray(i)?.count?.controls?.isEditable.value"
+          (ngModelChange)="calculateSum(itemRow, i)"
+        >
+          Кол-во
+        </tui-input-count>
+      </ng-container>
+
+      <ng-container formGroupName="price">
+        <tui-input-count
+          class="cell cell_price"
+          [class._isEditable]="getFormArray(i)?.isFreePrice?.value"
+          tuiTextfieldSize="m"
+          formControlName="amount"
+          [readOnly]="getFormArray(i)?.isFreePrice?.value != true"
+          (ngModelChange)="calculateSum(itemRow, i)"
+        >
+          Цена
+        </tui-input-count>
+      </ng-container>
+
+      <ng-container formGroupName="totalSum">
+        <tui-input-number
+          class="cell cell_price"
+          tuiTextfieldSize="m"
+          formControlName="amount"
+          [readOnly]="true"
+        >
+          Сумма
+        </tui-input-number>
+      </ng-container>
+      <button
+        class="cell cell_delete"
+        appearance="buttonDeleteRow"
+        tuiIconButton
+        [icon]="
+          form.get('tableRowArray').length === 1
+            ? 'tuiIconHrLarge'
+            : 'tuiIconTrashLarge'
+        "
+        type="button"
+        (click)="deleteRow(i)"
+        [disabled]="form.get('tableRowArray').length === 1"
+      ></button>
+    </div>
+  </div> -->
+</form>
+
+<button
+  tuiButton
+  type="button"
+  size="s"
+  class="tui-space_right-3 tui-space_bottom-3 tui-space_top-3 btn-add"
+  (click)="addNewRow()"
+  [disabled]="form.invalid"
+>
+  Добавить строку
+</button>
+
+<pre>{{ form.get("tableRowArray")?.value | json }}</pre>
+
+<!-- <pre>{{ serviceListData$ | async | json }}</pre> -->
+
+<ng-template #valueContent let-data>
+  <div class="itemContent">
+    <div class="itemContent__name">{{ data?.name }}</div>
+  </div>
+</ng-template>
+
+<!-- <ng-template #itemContent let-data>
+  <div class="itemContent">
+    <div class="itemContent__name">{{ data?.name }}</div>
+    <tui-money
+      class="itemContent__amount"
+      [value]="data.price.amount"
+    ></tui-money>
+  </div>
+</ng-template> -->

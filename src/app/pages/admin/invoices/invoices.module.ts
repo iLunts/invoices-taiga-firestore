@@ -9,6 +9,7 @@ import { InvoicesCreateComponent } from './create/create.component';
 import { ComponentsModule } from 'src/app/shared/components/components.module';
 import { StatusModule } from 'src/app/shared/components/status/status.module';
 import { CompanyModule } from 'src/app/shared/components/company/company.module';
+import { ServicesModule } from 'src/app/shared/components/services/services.module';
 // import { ContractorModule } from 'src/app/shared/components/contractor/contractor.module';
 // import { HeaderModule } from '../components/header/header.module';
 // import { BreadcrumbsModule } from 'src/app/shared/components/breadcrumbs/breadcrumbs.module';
@@ -24,6 +25,7 @@ import { CompanyModule } from 'src/app/shared/components/company/company.module'
     TaigaSharedModule,
     ComponentsModule,
     StatusModule,
+    ServicesModule,
     CompanyModule,
   ],
 })
