@@ -25,7 +25,6 @@
   &&--unit {
     width: 100px;
     flex: 0 0 150px;
-    // text-align: right;
   }
 
   &&--price,
@@ -50,5 +49,26 @@
     &._pressed {
       color: var(--tui-accent-active);
     }
+  }
+}
+
+:host ::ng-deep {
+  [tuiWrapper][data-appearance="table"] {
+    .t-input {
+      white-space: normal;
+    }
+
+    .itemContent .itemContent__name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+  }
+
+  ._isEditable [tuiWrapper][data-appearance="table"] {
+    font-weight: 600;
+    color: #3b82f6;
   }
 }

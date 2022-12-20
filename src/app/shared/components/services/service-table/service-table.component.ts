@@ -10,19 +10,19 @@ import {
   ControlValueAccessor,
   FormArray,
   FormBuilder,
-  FormControl,
   FormGroup,
   NgControl,
   Validators,
 } from '@angular/forms';
 import { TuiDay, TuiDestroyService } from '@taiga-ui/cdk';
 import { TUI_ARROW } from '@taiga-ui/kit';
-import { filter, map, Observable, tap } from 'rxjs';
+import { filter, map, Observable, takeUntil, tap } from 'rxjs';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 
 import { Service, ServiceGrouped } from 'src/app/models/service.model';
 import { ServicesService } from 'src/app/services/services.service';
+import { DateHelper } from 'src/app/utils/date.helper';
 
 @Component({
   selector: 'app-service-table',
@@ -73,16 +73,22 @@ export class ServiceTableComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit(): void {}
 
-  writeValue(obj: any): void {
-    debugger;
-    // this.publishEntryStoreService.init(obj);
+  writeValue(services: Service[]): void {
+    if (services) {
+      services.forEach((service) => {
+        this.addNewRow(service);
+      });
+      this.tableRowArray.removeAt(0);
+    }
   }
 
   registerOnChange(fn: any): void {
-    debugger;
-    // this.publishEntryStoreService.dataChanged$
-    //   .pipe(takeUntil(this.destroyed$))
-    //   .subscribe((x) => fn(x));
+    this.form.valueChanges
+      .pipe(
+        map((form) => form.tableRowArray),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((x) => (this.form.valid ? fn(x) : fn([])));
   }
 
   registerOnTouched(fn: () => void): void {
@@ -99,7 +105,9 @@ export class ServiceTableComponent implements OnInit, ControlValueAccessor {
         validators: [Validators.required],
       }),
       date: this.fb.control(
-        serviceItem ? this.convertDate(serviceItem?.date) : this.initDate(),
+        serviceItem
+          ? DateHelper.convertDateToTuiDay(serviceItem?.date)
+          : this.initDate(),
         {
           validators: [Validators.required],
         }
@@ -167,35 +175,20 @@ export class ServiceTableComponent implements OnInit, ControlValueAccessor {
   }
 
   selectedService(event: Service, index: number): void {
-    const listControl = this.form.get('tableRowArray') as FormArray;
-    const control = listControl.at(index);
+    const control = this.tableRowArray.at(index);
 
-    // Count
     control.get('count')?.setValue(event.count);
-
-    // Price
     control.get('price')?.setValue(event.price);
-
-    // isFreePrice
     control.get('isFreePrice')?.setValue(event.isFreePrice);
-
-    // Unit
     control.get('unit')?.setValue(event.unit);
-
-    // Tax
     control.get('tax')?.setValue(event.tax);
-
-    // Total
     control
       .get('totalSum')
       ?.get('amount')
       ?.setValue(event.price.amount * event.count.amount);
     control.get('totalSum')?.get('currency')?.setValue(event.price.currency);
-
-    // TotalTax
     control.get('totalTax')?.get('currency')?.setValue(event.price.currency);
 
-    // Calculate
     this.calculate(index);
   }
 
@@ -207,18 +200,6 @@ export class ServiceTableComponent implements OnInit, ControlValueAccessor {
       return TuiDay.normalizeParse(moment(date).add(1, 'day').format(format));
     } else {
       return TuiDay.normalizeParse(moment().format(format));
-    }
-  }
-
-  convertDate(date: any): TuiDay {
-    if (date) {
-      if (typeof date === 'string') {
-        return TuiDay.jsonParse(date.toString());
-      } else {
-        return date;
-      }
-    } else {
-      return null!;
     }
   }
 

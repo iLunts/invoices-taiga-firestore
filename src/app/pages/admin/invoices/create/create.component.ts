@@ -23,6 +23,7 @@ import { InvoiceService } from 'src/app/services/invoice.service';
 import { Service } from 'src/app/models/service.model';
 import { StoreService } from 'src/app/services/store.service';
 import { swallowErrors } from 'src/app/utils/rxjs.helper';
+import { TuiDay } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-invoices-create',
@@ -158,10 +159,10 @@ export class InvoicesCreateComponent implements OnInit, OnDestroy {
   }
 
   setForm(invoice: Invoice): void {
+    invoice.dateRange = DateHelper.convertDateRangeToTuiDayRange(
+      invoice.dateRange!
+    );
     this.form.patchValue(invoice);
-    this.form
-      .get('dateRange')
-      ?.setValue(DateHelper.convertDateRangeToTuiDayRange(invoice.dateRange!));
   }
 
   cancel(): void {

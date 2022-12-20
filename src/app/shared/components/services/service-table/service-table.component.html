@@ -41,11 +41,12 @@
         "
         [formGroupName]="i"
       >
-        <td tuiTd class="cell cell--date">
+        <td tuiTd class="cell cell--date _isEditable">
           <tui-input-date
             class="_isEditable"
             tuiTextfieldSize="m"
             formControlName="date"
+            tuiHint="Поле можно редактировать"
             *ngIf="!hideDateColumn"
           >
             Дата
@@ -87,6 +88,14 @@
           <tui-input-count
             formControlName="amount"
             [readOnly]="true"
+            [tuiHint]="
+              getFormArray(i)?.count?.isEditable
+                ? 'Поле можно редактировать'
+                : 'Поле нельзя редактировать'
+            "
+            [tuiHintAppearance]="
+              getFormArray(i)?.count?.isEditable ? '' : 'error'
+            "
             [class._isEditable]="getFormArray(i)?.count?.isEditable"
             [readOnly]="!getFormArray(i)?.count?.isEditable"
             (ngModelChange)="calculateSum(itemRow, i)"
@@ -97,6 +106,12 @@
             formControlName="amount"
             [class._isEditable]="getFormArray(i)?.isFreePrice"
             [readOnly]="getFormArray(i)?.isFreePrice != true"
+            [tuiHint]="
+              getFormArray(i)?.isFreePrice
+                ? 'Поле можно редактировать'
+                : 'Поле нельзя редактировать'
+            "
+            [tuiHintAppearance]="getFormArray(i)?.isFreePrice ? '' : 'error'"
             (ngModelChange)="calculateSum(itemRow, i)"
           >
           </tui-input-number>
@@ -138,9 +153,7 @@
   Добавить строку
 </button>
 
-<pre>{{ form.get("tableRowArray")?.value | json }}</pre>
-
-<!-- <pre>{{ serviceListData$ | async | json }}</pre> -->
+<!-- <pre>{{ form.get("tableRowArray")?.value | json }}</pre> -->
 
 <ng-template #valueContent let-data>
   <div class="itemContent">

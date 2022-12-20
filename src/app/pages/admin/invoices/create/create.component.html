@@ -17,8 +17,8 @@
       <tui-input-date-range
         class="tui-col_xs-12 tui-col_s-1 tui-col_sm-1 tui-col_md-5 tui-col_lg-5"
         tuiUnfinishedValidator="Finish filling the field"
-        formControlName="dateRange"
         [min]="initDay"
+        formControlName="dateRange"
         [minLength]="{ day: 3 }"
         [maxLength]="{ month: 1 }"
         tuiHintContent="минимальный диапазон 3 дня, максимальный диапазон: 1 месяц"
@@ -66,7 +66,12 @@
           [services]="f.services.value"
           (selected)="setService($event)"
         ></app-service-table> -->
-        <app-service-table></app-service-table>
+
+        <form [formGroup]="form">
+          <app-service-table formControlName="services"></app-service-table>
+
+          <pre>{{ form.get("services")?.value | json }}</pre>
+        </form>
       </div>
     </div>
 
@@ -96,7 +101,7 @@
     type="button"
     class="tui-space_right-3"
     (click)="save()"
-    [disabled]="!form.valid && form.pristine"
+    [disabled]="!form.valid"
   >
     {{ isEdit ? "Изменить" : "Создать" }}
   </button>
