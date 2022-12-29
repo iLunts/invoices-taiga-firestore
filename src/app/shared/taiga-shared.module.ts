@@ -5,6 +5,7 @@ import {
   TuiButtonModule,
   TuiDataListModule,
   TuiDialogModule,
+  TuiDropdownModule,
   TuiFormatNumberPipeModule,
   TuiHintModule,
   TuiHostedDropdownModule,
@@ -77,6 +78,7 @@ import { TuiEditorModule } from '@taiga-ui/addon-editor';
     TuiTabsModule,
     TuiTextAreaModule,
     TuiTextfieldControllerModule,
+    TuiDropdownModule,
   ],
   exports: [
     TuiActiveZoneModule,
@@ -114,6 +116,7 @@ import { TuiEditorModule } from '@taiga-ui/addon-editor';
     TuiTabsModule,
     TuiTextAreaModule,
     TuiTextfieldControllerModule,
+    TuiDropdownModule,
   ],
 })
 export class TaigaSharedModule {}
