@@ -1,21 +1,8 @@
-<!-- TODO: (Taiga UI migration) tuiFormatNumber pipe has new API. See https://taiga-ui.dev/pipes/format-number -->
 <app-header-list
   title="Акты"
   description="Создавайте акты с различными товарами или услугами для разнличных контрагентов"
 >
   <div action>
-    <!-- <button
-      class="tui-space_left-5"
-      tuiButton
-      size="m"
-      icon="tuiIconPlus"
-      title="Создать новый"
-      [routerLink]="[routing.admin.act.create]"
-      [queryParams]="{ lastIndex: (lastIndex$ | async)?.number }"
-      [disabled]="(indicator$ | async)?.loading || !(contractor$ | async)"
-    >
-      Создать новый
-    </button> -->
     <button
       class="tui-space_left-5"
       tuiButton
@@ -24,6 +11,7 @@
       title="Создать новый"
       [routerLink]="[routing.admin.act.create]"
       [queryParams]="{ lastIndex: (lastIndex$ | async)?.number }"
+      [disabled]="(indicator$ | async)?.loading || !(contractor$ | async)"
     >
       Создать новый
     </button>
@@ -107,6 +95,7 @@
                     *tuiHead="'action'"
                     tuiTh
                     [resizable]="true"
+                    [sorter]="null"
                   ></th>
                 </tr>
               </thead>
@@ -120,7 +109,7 @@
                     № <b>{{ item?.number! || "Б.н." }}</b>
                   </td>
                   <td class="tui-table__td" *tuiCell="'date'" tuiTd>
-                    <b>{{ item?.date | date: "dd MMM yyyy" }}</b>
+                    <b>{{ item?.date | date : "dd MMM yyyy" }}</b>
                   </td>
                   <td class="tui-table__td" *tuiCell="'status'" tuiTd>
                     <tui-badge
@@ -145,16 +134,6 @@
                     *tuiCell="'action'"
                     tuiTd
                   >
-                    <!-- <button
-                      tuiIconButton
-                      appearance="flat"
-                      size="s"
-                      icon="tuiIconDownload"
-                      title="Скачать PDF"
-                      shape="rounded"
-                      [disabled]="(indicator | async)?.loading"
-                      (click)="downloadPdf(item)"
-                    ></button> -->
                     <button
                       tuiIconButton
                       appearance="flat"
@@ -162,6 +141,7 @@
                       icon="tuiIconDownload"
                       title="Скачать PDF"
                       shape="rounded"
+                      [disabled]="(indicator$ | async)?.loading!"
                       (click)="downloadPdf(item)"
                     ></button>
                     <button
@@ -171,18 +151,9 @@
                       icon="tuiIconTrash"
                       title="Удалить"
                       shape="rounded"
+                      [disabled]="(indicator$ | async)?.loading!"
                       (click)="openDeleteModal(item, dialogDelete)"
                     ></button>
-                    <!-- <button
-                      tuiIconButton
-                      appearance="flat"
-                      size="s"
-                      icon="tuiIconTrash"
-                      title="Удалить"
-                      shape="rounded"
-                      [disabled]="(indicator | async)?.loading"
-                      (click)="openDeleteModal(item, dialogDelete)"
-                    ></button> -->
                   </td>
                 </tr>
               </tbody>

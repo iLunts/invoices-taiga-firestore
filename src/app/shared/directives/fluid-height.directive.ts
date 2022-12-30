@@ -13,7 +13,7 @@ import { debounceTime, throttleTime } from 'rxjs/operators';
 })
 export class FluidHeightDirective implements AfterViewInit {
   @Input() minHeight!: number;
-  @Input('fluidHeight') topOffset!: number;
+  @Input('fluidHeight') topOffset!: any;
 
   private domElement: HTMLElement;
 

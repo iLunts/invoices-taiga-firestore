@@ -1,4 +1,3 @@
-<!-- TODO: (Taiga UI migration) tuiFormatNumber pipe has new API. See https://taiga-ui.dev/pipes/format-number -->
 <app-header-list
   title="Счета и платежи"
   description="Просматривайте все свои счета и платежи и убедитесь, что вы получаете оплату счетов вовремя."
@@ -12,6 +11,7 @@
       title="Создать новый"
       [routerLink]="[routing.admin.invoice.create]"
       [queryParams]="{ lastIndex: (lastIndex$ | async)?.number }"
+      [disabled]="(indicator$ | async)?.loading || !(contractor$ | async)"
     >
       Создать новый
     </button>
@@ -153,6 +153,7 @@
                       icon="tuiIconDownload"
                       title="Скачать PDF"
                       shape="rounded"
+                      [disabled]="(indicator$ | async)?.loading!"
                       (click)="downloadPdf(item)"
                     ></button>
                     <button
@@ -167,6 +168,7 @@
                         cloneId: item._id,
                         lastIndex: (lastIndex$ | async)?.number
                       }"
+                      [disabled]="(indicator$ | async)?.loading!"
                     ></button>
                     <tui-hosted-dropdown #dropdown [content]="content">
                       <button
@@ -177,6 +179,7 @@
                         type="button"
                         shape="rounded"
                         [pseudoHover]="dropdown.open || null"
+                        [disabled]="(indicator$ | async)?.loading!"
                       ></button>
                     </tui-hosted-dropdown>
                     <ng-template #content let-activeZone>
@@ -214,21 +217,15 @@
                               routing.admin.invoice.edit,
                               item._id
                             ]"
+                            [disabled]="(indicator$ | async)?.loading!"
                           >
                             Изменить
                           </button>
-                          <!-- <button
-                            class="btn-delete"
-                            tuiOption
-                            (click)="openDeleteModal(item, dialogDelete)"
-                            [disabled]="(indicator$ | async)?.loading"
-                          >
-                            Удалить
-                          </button> -->
                           <button
                             class="btn-delete"
                             tuiOption
                             (click)="openDeleteModal(item, dialogDelete)"
+                            [disabled]="(indicator$ | async)?.loading!"
                           >
                             Удалить
                           </button>

@@ -101,6 +101,7 @@
                     *tuiHead="'action'"
                     tuiTh
                     [resizable]="true"
+                    [sorter]="null"
                   ></th>
                 </tr>
               </thead>
@@ -115,8 +116,8 @@
                 </td> -->
                   <td class="tui-table__td" *tuiCell="'date'" tuiTd>
                     <b
-                      >{{ item.dateRange.from | date: "dd MMM yyyy" }} -
-                      {{ item.dateRange.to | date: "dd MMM yyyy" }}</b
+                      >{{ item.dateRange.from | date : "dd MMM yyyy" }} -
+                      {{ item.dateRange.to | date : "dd MMM yyyy" }}</b
                     >
                   </td>
                   <td class="tui-table__td" *tuiCell="'status'" tuiTd>
@@ -149,17 +150,9 @@
                       icon="tuiIconDownload"
                       title="Скачать PDF"
                       shape="rounded"
+                      [disabled]="(indicator$ | async)?.loading!"
                       (click)="downloadPdf(item)"
                     ></button>
-                    <!-- <button
-                    tuiIconButton
-                    appearance="flat"
-                    size="s"
-                    icon="tuiIconTrash"
-                    title="Удалить"
-                    shape="rounded"
-                    (click)="delete(item)"
-                  ></button> -->
                     <tui-hosted-dropdown #dropdown [content]="content">
                       <button
                         tuiIconButton
@@ -168,6 +161,7 @@
                         icon="tuiIconMoreVer"
                         type="button"
                         shape="rounded"
+                        [disabled]="(indicator$ | async)?.loading!"
                         [pseudoHover]="dropdown.open || null"
                       ></button>
                     </tui-hosted-dropdown>

@@ -22,7 +22,7 @@ import { StateInProgressDirective } from './directives/state-in-progress.directi
   ],
   exports: [
     // ComponentsModule,
-    // FluidHeightDirective,
+    FluidHeightDirective,
     // StateInProgressDirective,
     // TaigaModule,
     // TextMaskModule,

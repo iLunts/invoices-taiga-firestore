@@ -5,7 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-// import { indicate, IndicatorBehaviorSubject } from 'ngx-ready-set-go';
+import { indicate, IndicatorBehaviorSubject } from 'ngx-ready-set-go';
 import { Observable, Subject } from 'rxjs';
 import {
   distinctUntilChanged,
@@ -61,7 +61,7 @@ export class ActListComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly destroy$ = new Subject();
   acts$!: Observable<any>;
   actStatuses$!: Observable<any>;
-  // indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
+  indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
   contractor$: Observable<Contractor>;
 
   constructor(
@@ -126,7 +126,7 @@ export class ActListComponent implements OnInit, AfterViewInit, OnDestroy {
         required: false,
         data: item,
       })
-      // .pipe(indicate(this.indicator$))
+      .pipe(indicate(this.indicator$))
       .subscribe({
         next: (data) => {
           this.delete(item);

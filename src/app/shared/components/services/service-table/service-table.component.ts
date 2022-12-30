@@ -114,7 +114,7 @@ export class ServiceTableComponent implements OnInit, ControlValueAccessor {
       ),
       count: this.fb.group({
         amount: this.fb.control(serviceItem?.count.amount || null, {
-          validators: [Validators.required],
+          validators: [Validators.required, Validators.min(1)],
         }),
         isEditable: this.fb.control(serviceItem?.count.isEditable, {
           validators: [Validators.required],

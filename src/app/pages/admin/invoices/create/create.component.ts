@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateHelper } from 'src/app/utils/date.helper';
 import { environment } from 'src/environments/environment';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import {
   filter,
@@ -23,7 +23,6 @@ import { InvoiceService } from 'src/app/services/invoice.service';
 import { Service } from 'src/app/models/service.model';
 import { StoreService } from 'src/app/services/store.service';
 import { swallowErrors } from 'src/app/utils/rxjs.helper';
-import { TuiDay } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-invoices-create',
@@ -46,7 +45,8 @@ export class InvoicesCreateComponent implements OnInit, OnDestroy {
     private companyService: CompanyService,
     private invoiceService: InvoiceService,
     private router: Router,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private fb: FormBuilder
   ) {
     this.initForm();
 
@@ -113,22 +113,22 @@ export class InvoicesCreateComponent implements OnInit, OnDestroy {
   }
 
   initForm(): void {
-    this.form = new FormGroup({
-      _id: new FormControl(this.afs.createId(), [Validators.required]),
-      _contractId: new FormControl(null),
-      contractor: new FormControl(null, [Validators.required]),
-      dateRange: new FormControl(DateHelper.initTuiDayRange(6), [
+    this.form = this.fb.group({
+      _id: this.fb.control(this.afs.createId(), [Validators.required]),
+      _contractId: this.fb.control(null),
+      contractor: this.fb.control(null, [Validators.required]),
+      dateRange: this.fb.control(DateHelper.initTuiDayRange(6), [
         Validators.required,
       ]),
-      description: new FormControl(null),
-      number: new FormControl(1, [Validators.required]),
-      profileCompany: new FormControl(null, [Validators.required]),
-      qrCode: new FormControl(null),
-      services: new FormControl(null, [Validators.required]),
-      signature: new FormControl(null),
-      status: new FormControl(null, [Validators.required]),
-      total: new FormControl(new TotalSum(), [Validators.required]),
-      type: new FormControl(1, [Validators.required]),
+      description: this.fb.control(null),
+      number: this.fb.control(1, [Validators.required]),
+      profileCompany: this.fb.control(null, [Validators.required]),
+      qrCode: this.fb.control(null),
+      services: this.fb.control(null, [Validators.required]),
+      signature: this.fb.control(null),
+      status: this.fb.control(null, [Validators.required]),
+      total: this.fb.control(new TotalSum(), [Validators.required]),
+      type: this.fb.control(1, [Validators.required]),
     });
   }
 

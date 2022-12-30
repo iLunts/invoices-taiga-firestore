@@ -62,15 +62,8 @@
       <div
         class="tui-col_xs-12 tui-col_s-12 tui-col_sm-12 tui-col_md-12 tui-col_lg-12"
       >
-        <!-- <app-service-table
-          [services]="f.services.value"
-          (selected)="setService($event)"
-        ></app-service-table> -->
-
         <form [formGroup]="form">
           <app-service-table formControlName="services"></app-service-table>
-
-          <pre>{{ form.get("services")?.value | json }}</pre>
         </form>
       </div>
     </div>

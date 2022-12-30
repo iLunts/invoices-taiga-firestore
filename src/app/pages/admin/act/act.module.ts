@@ -13,6 +13,7 @@ import { ComponentsModule } from 'src/app/shared/components/components.module';
 import { StatusModule } from 'src/app/shared/components/status/status.module';
 import { CompanyModule } from 'src/app/shared/components/company/company.module';
 import { ContractComponentsModule } from 'src/app/shared/components/contract/contract.module';
+import { ServicesModule } from 'src/app/shared/components/services/services.module';
 
 @NgModule({
   declarations: [ActCreateComponent, ActListComponent],
@@ -25,6 +26,7 @@ import { ContractComponentsModule } from 'src/app/shared/components/contract/con
     ContractorModule,
     SharedModule,
     StatusModule,
+    ServicesModule,
     TaigaSharedModule,
     ContractComponentsModule,
   ],

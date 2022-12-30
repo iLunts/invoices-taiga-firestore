@@ -9,7 +9,7 @@
       >
         <tui-notification>
           Акт создается на основании счета #{{ invoice.number }} от
-          {{ invoice._createdDate | date: "dd.MM.yyyy" }}
+          {{ invoice._createdDate | date : "dd.MM.yyyy" }}
         </tui-notification>
       </div>
       <div
@@ -21,7 +21,7 @@
             rentalCertificate.number
           }}
           от
-          {{ rentalCertificate._createdDate | date: "dd.MM.yyyy" }}
+          {{ rentalCertificate._createdDate | date : "dd.MM.yyyy" }}
         </tui-notification>
       </div>
 
@@ -88,6 +88,13 @@
               [hideDateColumn]="true"
               (selected)="setService($event)"
             ></app-service-table> -->
+
+            <form [formGroup]="form">
+              <app-service-table
+                formControlName="services"
+                [hideDateColumn]="true"
+              ></app-service-table>
+            </form>
           </div>
         </div>
       </div>

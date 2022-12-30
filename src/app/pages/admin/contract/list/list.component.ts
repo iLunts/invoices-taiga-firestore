@@ -16,7 +16,7 @@ import {
   shareReplay,
   switchMap,
 } from 'rxjs/operators';
-// import { indicate, IndicatorBehaviorSubject } from 'ngx-ready-set-go';
+import { indicate, IndicatorBehaviorSubject } from 'ngx-ready-set-go';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import * as _ from 'lodash';
 
@@ -64,7 +64,7 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
   contracts$!: Observable<Contract[]>;
   contractStatuses$!: Observable<ContractStatus[]>;
   lastIndex$: Observable<Contract>;
-  // indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
+  indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
   contractor$: Observable<Contractor>;
 
   constructor(
@@ -130,7 +130,7 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
         required: false,
         data: item,
       })
-      // .pipe(indicate(this.indicator$))
+      .pipe(indicate(this.indicator$))
       .subscribe({
         next: (data) => {
           this.delete(item);

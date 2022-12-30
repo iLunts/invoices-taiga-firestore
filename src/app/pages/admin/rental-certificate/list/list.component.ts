@@ -5,29 +5,29 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
-
-import {
-  RentalCertificate,
-  RentalCertificateStatus,
-} from 'src/app/models/rental-certificate.model';
-import { RentalCertificateService } from 'src/app/services/rental-certificate-service.service';
-// import { TemplatePdfService } from 'src/app/services/template-pdf.service';
-import { StoreService } from 'src/app/services/store.service';
 import {
   distinctUntilChanged,
   filter,
   shareReplay,
   switchMap,
 } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { indicate, IndicatorBehaviorSubject } from 'ngx-ready-set-go';
+import { Observable, Subject } from 'rxjs';
+import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
+
+import {
+  RentalCertificate,
+  RentalCertificateStatus,
+} from 'src/app/models/rental-certificate.model';
+import { Contractor } from 'src/app/models/company.model';
+import { RentalCertificateService } from 'src/app/services/rental-certificate-service.service';
 import { Status } from 'src/app/models/status.model';
 import { StatusHelper } from 'src/app/utils/status.helper';
-// import { indicate, IndicatorBehaviorSubject } from 'ngx-ready-set-go';
-import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
+import { StoreService } from 'src/app/services/store.service';
 import { TabItem } from 'src/app/models/tabs.model';
-import { Contractor } from 'src/app/models/company.model';
+import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
+// import { TemplatePdfService } from 'src/app/services/template-pdf.service';
 
 @Component({
   selector: 'app-rental-certificate-list',
@@ -40,7 +40,7 @@ export class RentalCertificateListComponent
   private readonly destroy$ = new Subject();
   rentalCertificates$!: Observable<any>;
   rentalCertificateStatuses$!: Observable<any>;
-  // indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
+  indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
   contractor$: Observable<Contractor>;
 
   readonly columns = ['date', 'status', 'sum', 'action'];
@@ -135,7 +135,7 @@ export class RentalCertificateListComponent
         required: false,
         data: item,
       })
-      // .pipe(indicate(this.indicator$))
+      .pipe(indicate(this.indicator$))
       .subscribe({
         next: (data) => {
           this.delete(item);

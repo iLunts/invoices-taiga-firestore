@@ -3,18 +3,6 @@
   description="Создавайте договора с различными шаблонами для разных контрагентов"
 >
   <div action>
-    <!-- <button
-      class="tui-space_left-5"
-      tuiButton
-      size="m"
-      icon="tuiIconPlus"
-      title="Создать новый"
-      [routerLink]="[routing.admin.contract.create]"
-      [queryParams]="{ lastIndex: (lastIndex$ | async)?.number }"
-      [disabled]="(indicator$ | async)?.loading || !(contractor$ | async)"
-    >
-      Создать новый
-    </button> -->
     <button
       class="tui-space_left-5"
       tuiButton
@@ -23,6 +11,7 @@
       title="Создать новый"
       [routerLink]="[routing.admin.contract.create]"
       [queryParams]="{ lastIndex: (lastIndex$ | async)?.number }"
+      [disabled]="(indicator$ | async)?.loading || !(contractor$ | async)"
     >
       Создать новый
     </button>
@@ -114,6 +103,7 @@
                     *tuiHead="'action'"
                     tuiTh
                     [resizable]="false"
+                    [sorter]="null"
                   ></th>
                 </tr>
               </thead>
@@ -128,7 +118,7 @@
                     <small *ngIf="item?.number == null">Без номера</small>
                   </td>
                   <td class="tui-table__td" *tuiCell="'date'" tuiTd>
-                    <b>{{ item?.date | date: "dd MMM yyyy" }}</b>
+                    <b>{{ item?.date | date : "dd MMM yyyy" }}</b>
                   </td>
                   <td class="tui-table__td" *tuiCell="'status'" tuiTd>
                     <tui-badge
@@ -141,11 +131,11 @@
                   </td>
                   <td class="tui-table__td" *tuiCell="'dateCreation'" tuiTd>
                     <span>
-                      {{ item?._createdDate | date: "dd MMM yyyy" }}
+                      {{ item?._createdDate | date : "dd MMM yyyy" }}
                     </span>
                     <br />
                     <small>
-                      {{ item?._createdDate | date: "HH:mm" }}
+                      {{ item?._createdDate | date : "HH:mm" }}
                     </small>
                   </td>
                   <td
@@ -153,16 +143,6 @@
                     *tuiCell="'action'"
                     tuiTd
                   >
-                    <!-- <button
-                      tuiIconButton
-                      appearance="flat"
-                      size="s"
-                      icon="tuiIconDownload"
-                      title="Скачать PDF"
-                      shape="rounded"
-                      (click)="downloadPdf(item)"
-                      [disabled]="(indicator | async)?.loading"
-                    ></button> -->
                     <button
                       tuiIconButton
                       appearance="flat"
@@ -170,19 +150,10 @@
                       icon="tuiIconDownload"
                       title="Скачать PDF"
                       shape="rounded"
+                      [disabled]="(indicator$ | async)?.loading!"
                       (click)="downloadPdf(item)"
                     ></button>
                     <tui-hosted-dropdown #dropdown [content]="content">
-                      <!-- <button
-                        tuiIconButton
-                        appearance="flat"
-                        size="s"
-                        icon="tuiIconMoreVer"
-                        type="button"
-                        shape="rounded"
-                        [pseudoHover]="dropdown.open || null"
-                        [disabled]="(indicator | async)?.loading"
-                      ></button> -->
                       <button
                         tuiIconButton
                         appearance="flat"
@@ -190,6 +161,7 @@
                         icon="tuiIconMoreVer"
                         type="button"
                         shape="rounded"
+                        [disabled]="(indicator$ | async)?.loading!"
                         [pseudoHover]="dropdown.open || null"
                       ></button>
                     </tui-hosted-dropdown>
@@ -261,7 +233,7 @@
     <p>
       Вы действительно хотите удалить договор: №
       <b>{{ selectedContract.number }}</b>
-      от <b>{{ selectedContract.date | date: "dd MMM yyyy" }}</b> ?
+      от <b>{{ selectedContract.date | date : "dd MMM yyyy" }}</b> ?
     </p>
     <div class="modal-dialog__actions">
       <button

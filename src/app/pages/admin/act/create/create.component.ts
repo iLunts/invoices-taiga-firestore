@@ -1,6 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import {
@@ -54,7 +59,8 @@ export class ActCreateComponent implements OnInit, OnDestroy {
     private companyService: CompanyService,
     private invoiceService: InvoiceService,
     private rentalCertificateService: RentalCertificateService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private fb: FormBuilder
   ) {
     this.initForm();
 
@@ -147,23 +153,23 @@ export class ActCreateComponent implements OnInit, OnDestroy {
   }
 
   initForm(): void {
-    this.form = new FormGroup({
-      _id: new FormControl(this.afs.createId(), [Validators.required]),
-      _contractId: new FormControl(null),
-      _invoiceId: new FormControl(null),
-      _rentalCertificateId: new FormControl(null),
-      contractor: new FormControl(null, [Validators.required]),
-      contract: new FormControl(null, [Validators.required]),
-      date: new FormControl(DateHelper.initTuiDay(0)),
-      description: new FormControl(null),
-      number: new FormControl(1, [Validators.required]),
-      profileCompany: new FormControl(null, [Validators.required]),
-      qrCode: new FormControl(null),
-      services: new FormControl(null, [Validators.required]),
-      signature: new FormControl(null),
-      status: new FormControl(null, [Validators.required]),
-      total: new FormControl(new TotalSum(), [Validators.required]),
-      type: new FormControl(1, [Validators.required]),
+    this.form = this.fb.group({
+      _id: this.fb.control(this.afs.createId(), [Validators.required]),
+      _contractId: this.fb.control(null),
+      _invoiceId: this.fb.control(null),
+      _rentalCertificateId: this.fb.control(null),
+      contractor: this.fb.control(null, [Validators.required]),
+      contract: this.fb.control(null, [Validators.required]),
+      date: this.fb.control(DateHelper.initTuiDay(0)),
+      description: this.fb.control(null),
+      number: this.fb.control(1, [Validators.required]),
+      profileCompany: this.fb.control(null, [Validators.required]),
+      qrCode: this.fb.control(null),
+      services: this.fb.control(null, [Validators.required]),
+      signature: this.fb.control(null),
+      status: this.fb.control(null, [Validators.required]),
+      total: this.fb.control(new TotalSum(), [Validators.required]),
+      type: this.fb.control(1, [Validators.required]),
     });
   }
 

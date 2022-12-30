@@ -29,6 +29,7 @@ import { InvoiceService } from 'src/app/services/invoice.service';
 import { StoreService } from 'src/app/services/store.service';
 import { StatusHelper } from 'src/app/utils/status.helper';
 import { StatusService } from 'src/app/services/status.service';
+import { indicate, IndicatorBehaviorSubject } from 'ngx-ready-set-go';
 
 @Component({
   selector: 'app-invoices-list',
@@ -62,7 +63,7 @@ export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
   invoices$!: Observable<any>;
   invoiceStatuses$: Observable<any>;
   lastIndex$!: Observable<Invoice>;
-  // indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
+  indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
   contractor$!: Observable<Contractor>;
 
   constructor(
@@ -127,7 +128,7 @@ export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
         required: false,
         data: item,
       })
-      // .pipe(indicate(this.indicator$))
+      .pipe(indicate(this.indicator$))
       .subscribe({
         next: (data) => {
           this.delete(item);
