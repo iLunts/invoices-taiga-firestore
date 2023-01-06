@@ -11,7 +11,7 @@
       >
         <tui-notification>
           Справка аренды создается на основании счета #{{ invoice.number }} от
-          {{ invoice._createdDate | date: "dd.MM.yyyy" }}
+          {{ invoice._createdDate | date : "dd.MM.yyyy" }}
         </tui-notification>
       </div>
 
@@ -48,18 +48,18 @@
     <div class="tui-form__row tui-form__row_multi-fields">
       <div class="tui-form__multi-field">
         <h3 class="tui-form__header">Арендодатель</h3>
-        <app-company-panel
+        <!-- <app-company-panel
           [company]="f.profileCompany.value"
           [isLoaded]="true"
-        ></app-company-panel>
+        ></app-company-panel> -->
       </div>
 
       <div class="tui-form__multi-field">
         <h3 class="tui-form__header">Арендодатель</h3>
-        <app-company-panel
+        <!-- <app-company-panel
           [company]="f.contractor.value"
           [isLoaded]="true"
-        ></app-company-panel>
+        ></app-company-panel> -->
 
         <app-contract-panel
           class="tui-space_top-4"

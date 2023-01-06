@@ -29,7 +29,7 @@ import { StoreService } from 'src/app/services/store.service';
 import { TabItem } from 'src/app/models/tabs.model';
 // import { TemplatePdfService } from 'src/app/services/template-pdf.service';
 import { swallowErrors } from 'src/app/utils/rxjs.helper';
-import { Contractor } from 'src/app/models/company.model';
+import { Company, Contractor } from 'src/app/models/company.model';
 
 @Component({
   selector: 'app-contract-list',
@@ -65,7 +65,7 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
   contractStatuses$!: Observable<ContractStatus[]>;
   lastIndex$: Observable<Contract>;
   indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
-  contractor$: Observable<Contractor>;
+  contractor$: Observable<Company>;
 
   constructor(
     private contractService: ContractService,
@@ -111,7 +111,7 @@ export class ContractListComponent implements OnInit, AfterViewInit, OnDestroy {
       distinctUntilChanged(),
       switchMap((contractor) =>
         this.contractService
-          .getAllByContractorId$(contractor._id)
+          .getAllByContractorId$(contractor._id!)
           .pipe(swallowErrors())
       ),
       shareReplay()

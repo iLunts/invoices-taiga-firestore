@@ -1,11 +1,18 @@
 // import { Injectable } from '@angular/core';
-// import pdfMake from 'pdfmake/build/pdfmake';
-// import pdfFonts from 'pdfmake/build/vfs_fonts';
-// import htmlToPdfmake from 'html-to-pdfmake';
-// pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+// import * as pdfMake from 'pdfmake/build/pdfmake';
+// import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+// import * as htmlToPdfmake from 'html-to-pdfmake';
+
+// // import pdfMake from 'pdfmake/build/pdfmake';
+// // import pdfFonts from 'pdfmake/build/vfs_fonts';
+// // import htmlToPdfmake from 'html-to-pdfmake';
+
+// // import * as Handlebars from 'handlebars/dist/cjs/handlebars';
 // import * as Handlebars from 'handlebars/dist/cjs/handlebars';
 // import * as moment from 'moment';
+// // pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 // import { Invoice } from '../models/invoice.model';
 // import { INVOICE_TEMPLATE_ALL } from '../templates/invoices/invoice.template';
 // import { ACT_TEMPLATE_ALL } from '../templates/act/act.template';
@@ -13,7 +20,7 @@
 // import { RENTAL_REFERENCE_TEMPLATE_ALL } from '../templates/rental-reference/rental-reference.template';
 
 // @Injectable({
-//   providedIn: 'root'
+//   providedIn: 'root',
 // })
 // export class TemplatePdfService {
 //   pdfObj = null;
@@ -52,7 +59,7 @@
 //   }
 
 //   createContractPdf(data?: any): void {
-//     Handlebars.registerHelper('formatDate', (datetime, format) => {
+//     Handlebars.registerHelper('formatDate', (datetime: any, format: any) => {
 //       if (moment) {
 //         // can use other formats like 'lll' too
 //         format = format || 'DD.MM.YYYY';
@@ -73,12 +80,12 @@
 //     let template = Handlebars.compile(data.template);
 //     let html = template(data, {
 //       tableAutoSize: true,
-//       defaultStyle: defaultStyle
+//       //   defaultStyle: defaultStyle,
 //     });
 //     // let result = htmlToPdfmake(html);
 //     let result = htmlToPdfmake(html, {
 //       tableAutoSize: true,
-//       defaultStyle: defaultStyle
+//       //   defaultStyle: defaultStyle,
 //     });
 
 //     let docDefinition = {
@@ -86,16 +93,16 @@
 //       pageOrientation: 'portrait',
 //       pageMargins: [40, 20, 40, 20],
 //       content: [result],
-//       styles: DOC_DEFININITION_STYLE
+//       styles: DOC_DEFININITION_STYLE,
 //     };
 
 //     this.pdfObj = pdfMake.createPdf(docDefinition);
 //   }
 
 //   createInvoicePdf(data?: Invoice): void {
-//     const sumToWord = this.sum_letters(data.total.totalSum.amount);
+//     const sumToWord = this.sum_letters(data?.total.totalSum.amount);
 //     // Date format
-//     Handlebars.registerHelper('formatDate', (datetime, format) => {
+//     Handlebars.registerHelper('formatDate', (datetime: any, format: any) => {
 //       if (moment) {
 //         // can use other formats like 'lll' too
 //         format = format || 'DD.MM.YYYY';
@@ -116,7 +123,7 @@
 //     });
 
 //     // Get summa
-//     Handlebars.registerHelper('getSum', (count, price) => {
+//     Handlebars.registerHelper('getSum', (count: any, price: any) => {
 //       if (!count || !price) {
 //         return 'NaN';
 //       } else {
@@ -140,13 +147,13 @@
 
 //     // Get total SUM to digs RUB and COP
 //     Handlebars.registerHelper('getTotalSumDigs', () => {
-//       let sum = Number(data.total.totalSum.amount).toFixed(2).split('.');
+//       let sum = Number(data?.total.totalSum.amount).toFixed(2).split('.');
 //       return sum[0] + ' руб. ' + sum[1] + ' коп.';
 //     });
 
 //     // Get count services
 //     Handlebars.registerHelper('getCountService', () => {
-//       if (data.services) {
+//       if (data?.services) {
 //         return Object.keys(data.services).length;
 //       } else {
 //         return 0;
@@ -163,18 +170,16 @@
 //     let template = Handlebars.compile(INVOICE_TEMPLATE_ALL);
 //     let html = template(data, {
 //       tableAutoSize: true,
-//       defaultStyle: defaultStyle
-//       // imagesByReference: true,
+//       //   defaultStyle: defaultStyle,
 //     });
 //     let result = htmlToPdfmake(html, {
 //       tableAutoSize: true,
-//       defaultStyle: defaultStyle
-//       // imagesByReference: true,
+//       //   defaultStyle: defaultStyle,
 //     });
 
 //     let docDefinition = {
 //       content: [result],
-//       styles: DOC_DEFININITION_STYLE
+//       styles: DOC_DEFININITION_STYLE,
 //     };
 
 //     this.pdfObj = pdfMake.createPdf(docDefinition);
@@ -183,7 +188,7 @@
 //   createActPdf(data: Invoice): void {
 //     const sumToWord = this.sum_letters(data.total.totalSum.amount);
 //     // Date format
-//     Handlebars.registerHelper('formatDate', (datetime, format) => {
+//     Handlebars.registerHelper('formatDate', (datetime: any, format: any) => {
 //       if (moment) {
 //         // can use other formats like 'lll' too
 //         format = format || 'DD.MM.YYYY';
@@ -204,7 +209,7 @@
 //     });
 
 //     // Get summa
-//     Handlebars.registerHelper('getSum', (count, price) => {
+//     Handlebars.registerHelper('getSum', (count: any, price: any) => {
 //       if (!count || !price) {
 //         return 'NaN';
 //       } else {
@@ -251,26 +256,26 @@
 //     let template = Handlebars.compile(ACT_TEMPLATE_ALL);
 //     let html = template(data, {
 //       tableAutoSize: true,
-//       defaultStyle: defaultStyle
+//       //   defaultStyle: defaultStyle,
 //     });
 //     let result = htmlToPdfmake(html, {
 //       tableAutoSize: true,
-//       defaultStyle: defaultStyle
+//       //   defaultStyle: defaultStyle,
 //     });
 
 //     let docDefinition = {
 //       content: [result],
-//       styles: DOC_DEFININITION_STYLE
+//       styles: DOC_DEFININITION_STYLE,
 //     };
 
 //     this.pdfObj = pdfMake.createPdf(docDefinition);
 //   }
 
 //   createRentalCertificatePdf(data?: Invoice): void {
-//     const sumToWord = this.sum_letters(data.total.totalSum.amount);
+//     const sumToWord = this.sum_letters(data?.total.totalSum.amount);
 
 //     // Date format
-//     Handlebars.registerHelper('formatDate', (datetime, format) => {
+//     Handlebars.registerHelper('formatDate', (datetime: any, format: any) => {
 //       if (moment) {
 //         format = format || 'DD.MM.YYYY';
 //         moment.locale('ru');
@@ -305,7 +310,7 @@
 //     );
 
 //     // Get summa
-//     Handlebars.registerHelper('getSum', (count, price) => {
+//     Handlebars.registerHelper('getSum', (count: any, price: any) => {
 //       if (!count || !price) {
 //         return 'NaN';
 //       } else {
@@ -329,13 +334,13 @@
 
 //     // Get total SUM to digs RUB and COP
 //     Handlebars.registerHelper('getTotalSumDigs', () => {
-//       let sum = Number(data.total.totalSum.amount).toFixed(2).split('.');
+//       let sum = Number(data?.total.totalSum.amount).toFixed(2).split('.');
 //       return sum[0] + ' руб. ' + sum[1] + ' коп.';
 //     });
 
 //     // Get count services
 //     Handlebars.registerHelper('getCountService', () => {
-//       if (data.services) {
+//       if (data?.services) {
 //         return Object.keys(data.services).length;
 //       } else {
 //         return 0;
@@ -352,24 +357,22 @@
 //     let template = Handlebars.compile(RENTAL_REFERENCE_TEMPLATE_ALL);
 //     let html = template(data, {
 //       tableAutoSize: true,
-//       defaultStyle: defaultStyle
-//       // imagesByReference: true,
+//       //   defaultStyle: defaultStyle,
 //     });
 //     let result = htmlToPdfmake(html, {
 //       tableAutoSize: true,
-//       defaultStyle: defaultStyle
-//       // imagesByReference: true,
+//       //   defaultStyle: defaultStyle,
 //     });
 
 //     let docDefinition = {
 //       content: [result],
-//       styles: DOC_DEFININITION_STYLE
+//       styles: DOC_DEFININITION_STYLE,
 //     };
 
 //     this.pdfObj = pdfMake.createPdf(docDefinition);
 //   }
 
-//   num_letters(k, d?): any {
+//   num_letters(k: any, d?: any): any {
 //     // целое число прописью, это основа
 //     k = k.toString();
 //     var i = '',
@@ -386,10 +389,10 @@
 //           'септиллион',
 //           'октиллион',
 //           'нониллион',
-//           'дециллион'
+//           'дециллион',
 //         ],
 //         ['а', 'и', ''],
-//         ['', 'а', 'ов']
+//         ['', 'а', 'ов'],
 //       ];
 //     if (k == '' || k == '0') return ' ноль'; // 0
 //     k = k.split(/(?=(?:\d{3})+$)/); // разбить число в массив с трёхзначными числами
@@ -414,7 +417,7 @@
 //     return i;
 //   }
 
-//   transformDigs(k, d?): any {
+//   transformDigs(k: any, d?: any): any {
 //     // преобразовать трёхзначные числа
 //     var e = [
 //       [
@@ -427,7 +430,7 @@
 //         ' шесть',
 //         ' семь',
 //         ' восемь',
-//         ' девять'
+//         ' девять',
 //       ],
 //       [
 //         ' десять',
@@ -439,7 +442,7 @@
 //         ' шестнадцать',
 //         ' семнадцать',
 //         ' восемнадцать',
-//         ' девятнадцать'
+//         ' девятнадцать',
 //       ],
 //       [
 //         '',
@@ -451,7 +454,7 @@
 //         ' шестьдесят',
 //         ' семьдесят',
 //         ' восемьдесят',
-//         ' девяносто'
+//         ' девяносто',
 //       ],
 //       [
 //         '',
@@ -463,9 +466,9 @@
 //         ' шестьсот',
 //         ' семьсот',
 //         ' восемьсот',
-//         ' девятьсот'
+//         ' девятьсот',
 //       ],
-//       ['', ' одна', ' две']
+//       ['', ' одна', ' две'],
 //     ];
 //     return (
 //       e[3][k[0]] +
@@ -473,7 +476,7 @@
 //     );
 //   }
 
-//   declOfNum(n, t, o): any {
+//   declOfNum(n: any, t: any, o: any): any {
 //     // склонение именительных рядом с числительным: число (typeof = string), корень (не пустой), окончание
 //     var k = [2, 0, 1, 1, 1, 2, 2, 2, 2, 2];
 //     return t == ''
@@ -481,12 +484,12 @@
 //       : ' ' + t + (n[n.length - 2] == '1' ? o[2] : o[k[n[n.length - 1]]]);
 //   }
 
-//   razUp(e): any {
+//   razUp(e: any): any {
 //     // сделать первую букву заглавной и убрать лишний первый пробел
 //     return e[1].toUpperCase() + e.substring(2);
 //   }
 
-//   sum_letters(a): any {
+//   sum_letters(a: any): any {
 //     a = Number(a).toFixed(2).split('.'); // округлить до сотых и сделать массив двух чисел: до точки и после неё
 //     return this.razUp(
 //       this.num_letters(a[0]) +

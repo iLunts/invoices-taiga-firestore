@@ -1,0 +1,48 @@
+<app-header-list
+  title="Контрагенты"
+  description="Создавайте контрагентов для использования их при создании счетов, актов или справок аренды"
+>
+  <div action>
+    <button
+      class="tui-space_left-5"
+      tuiButton
+      size="m"
+      icon="tuiIconPlus"
+      title="Создать новый"
+      [routerLink]="[routing.admin.contractor.create]"
+      [disabled]="(indicator$ | async)?.loading!"
+    >
+      Создать новый
+    </button>
+    <button
+      class="tui-space_left-5"
+      tuiIconButton
+      size="m"
+      icon="tuiIconAttention"
+      [disabled]="true"
+    ></button>
+  </div>
+</app-header-list>
+
+<section class="page-body" fluidHeight>
+  <section class="tui-container tui-container_full">
+    <div class="tui-row tui-row_adaptive">
+      <div class="tui-col_6 tui-col-offset_3">
+        <tui-notification>
+          В данный момент детальная информация по выбранному контрагенту не
+          отображается. В будущем мы обязательно отобразим всю информацию по
+          счетам, справкам, актам и оплатам по данному
+          контрагенту</tui-notification
+        >
+      </div>
+    </div>
+  </section>
+</section>
+
+<aside class="aside _right _close" *ngIf="isOpenAsideContractorView">
+  <div class="aside__panel">
+    <!-- <app-contractor-info
+      (close)="toggleAsideContractorView()"
+    ></app-contractor-info> -->
+  </div>
+</aside>

@@ -24,7 +24,7 @@ import { Invoice, InvoiceStatus } from 'src/app/models/invoice.model';
 import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { TabItem } from 'src/app/models/tabs.model';
 import { Status } from 'src/app/models/status.model';
-import { Contractor } from 'src/app/models/company.model';
+import { Company, Contractor } from 'src/app/models/company.model';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { StoreService } from 'src/app/services/store.service';
 import { StatusHelper } from 'src/app/utils/status.helper';
@@ -64,7 +64,7 @@ export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
   invoiceStatuses$: Observable<any>;
   lastIndex$!: Observable<Invoice>;
   indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
-  contractor$!: Observable<Contractor>;
+  contractor$!: Observable<Company>;
 
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
@@ -77,7 +77,7 @@ export class InvoicesListComponent implements OnInit, AfterViewInit, OnDestroy {
       filter((contractor) => !!contractor),
       distinctUntilChanged(),
       switchMap((contractor) =>
-        this.invoiceService.getAllByContractorId$(contractor._id)
+        this.invoiceService.getAllByContractorId$(contractor._id!)
       ),
       shareReplay()
     );

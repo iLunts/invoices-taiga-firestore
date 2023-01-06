@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { Contractor } from 'src/app/models/company.model';
+import { Company, Contractor } from 'src/app/models/company.model';
 import { ContractorService } from 'src/app/services/contractor.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class ContractorPanelComponent implements OnInit {
 
   @Output() selected = new EventEmitter<Contractor>();
 
-  contractors$: Observable<Contractor[]>;
+  contractors$: Observable<Company[]>;
 
   form: FormGroup;
 

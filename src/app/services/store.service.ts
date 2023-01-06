@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { Contractor } from '../models/company.model';
+import { Company } from '../models/company.model';
 import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StoreService {
-  private contractorSubject = new BehaviorSubject<Contractor>(null!);
+  private contractorSubject = new BehaviorSubject<Company>(null!);
   contractor$ = this.contractorSubject.asObservable();
 
   constructor() {}
 
-  setContractor(contractor: Contractor): void {
+  setContractor(contractor: Company): void {
     this.contractorSubject.next(contractor);
   }
 
-  getContractor$(): Observable<Contractor> {
+  getContractor$(): Observable<Company> {
     return this.contractor$.pipe(
       distinctUntilChanged((a, b) => _.isEqual(a, b))
     );

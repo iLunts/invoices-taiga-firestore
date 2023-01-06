@@ -7,7 +7,7 @@ import { Observable, from, BehaviorSubject, of } from 'rxjs';
 import * as _ from 'lodash';
 
 import { AuthService } from './auth.service';
-import { Contractor, ContractorInfo } from '../models/company.model';
+import { Company, Contractor, ContractorInfo } from '../models/company.model';
 import { NotificationService } from './notification.service';
 import { filter, switchMap } from 'rxjs/operators';
 
@@ -17,14 +17,14 @@ import { filter, switchMap } from 'rxjs/operators';
 export class ContractorService {
   private dbPath = '/contractors';
   private regexSWIFT = /^[A-Z]{2}[0-9]{2}[A-Z]{4}[0-9]{20}$/;
-  contractorRef: AngularFirestoreCollection<Contractor> = null!;
-  customersExistRef: AngularFirestoreCollection<Contractor> = null!;
-  dbRef: AngularFirestoreCollection<Contractor> = null!;
+  contractorRef: AngularFirestoreCollection<Company> = null!;
+  customersExistRef: AngularFirestoreCollection<Company> = null!;
+  dbRef: AngularFirestoreCollection<Company> = null!;
 
   selectedContractor!: Contractor;
-  private contractorSubject = new BehaviorSubject<Contractor>(new Contractor());
-  contractor$: Observable<Contractor> = this.contractorSubject.asObservable();
-  contractors$: Observable<Contractor[]>;
+  private contractorSubject = new BehaviorSubject<Company>(new Company());
+  contractor$: Observable<Company> = this.contractorSubject.asObservable();
+  contractors$: Observable<Company[]>;
 
   constructor(
     private _fs: AngularFirestore,
@@ -40,7 +40,7 @@ export class ContractorService {
     this.contractors$ = this.contractorRef.valueChanges();
   }
 
-  getAll$(): Observable<Contractor[]> {
+  getAll$(): Observable<Company[]> {
     return this.contractorRef.valueChanges();
   }
 
@@ -94,19 +94,19 @@ export class ContractorService {
     return of(this.contractorRef.doc(_id).update(value));
   }
 
-  getContractorState$(): Observable<Contractor> {
+  getContractorState$(): Observable<Company> {
     return this.contractor$;
   }
 
-  setContractor(contractor: Contractor): void {
+  setContractor(contractor: Company): void {
     this.contractorSubject.next(contractor);
   }
 
   clearContractor(): void {
-    this.setContractor(new Contractor());
+    this.setContractor(new Company());
   }
 
-  getContractor(): Contractor {
+  getContractor(): Company {
     return this.contractorSubject.getValue();
     // if (this.contractor$.getValue()) {
     //   return this.contractor$.getValue();
@@ -185,10 +185,10 @@ export class ContractorService {
     return bankInfo;
   }
 
-  checkContractorValid$(contractor: Contractor): Observable<boolean> {
+  checkContractorValid$(contractor: Company): Observable<boolean> {
     return of(contractor).pipe(
       filter((contractor) => !!contractor),
-      switchMap((contractor: Contractor) =>
+      switchMap((contractor: Company) =>
         of(
           // this.checkContractorInfoValid(contractor) &&
           this.checkContractorBankValid(contractor) &&
@@ -198,13 +198,13 @@ export class ContractorService {
     );
   }
 
-  checkContractorInfoValid(contractor: Contractor): boolean {
+  checkContractorInfoValid(contractor: Company): boolean {
     return Object.values(contractor.info).every(
       (info: ContractorInfo) => info !== null
     );
   }
 
-  checkContractorBankValid(contractor: Contractor): boolean {
+  checkContractorBankValid(contractor: Company): boolean {
     const bank = contractor?.bankAccount?.bank;
     let status = true;
 

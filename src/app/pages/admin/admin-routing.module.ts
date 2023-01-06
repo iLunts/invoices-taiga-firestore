@@ -31,14 +31,14 @@ const routes: Routes = [
               ),
             canActivate: [AuthGuard, CompanyGuard],
           },
-          // {
-          //   path: 'contractor',
-          //   loadChildren: () =>
-          //     import('./contractor/contractor.module').then(
-          //       (m) => m.ContractorModule
-          //     ),
-          //   canActivate: [AuthGuard, CompanyGuard],
-          // },
+          {
+            path: 'contractor',
+            loadChildren: () =>
+              import('./contractor/contractor.module').then(
+                (m) => m.ContractorModule
+              ),
+            canActivate: [AuthGuard, CompanyGuard],
+          },
           {
             path: 'act',
             loadChildren: () =>

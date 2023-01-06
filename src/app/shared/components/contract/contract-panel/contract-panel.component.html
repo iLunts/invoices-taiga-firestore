@@ -8,27 +8,29 @@
     class="b-form"
     [formGroup]="form"
   >
-    <tui-expand [expanded]="contracts?.length != undefined">
-      <tui-select
-        formControlName="contract"
-        [valueContent]="itemContent"
-        (ngModelChange)="selected.emit($event)"
-      >
-        Договор
-        <!-- <tui-data-list-wrapper
+    <tui-expand [expanded]="!!contracts?.length">
+      <tui-badged-content [contentTop]="contracts?.length">
+        <tui-select
+          formControlName="contract"
+          [valueContent]="itemContent"
+          (ngModelChange)="selected.emit($event)"
+        >
+          Договор
+          <!-- <tui-data-list-wrapper
           *tuiDataList
           size="l"
           [items]="contracts"
           [itemContent]="itemContent"
           [disabledItemHandler]="disabledItemHandler"
         ></tui-data-list-wrapper> -->
-        <tui-data-list-wrapper
-          *tuiDataList
-          size="l"
-          [items]="contracts"
-          [itemContent]="itemContent"
-        ></tui-data-list-wrapper>
-      </tui-select>
+          <tui-data-list-wrapper
+            *tuiDataList
+            size="l"
+            [items]="contracts"
+            [itemContent]="itemContent"
+          ></tui-data-list-wrapper>
+        </tui-select>
+      </tui-badged-content>
     </tui-expand>
 
     <tui-expand

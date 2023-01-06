@@ -43,8 +43,9 @@
     <div class="tui-form__row tui-form__row_multi-fields">
       <div class="tui-form__multi-field">
         <h3 class="tui-form__header">Арендодатель</h3>
+
         <app-company-panel
-          [company]="f.profileCompany.value"
+          formControlName="profileCompany"
           [isLoaded]="true"
         ></app-company-panel>
       </div>
@@ -52,7 +53,7 @@
       <div class="tui-form__multi-field">
         <h3 class="tui-form__header">Арендодатель</h3>
         <app-company-panel
-          [company]="f.contractor.value"
+          formControlName="contractor"
           [isLoaded]="true"
         ></app-company-panel>
       </div>
@@ -62,9 +63,7 @@
       <div
         class="tui-col_xs-12 tui-col_s-12 tui-col_sm-12 tui-col_md-12 tui-col_lg-12"
       >
-        <form [formGroup]="form">
-          <app-service-table formControlName="services"></app-service-table>
-        </form>
+        <app-service-table formControlName="services"></app-service-table>
       </div>
     </div>
 

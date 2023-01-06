@@ -27,7 +27,7 @@ import { Status } from 'src/app/models/status.model';
 import { StatusHelper } from 'src/app/utils/status.helper';
 import { TabItem } from 'src/app/models/tabs.model';
 import { swallowErrors } from 'src/app/utils/rxjs.helper';
-import { Contractor } from 'src/app/models/company.model';
+import { Company } from 'src/app/models/company.model';
 
 @Component({
   selector: 'app-act-list',
@@ -62,7 +62,7 @@ export class ActListComponent implements OnInit, AfterViewInit, OnDestroy {
   acts$!: Observable<any>;
   actStatuses$!: Observable<any>;
   indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
-  contractor$: Observable<Contractor>;
+  contractor$: Observable<Company>;
 
   constructor(
     private actService: ActService,
@@ -107,7 +107,7 @@ export class ActListComponent implements OnInit, AfterViewInit, OnDestroy {
       distinctUntilChanged(),
       switchMap((contractor) =>
         this.actService
-          .getAllByContractorId$(contractor._id)
+          .getAllByContractorId$(contractor._id!)
           .pipe(swallowErrors())
       ),
       shareReplay()

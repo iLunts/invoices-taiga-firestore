@@ -20,7 +20,7 @@ import {
   RentalCertificate,
   RentalCertificateStatus,
 } from 'src/app/models/rental-certificate.model';
-import { Contractor } from 'src/app/models/company.model';
+import { Company } from 'src/app/models/company.model';
 import { RentalCertificateService } from 'src/app/services/rental-certificate-service.service';
 import { Status } from 'src/app/models/status.model';
 import { StatusHelper } from 'src/app/utils/status.helper';
@@ -41,7 +41,7 @@ export class RentalCertificateListComponent
   rentalCertificates$!: Observable<any>;
   rentalCertificateStatuses$!: Observable<any>;
   indicator$: IndicatorBehaviorSubject = new IndicatorBehaviorSubject();
-  contractor$: Observable<Contractor>;
+  contractor$: Observable<Company>;
 
   readonly columns = ['date', 'status', 'sum', 'action'];
   rentalCertificateStatuses: RentalCertificateStatus[] = [];
@@ -103,7 +103,7 @@ export class RentalCertificateListComponent
       filter((contractor) => !!contractor),
       distinctUntilChanged(),
       switchMap((contractor) =>
-        this.rentalCertificateService.getAllByContractorId$(contractor._id)
+        this.rentalCertificateService.getAllByContractorId$(contractor._id!)
       ),
       shareReplay()
     );

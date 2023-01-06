@@ -12,7 +12,7 @@ import {
   tap,
 } from 'rxjs/operators';
 
-import { Contractor } from 'src/app/models/company.model';
+import { Company, Contractor } from 'src/app/models/company.model';
 import { ContractorService } from 'src/app/services/contractor.service';
 import { StoreService } from 'src/app/services/store.service';
 import { environment } from 'src/environments/environment';
@@ -24,13 +24,13 @@ import { environment } from 'src/environments/environment';
 })
 export class ContractorAsideComponent implements OnInit {
   filterControl = new FormControl('');
-  selectedContractor!: Contractor;
+  selectedContractor!: Company;
   routing = environment.routing;
 
   filter$!: Observable<string>;
-  contractors$: Observable<Contractor[]>;
-  filteredContractors$: Observable<Contractor[]>;
-  contractorSelected$!: Observable<Contractor>;
+  contractors$: Observable<Company[]>;
+  filteredContractors$: Observable<Company[]>;
+  contractorSelected$!: Observable<Company>;
 
   constructor(
     private contractorService: ContractorService,
@@ -51,7 +51,7 @@ export class ContractorAsideComponent implements OnInit {
       filter(([contractors, search]) => Boolean(contractors)),
       map(([contractors, search]) => {
         return contractors.filter(
-          (contractor: Contractor) =>
+          (contractor: Company) =>
             contractor.info
               .fullName!.toLowerCase()
               .includes(search!.toLowerCase()) ||
@@ -72,15 +72,15 @@ export class ContractorAsideComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  selectContractor(contractor: Contractor): void {
+  selectContractor(contractor: Company): void {
     this.storeService.setContractor(contractor);
   }
 
-  setContractor(contractor: Contractor): void {
+  setContractor(contractor: Company): void {
     this.selectedContractor = contractor;
   }
 
-  isSelectedContractor(contractor: Contractor): boolean {
+  isSelectedContractor(contractor: Company): boolean {
     return this.selectedContractor?._id === contractor?._id;
   }
 

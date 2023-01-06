@@ -18,9 +18,9 @@ export class ContractorStorageService implements OnDestroy {
   private dbPath = '/contractors';
   // private companyRef: AngularFirestoreCollection<Company> = null;
   private readonly destroySubject = new Subject();
-  private contractorSubject = new BehaviorSubject<Contractor>(new Contractor());
-  contractorRef: AngularFirestoreCollection<Contractor> = null!;
-  contractor$: Observable<Contractor> = this.contractorSubject.asObservable();
+  private contractorSubject = new BehaviorSubject<Company>(new Company());
+  contractorRef: AngularFirestoreCollection<Company> = null!;
+  contractor$: Observable<Company> = this.contractorSubject.asObservable();
 
   constructor(
     private authService: AuthService,
@@ -39,15 +39,15 @@ export class ContractorStorageService implements OnDestroy {
     this.destroySubject.complete();
   }
 
-  getContractor$(): Observable<Contractor> {
+  getContractor$(): Observable<Company> {
     return this.contractor$;
   }
 
-  getContractorValue(): Contractor {
+  getContractorValue(): Company {
     return this.contractorSubject.getValue();
   }
 
-  setContractor(contractor: Contractor): void {
+  setContractor(contractor: Company): void {
     this.contractorSubject.next(contractor);
   }
 

@@ -1,0 +1,153 @@
+<app-header-create title="Создание контрагента"></app-header-create>
+
+<tui-scrollbar class="page-body page-body--header-footer">
+  <tui-loader
+    [showLoader]="!(indicator$ | async)?.loading"
+    [overlay]="true"
+    size="l"
+    textContent="Ожидайте..."
+  >
+    <div
+      class="tui-container tui-container_full"
+      *ngIf="contractor$ | async; let contractor"
+    >
+      <!-- УНП -->
+      <div class="tui-form__row tui-form__row_multi-fields form-group">
+        <div
+          class="tui-form__multi-field form-group__item form-group__item-info"
+        >
+          <h3 class="form-group__item-title">Учётный номер плательщика</h3>
+          <p class="form-group__item-desc">
+            единый уникальный номер, присваиваемый каждому плательщику при
+            постановке на учёт в налоговом органе в Беларуси, и используемый по
+            всем налогам, сборам, пошлинам, в том числе по таможенным платежам.
+          </p>
+        </div>
+        <div class="tui-form__multi-field form-group__item">
+          <!-- <app-company-unp
+            [company]="contractor"
+            [canChange]="true"
+            (onChange)="changeCompanyInfo($event)"
+          ></app-company-unp> -->
+        </div>
+      </div>
+
+      <!-- Адрес -->
+      <div class="tui-form__row tui-form__row_multi-fields form-group">
+        <div
+          class="tui-form__multi-field form-group__item form-group__item-info"
+        >
+          <h3 class="form-group__item-title">Адрес</h3>
+          <p class="form-group__item-desc">
+            необходимо указать реальный юридический адрес контрагента. Данный
+            адрес будет указываться в реквизитах контрагента на всех документах
+          </p>
+        </div>
+        <div class="tui-form__multi-field form-group__item">
+          <!-- <app-company-address
+            [company]="contractor"
+            (onChange)="changeAddress($event)"
+          ></app-company-address> -->
+        </div>
+      </div>
+
+      <!-- Юридический Адрес -->
+      <div
+        class="tui-form__row tui-form__row_multi-fields form-group"
+        *ngIf="isEmptyAddress(contractor.juridicalAddress)"
+      >
+        <div
+          class="tui-form__multi-field form-group__item form-group__item-info"
+        >
+          <h3 class="form-group__item-title">Юридический адрес</h3>
+          <p class="form-group__item-desc">
+            необходимо указать реальный юридический адрес контрагента. Данный
+            адрес будет указываться в реквизитах контрагента на всех документах
+          </p>
+        </div>
+        <div class="tui-form__multi-field form-group__item">
+          <!-- <app-company-address-fields
+            [company]="contractor"
+          ></app-company-address-fields> -->
+        </div>
+      </div>
+
+      <!-- Почтовый Адрес -->
+      <div class="tui-form__row tui-form__row_multi-fields form-group">
+        <div
+          class="tui-form__multi-field form-group__item form-group__item-info"
+        >
+          <h3 class="form-group__item-title">Почтовый адрес</h3>
+          <p class="form-group__item-desc">
+            необходимо указать реальный почтовый адрес контрагента. Данный адрес
+            будет указываться в реквизитах контрагента на всех документах
+          </p>
+        </div>
+        <div class="tui-form__multi-field form-group__item">
+          <!-- <app-company-address-fields
+            [company]="contractor"
+          ></app-company-address-fields> -->
+        </div>
+      </div>
+
+      <!-- Банк -->
+      <div class="tui-form__row tui-form__row_multi-fields form-group">
+        <div
+          class="tui-form__multi-field form-group__item form-group__item-info"
+        >
+          <h3 class="form-group__item-title">Банк</h3>
+          <p class="form-group__item-desc">
+            необходимо указать реальный юридический адрес контрагента. Данный
+            адрес будет указываться в реквизитах контрагента на всех документах
+          </p>
+        </div>
+        <div class="tui-form__multi-field form-group__item">
+          <!-- <app-company-bank
+            [company]="contractor"
+            (onChange)="changeBank($event)"
+          ></app-company-bank> -->
+        </div>
+      </div>
+
+      <!-- Ответственное лицо -->
+      <div class="tui-form__row tui-form__row_multi-fields form-group">
+        <div
+          class="tui-form__multi-field form-group__item form-group__item-info"
+        >
+          <h3 class="form-group__item-title">Ответственное лицо</h3>
+          <p class="form-group__item-desc">
+            необходимо указать реальный юридический адрес контрагента. Данный
+            адрес будет указываться в реквизитах контрагента на всех документах
+          </p>
+        </div>
+        <div class="tui-form__multi-field form-group__item">
+          <!-- <app-responsible-person-panel></app-responsible-person-panel> -->
+        </div>
+      </div>
+    </div>
+  </tui-loader>
+</tui-scrollbar>
+
+<div class="page-footer">
+  <button
+    class="tui-space_right-3"
+    tuiButton
+    type="button"
+    [showLoader]="false"
+    [size]="'m'"
+    appearance="secondary"
+    (click)="cancel()"
+  >
+    Отменить
+  </button>
+  <button
+    tuiButton
+    type="button"
+    [showLoader]="!(indicator$ | async)?.loading"
+    [size]="'m'"
+    [disabled]="!(valid$ | async)"
+    (click)="save()"
+  >
+    Добавить
+  </button>
+</div>
