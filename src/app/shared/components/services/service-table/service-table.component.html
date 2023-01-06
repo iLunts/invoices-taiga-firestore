@@ -23,7 +23,7 @@
   <table tuiTable class="table" formArrayName="tableRowArray">
     <thead>
       <tr>
-        <th tuiTh>Дата</th>
+        <th tuiTh *ngIf="!hideDateColumn">Дата</th>
         <th tuiTh>Название</th>
         <th tuiTh>Ед. из.</th>
         <th tuiTh>Кол-во</th>
@@ -41,13 +41,12 @@
         "
         [formGroupName]="i"
       >
-        <td tuiTd class="cell cell--date _isEditable">
+        <td tuiTd class="cell cell--date _isEditable" *ngIf="!hideDateColumn">
           <tui-input-date
             class="_isEditable"
             tuiTextfieldSize="m"
             formControlName="date"
             tuiHint="Поле можно редактировать"
-            *ngIf="!hideDateColumn"
           >
             Дата
           </tui-input-date>
